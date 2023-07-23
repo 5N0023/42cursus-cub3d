@@ -18,61 +18,83 @@
 # include <string.h>
 # include <unistd.h>
 
-typedef struct s_ray
+struct				s_ray
 {
-	double		x;
-	double		y;
-	double		angle;
-	double		distance;
-	double		dx;
-	double		dy;
-	int			hitside;
-}				t_ray;
+	double			x;
+	double			y;
+	double			angle;
+	double			distance;
+	double			dx;
+	double			dy;
+	int				hitside;
+};
 
-typedef struct s_player
+struct				s_mouse
 {
-	double		x;
-	double		y;
-	double		speed;
-	double		rotation;
-	double		angle;
-	int			wpress;
-	int			spress;
-	int			dpress;
-	int			apress;
+	int				x;
+	int				y;
+	int				oldx;
+	int				oldy;
+	int				click;
+	int				anglemove;
+	int				centermove;
+}					t_mouse;
 
-}				t_player;
-
-typedef struct s_map
+struct				s_player
 {
-	char		**map;
-	size_t		width;
-	size_t		height;
-}				t_map;
+	double			x;
+	double			y;
+	double			speed;
+	double			rotation;
+	double			angle;
+	int				wpress;
+	int				spress;
+	int				dpress;
+	int				apress;
+};
 
-typedef struct texture
+struct				s_map
 {
-	void		*img;
-	int			*addr;
-	int			bpp;
-	int			line_length;
-	int			endian;
-	int			width;
-	int			height;
-}				t_texture;
+	char			**map;
+	size_t			width;
+	size_t			height;
+};
+
+struct				texture
+{
+	void			*img;
+	int				*addr;
+	int				bpp;
+	int				line_length;
+	int				endian;
+	int				width;
+	int				height;
+};
+
+typedef struct s_hit
+{
+	double			x;
+	double 			y;
+	double			dx;
+	double			dy;
+	double			hitx;
+	double			hity;
+	int				hit;
+	double			distance;
+}					t_hit;
 
 typedef struct s_data
 {
-	mlx_t		*mlx;
-	void		*img;
-	t_texture	*texture;
-	t_map		*map;
-	t_player	*player;
-	t_ray		*ray;
-	double		center;
-	double		fov;
-	int			floorcolor;
-	int			ceilingcolor;
-}				t_data;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	struct s_player	player;
+	struct s_map	map;
+	struct s_ray	ray;
+	struct s_mouse	mouse;
+	double			center;
+	double			fov;
+	int				floorcolor;
+	int				ceilingcolor;
+}					t_data;
 
 #endif
