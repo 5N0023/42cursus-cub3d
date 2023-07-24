@@ -8,8 +8,10 @@
 # define RAY 1000
 # define NORD 0
 # define SUD 1
-# define EST 2
+# define EAST 2
 # define OUEST 3
+# define VERTICALE 0
+# define HORIZONTALE 1
 
 # include "MLX42/MLX42.h"
 # include <math.h>
@@ -27,6 +29,7 @@ struct				s_ray
 	double			dx;
 	double			dy;
 	int				hitside;
+	int				texture;
 };
 
 struct				s_mouse
@@ -40,6 +43,14 @@ struct				s_mouse
 	int				centermove;
 }					t_mouse;
 
+struct				s_gun
+{
+	mlx_image_t		*gun;
+	mlx_image_t		*gunshoot;
+	mlx_image_t		*gunreload[100];
+	int				state;
+};
+
 struct				s_player
 {
 	double			x;
@@ -51,6 +62,7 @@ struct				s_player
 	int				spress;
 	int				dpress;
 	int				apress;
+	struct s_gun	gun;
 };
 
 struct				s_map
@@ -60,20 +72,19 @@ struct				s_map
 	size_t			height;
 };
 
-struct				texture
+struct				s_texture
 {
-	void			*img;
-	int				*addr;
-	int				bpp;
-	int				line_length;
-	int				endian;
-	int				width;
-	int				height;
+	mlx_image_t		*nord;
+	mlx_image_t		*sud;
+	mlx_image_t		*est;
+	mlx_image_t		*ouest;
 };
 
 typedef struct s_hit
 {
 	double			x;
+	double			xray;
+	double			yray;
 	double 			y;
 	double			dx;
 	double			dy;
@@ -91,6 +102,7 @@ typedef struct s_data
 	struct s_map	map;
 	struct s_ray	ray;
 	struct s_mouse	mouse;
+	struct s_texture texture;
 	double			center;
 	double			fov;
 	int				floorcolor;

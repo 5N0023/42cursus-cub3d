@@ -7,7 +7,7 @@ MLX42 = MLX42/libmlx42.a
 
 all : $(NAME)
 $(NAME):$(OBJECTS)
-	gcc test.c $(MLX42) -Iinclude -lglfw -L$(shell brew --prefix glfw)/lib -I$(shell brew --prefix glfw)/include -o $(NAME)
+	gcc test.c $(MLX42)  -Iinclude -lglfw -L$(shell brew --prefix glfw)/lib -I$(shell brew --prefix glfw)/include -o $(NAME)
 
 %.o: %.c 
 	@$(CC)  -c $< -o $@

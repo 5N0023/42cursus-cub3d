@@ -2,5 +2,6 @@
     "files.associations": {
         "format": "c",
         "__bit_reference": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

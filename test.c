@@ -1,5 +1,5 @@
 #include "cub3D.h"
-
+#include <signal.h>
 
 double			hitx = 0;
 double			hity = 0;
@@ -10,6 +10,27 @@ double			hhitx = 0;
 double			hhity = 0;
 double			vhitx = 0;
 double			vhity = 0;
+
+int ft_pixel(int r, int g, int b, int a)
+{
+    return (r << 24 | g << 16 | b << 8 | a);
+}
+unsigned int get_pixel(mlx_image_t *img,int i,int j)
+{
+	int pixel;
+	uint8_t r;
+	uint8_t b;
+	uint8_t g;
+	uint8_t a;
+	int pos = (j * 4 * img->width) + i * 4;
+	r = img->pixels[pos];
+	g = img->pixels[pos+1];
+	b = img->pixels[pos+2];
+	a = img->pixels[pos+3];
+	return(ft_pixel(r,g,b,a));
+}
+
+
 
 void	draw_map(t_data *data, int x, int y, int size, int color)
 {
@@ -61,16 +82,10 @@ void	draw_line(int x0, int y0, int x1, int y1, int color, t_data *data)
 	{
 		if (x0 < 0 || x0 > WINDOWW || y0 < 0 || y0 > WINDOWW)
 			break ;
-		if (k == 0 && x0 != 0 && y0 != WINDOWW - 1)
-			mlx_put_pixel(data->img, x0, y0, 0x000000FF);
 		else
 			mlx_put_pixel(data->img, x0, y0, color);
 		if (x0 == x1 && y0 == y1)
-		{
-			if (x0 != 0 && y0 != WINDOWW - 1)
-				mlx_put_pixel(data->img, x0, y0, 0x000000FF);
 			break ;
-		}
 		e2 = 2 * err;
 		if (e2 > -dy)
 		{
@@ -86,60 +101,59 @@ void	draw_line(int x0, int y0, int x1, int y1, int color, t_data *data)
 	}
 }
 
-void	castrayvertical(t_hit *vhit, double angle, char **map)
+void	castrayvertical(double x, double y, double angle, char **map)
 {
 	double	pa;
 
-	vhit->dx = 150;
-	vhit->dy = 150;
-	double radian;
+	double dx, dy, radian;
 	pa = angle;
 	if (pa > 360)
 		pa -= 360;
 	if (pa < 0)
 		pa += 360;
 	if (pa <= 90 && pa >= 0)
-		vhit->dx = (int)vhit->x + 1;
+		dx = (int)x + 1;
 	else if (pa >= 0 && pa <= 180)
-		vhit->dx = (int)vhit->x + 1;
+		dx = (int)x + 1;
 	else if (pa >= 180 && pa <= 360)
 	{
-		if (vhit->dx == (int)vhit->x)
-			vhit->dx = (int)vhit->x - 1;
+		if (dx == (int)x)
+			dx = (int)x - 1;
 		else
-			vhit->dx = (int)vhit->x;
+			dx = (int)x;
 	}
 	radian = pa * M_PI / 180.0;
 	if (pa != 0 && pa != 180 && pa != 360)
-		vhit->dy = vhit->y + (vhit->dx - vhit->x) / tanf(radian);
+		dy = y + (dx - x) / tanf(radian);
 	else if (pa == 0 || pa == 180 || pa == 360)
 	{
-		vhit->dx = vhit->x;
+		dx = x;
 		if (pa == 0 || pa == 360)
-			vhit->dy = (int)vhit->y + 1;
+			dy = (int)y + 1;
 		else
 		{
-			if (vhit->dy != (int)vhit->y)
-				vhit->dy = (int)vhit->y;
+			if (dy != (int)y)
+				dy = (int)y;
 			else
-				vhit->dy = (int)vhit->y - 1;
+				dy = (int)y - 1;
 		}
 	}
-	vhit->x = vhit->dx;
-	vhit->y = vhit->dy;
-	vhit->distance = sqrtf(powf((vhit->x - xray), 2) + powf((vhit->y - yray), 2));
-	if (vhit->x < 0 || vhit->x > 10 || vhit->y < 0 || vhit->y > 10)
+	xray = dx;
+	yray = dy;
+	if (xray < 0 || xray > 10 || yray < 0 || yray > 10)
 	{
-		vhit->hit = 1;
+		hit = 1;
+		xray = dx;
+		yray = dy;
 		return ;
 	}
-	if (map[(int)vhit->dx][(int)vhit->dy] == '1')
-		vhit->hit = 1;
-	if (pa >= 180 || pa <= 90)
+	if ((pa >= 180 && pa <= 360) || pa ==0)
 	{
-		if (map[(int)vhit->dx - 1][(int)vhit->dy] == '1')
-			vhit->hit = 1;
+		if (map[(int)dx - 1][(int)dy] == '1')
+			hit = 1;
 	}
+	if (map[(int)dx][(int)dy] == '1')
+		hit = 1;
 }
 
 void	castrayhorizontal(double x, double y, double angle, char **map)
@@ -153,7 +167,7 @@ void	castrayhorizontal(double x, double y, double angle, char **map)
 	else if (pa < 0)
 		pa += 360;
 	radian = pa * M_PI / 180.0;
-	if (pa >=270 || pa < 90)
+	if (pa >= 0 && pa < 90)
 		dy = (int)y + 1;
 	else if (pa > 90 && pa < 270)
 	{
@@ -185,7 +199,6 @@ void	castrayhorizontal(double x, double y, double angle, char **map)
 	}
 	xray = dx;
 	yray = dy;
-		printf("vhit->x %f vhit->y %f angle %f \n", xray, yray, angle);
 	if (xray < 0 || xray > 10 || yray < 0 || yray > 10)
 	{
 		hit = 1;
@@ -235,10 +248,10 @@ double	hits(double angle,t_data *data)
 	xray = data->player.x;
 	yray = data->player.y;
 	hit = 0;
-	while (!vhit.hit)
-		castrayvertical(&vhit, angle, data->map.map);
-	vhitx = vhit.x;
-	vhity = vhit.y;
+	while (!hit)
+		castrayvertical(xray, yray, angle, data->map.map);
+	vhitx = xray;
+	vhity = yray;
 	xray = data->player.x;
 	yray = data->player.y;
 	hit = 0;
@@ -246,21 +259,24 @@ double	hits(double angle,t_data *data)
 		castrayhorizontal(xray, yray, angle, data->map.map);
 	hhitx = xray;
 	hhity = yray;
+	data->ray.angle = angle;
 	vdistance = sqrtf(powf((vhitx - data->player.x), 2) + powf((vhity - data->player.y), 2));
 	hdistance = sqrtf(powf((hhitx - data->player.x), 2) + powf((hhity - data->player.y), 2));
 	if (hdistance < vdistance)
 	{
-		hitx = hhitx;
-		hity = hhity;
-		distance = hdistance;
+		data->ray.x = hhitx;
+		data->ray.y = hhity;
+		data->ray.distance = hdistance;
+		data->ray.hitside = HORIZONTALE;
 	}
 	else
 	{
-		hitx = vhitx;
-		hity = vhity;
-		distance = vdistance;
+		data->ray.x = vhitx;
+		data->ray.y = vhity;
+		data->ray.distance = vdistance;
+		data->ray.hitside = VERTICALE;
 	}
-	return (distance);
+	return (data->ray.distance);
 }
 
 void	move_player(t_data *data)
@@ -277,10 +293,9 @@ void	move_player(t_data *data)
 		distance2 = hits(data->player.angle - 10 + 180,data);
 		if (distance1 > 0.2 && distance2 > 0.2)
 		{
-			x += cosf((data->player.angle + 90) * M_PI / 180.0) * 0.01;
-			y -= sinf((data->player.angle + 90) * M_PI / 180.0) * 0.01;
+			x += cosf((data->player.angle + 90) * M_PI / 180.0) * 0.025;
+			y -= sinf((data->player.angle + 90) * M_PI / 180.0) * 0.025;
 		}
-		printf("distance1 %f distance2 %f \n", distance1, distance2);
 	}
 	if (data->player.wpress)
 	{
@@ -288,8 +303,8 @@ void	move_player(t_data *data)
 		distance2 = hits(data->player.angle - 10,data);
 		if (distance1 > 0.2 && distance2 > 0.2)
 		{
-			x -= cosf((data->player.angle + 90) * M_PI / 180.0) * 0.01;
-			y += sinf((data->player.angle + 90) * M_PI / 180.0) * 0.01;
+			x -= cosf((data->player.angle + 90) * M_PI / 180.0) * 0.025;
+			y += sinf((data->player.angle + 90) * M_PI / 180.0) * 0.025;
 		}
 	}
 	if (data->player.dpress)
@@ -298,8 +313,8 @@ void	move_player(t_data *data)
 		distance2 = hits(data->player.angle - 10 - 90,data);
 		if (distance1 > 0.2 && distance2 > 0.2)
 		{
-			x -= cosf((data->player.angle)*M_PI / 180.0) * 0.01;
-			y += sinf((data->player.angle)*M_PI / 180.0) * 0.01;
+			x -= cosf((data->player.angle)*M_PI / 180.0) * 0.025;
+			y += sinf((data->player.angle)*M_PI / 180.0) * 0.025;
 		}
 	}
 	if (data->player.apress)
@@ -308,14 +323,14 @@ void	move_player(t_data *data)
 		distance2 = hits(data->player.angle - 10 + 90,data);
 		if (distance1 > 0.2 && distance2 > 0.2)
 		{
-			x += cosf((data->player.angle)*M_PI / 180.0) * 0.01;
-			y -= sinf((data->player.angle)*M_PI / 180.0) * 0.01;
+			x += cosf((data->player.angle)*M_PI / 180.0) * 0.025;
+			y -= sinf((data->player.angle)*M_PI / 180.0) * 0.025;
 		}
 	}
 	data->player.angle+=data->mouse.anglemove*2;
-    if(data->mouse.centermove > 0 && data->center < WINDOWW + 5 + 1)
+    if(data->mouse.centermove > 0 && data->center < WINDOWW - 6)
         data->center+=data->mouse.centermove * 5;
-    else if(data->mouse.centermove < 0 && data->center > 5)
+    else if(data->mouse.centermove < 1 && data->center > 6)
         data->center+=data->mouse.centermove * 5;
 	data->player.x = x;
 	data->player.y = y;
@@ -352,6 +367,8 @@ mlx_keyfunc	key_hook(mlx_key_data_t key, t_data *data)
 		data->player.apress = 1;
 	if (key.key == MLX_KEY_A && key.action == MLX_RELEASE)
 		data->player.apress = 0;
+	if (key.key == MLX_KEY_R )
+		data->player.gun.state = 2;
 	return (NULL);
 }
 
@@ -382,6 +399,56 @@ mlx_cursorfunc	key_cursor(double x, double y, t_data *data)
 	return (NULL);
 }
 
+void drawpixels(t_data *data, int k, double draw, double wallheight)
+{
+
+	
+}
+
+void draw_gun(t_data *data)
+{
+	static int f ;
+	if(data->player.gun.state == 0)
+	{
+		for(int i = 0;i < data->player.gun.gunreload[0]->width;i++)
+			{
+				
+				
+				for(int j = 0;j < data->player.gun.gunreload[0]->height;j++){
+					unsigned pixel = get_pixel(data->player.gun.gunreload[0], i, j);
+					if ( i == 0)
+						printf("pixel %d\n",pixel);
+					if (pixel > 0x60FF00FF || pixel < 0x500000FF)
+						mlx_put_pixel(data->img, i+40, j+(WINDOWW - data->player.gun.gunreload[0]->height), pixel);}
+			}
+		// f++;
+		// if (f == 8*2)
+		// {
+		// 	f = 0;
+		// }
+	}
+	if (data->player.gun.state == 2)
+	{
+		for(int i = 0;i < data->player.gun.gunreload[f/2]->width;i++)
+			{
+				
+				
+				for(int j = 0;j < data->player.gun.gunreload[f/2]->height;j++){
+					unsigned  pixel = get_pixel(data->player.gun.gunreload[f/2], i, j);
+					if (i == 0)
+						printf("pixel %d\n",pixel);
+					if (pixel > 0x60FF00FF || pixel < 0x500000FF)
+						mlx_put_pixel(data->img, i+40, j+(WINDOWW - data->player.gun.gunreload[f/2]->height), pixel);}
+			}
+		f++;
+		if (f == 60*2)
+		{
+			f = 0;
+			data->player.gun.state = 0;
+		}
+	}
+}
+
 int	my_mlx_loop_hook(t_data *data)
 {
 	double	POV;
@@ -400,10 +467,10 @@ int	my_mlx_loop_hook(t_data *data)
 	data->img = mlx_new_image(data->mlx, WINDOWW, WINDOWW);
 	for (int i = 0; i < WINDOWW; i++)
 		for (int j = data->center; j < WINDOWW; j++)
-			mlx_put_pixel(data->img, i, j, 0x00FFFF);
+			mlx_put_pixel(data->img, i, j, data->floorcolor);
 	for (int i = 0; i < WINDOWW; i++)
 		for (int j = 0; j < data->center; j++)
-			mlx_put_pixel(data->img, i, j, 0x87CEEBFF);
+			mlx_put_pixel(data->img, i, j, data->ceilingcolor);
 	if (data->player.angle >= 360)
 		data->player.angle -= 360;
 	else if (data->player.angle < 0)
@@ -421,16 +488,48 @@ int	my_mlx_loop_hook(t_data *data)
 		distance = hits(a,data) * cosf((a - data->player.angle) * M_PI / 180.0);
 		wallheight = WINDOWW / distance;
 		color = 0x964B00FF;
-		color = color - (int)(distance * 10);
+		if (data->ray.hitside == VERTICALE && data->ray.angle < 180)
+			data->ray.texture = OUEST;
+		if (data->ray.hitside == VERTICALE && data->ray.angle >= 180)
+			data->ray.texture = EAST;
+		if (data->ray.hitside == HORIZONTALE && (data->ray.angle < 90 || data->ray.angle > 270))
+				data->ray.texture = SUD;
+		if (data->ray.hitside == HORIZONTALE && data->ray.angle >= 90 && data->ray.angle <= 270)
+				data->ray.texture = NORD;
+		// draw_pixels(data, k, draw, wallheight);
 		draw_line(k, data->center - wallheight / 2, k, data->center + wallheight / 2, color, data);
 		angle += POV / WINDOWW;
 		draw += POV / WINDOWW;
 		k--;
 	}
 	draw_map(data, 10, 10, WINDOWW / 50, 0x00FF0F);
+	draw_gun(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
     move_player(data);
 	return (0);
+}
+
+void load_gun_texture(t_data *data)
+{
+	mlx_texture_t *texture;
+	char path[23] = "jett/frame-001.png";
+	for(int i = 0;i < 75;i++)
+	{
+		printf("path %s\n",path);
+		texture = mlx_load_png(path);
+		data->player.gun.gunreload[i] = mlx_texture_to_image(data->mlx, texture);
+		mlx_resize_image(data->player.gun.gunreload[i], 960, 540);
+		mlx_delete_texture(texture);
+		path[13]++;
+		if(path[13] == '9')
+		{
+			path[12]++;
+			path[13] = '0';
+		}
+		if(path[12] == '7' && path[13] == '5')
+			break;
+	}
+	printf("done\n");
 }
 
 int	main(void)
@@ -447,6 +546,7 @@ int	main(void)
 	data_ptr->player.spress = 0;
 	data_ptr->player.dpress = 0;
 	data_ptr->player.apress = 0;
+	data_ptr->player.gun.state = 0;
 	data_ptr->mouse.x = 0;
 	data_ptr->mouse.y = 0;
 	data_ptr->mouse.oldx = 0;
@@ -455,6 +555,8 @@ int	main(void)
 	data_ptr->mouse.anglemove = 0;
 	data_ptr->mouse.centermove = 0;
 	data_ptr->center = WINDOWW / 2;
+	data_ptr->floorcolor = 0x4C4C0FFF;
+	data_ptr->ceilingcolor = 0x87CEEBFF;
 
 	data_ptr->map.map= (char **)malloc(10 * sizeof(char *));
 	data_ptr->map.width = 10;
@@ -472,15 +574,28 @@ int	main(void)
 				data_ptr->map.map[i][j] = '1';
 		}
 	}
+	data_ptr->mlx = mlx_init(WINDOWW, WINDOWW, "CUB3D!", 1);
+	load_gun_texture(data_ptr);
+	mlx_texture_t *texture;
+	texture = mlx_load_png("test.png");
+	data_ptr->texture.est = mlx_texture_to_image(data_ptr->mlx, texture);
+	data_ptr->texture.nord = mlx_texture_to_image(data_ptr->mlx, texture);
+	data_ptr->texture.sud = mlx_texture_to_image(data_ptr->mlx, texture);
+	data_ptr->texture.ouest = mlx_texture_to_image(data_ptr->mlx, texture);
+	mlx_delete_texture(texture);
+	mlx_resize_image(data_ptr->texture.est, 250, 250);
+	mlx_resize_image(data_ptr->texture.nord, 250, 250);
+	mlx_resize_image(data_ptr->texture.sud, 250, 250);
+	mlx_resize_image(data_ptr->texture.ouest, 250, 250);
 	data_ptr->map.map[4][5] = '1';
 	data_ptr->map.map[5][4] = '1';
 	data_ptr->img = NULL;
-	data_ptr->mlx = mlx_init(WINDOWW, WINDOWW, "CUB3D!", 1);
 	mlx_loop_hook(data_ptr->mlx, (void *)my_mlx_loop_hook, data_ptr);
 	mlx_key_hook(data_ptr->mlx, (void *)key_hook, data_ptr);
 	mlx_mouse_hook(data_ptr->mlx, (void *)key_mouse, data_ptr);
 	mlx_set_cursor_mode(data_ptr->mlx, MLX_MOUSE_DISABLED);
 	mlx_cursor_hook(data_ptr->mlx, (void *)key_cursor, data_ptr);
 	mlx_loop(data_ptr->mlx);
+	mlx_terminate(data_ptr->mlx);
 	return (0);
 }
