@@ -180,15 +180,15 @@ void	move_player(t_data *data)
 	if(data->mouse.oldx != data->mouse.x)
 			data->player.angle = (data->mouse.x * -data->mouse.sensitivity);
     data->center  = WINDOWW / 2 + data->mouse.y * -data->mouse.sensitivity;
-	if(data->center <= 0)
+	if(data->center <= -500)
 	{
-		data->center = 0;
+		data->center = -500;
 		mlx_set_mouse_pos(data->mlx,data->mouse.x, data->mouse.y);
 	}
-	if(data->center >= WINDOWW)
+	if(data->center >= WINDOWW + 500)
 	{
 
-		data->center = WINDOWW;
+		data->center = WINDOWW + 500;
 		mlx_set_mouse_pos(data->mlx, data->mouse.x, data->mouse.y);
 	}
 	if(data->mouse.click == 1 && data->player.gun.state == 0)
@@ -234,10 +234,16 @@ mlx_keyfunc	key_hook(mlx_key_data_t key, t_data *data)
 		data->player.apress = 0;
 	if (key.key == MLX_KEY_R && key.action == MLX_PRESS)
 		data->player.gun.state = RELOAD;
-	if (key.key == MLX_KEY_P && key.action == MLX_PRESS)
+	if (key.key == MLX_KEY_P && key.action == MLX_PRESS && (data->gamemode == GAME || data->gamemode == STARTMENU))
 	{
-		mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
-		data->gamemode = STARTMENU;
+		if(data->gamemode == STARTMENU)
+		{
+			data->gamemode = GAME;
+			mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
+		}
+		else
+			{mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
+			data->gamemode = STARTMENU;}
 	}
 	return (NULL);
 }
@@ -253,8 +259,9 @@ mlx_mousefunc	key_mouse(mouse_key_t button, action_t action,
 }
 mlx_cursorfunc	key_cursor(double x, double y, t_data *data)
 {
-	data->mouse.x = x;
-	data->mouse.y = y;
+	if(data->gamemode == GAME)
+	{data->mouse.x = x;
+	data->mouse.y = y;}
 	return (NULL);
 }
 
@@ -274,22 +281,21 @@ void game(t_data *data)
 	double	wallheight;
 	int		color;
 	move_player(data);	
+	
 	POV = 60;
 	for (int i = 0; i < WINDOWW; i++)
 		for (int j = data->center; j < WINDOWW; j++)
-			mlx_put_pixel(data->img, i, j, data->floorcolor);
+			if(j  < WINDOWW && j > 0 && i < WINDOWW && i > 0)
+				mlx_put_pixel(data->img, i, j, data->floorcolor);
 	for (int i = 0; i < WINDOWW; i++)
 		for (int j = 0; j < data->center; j++)
-			mlx_put_pixel(data->img, i, j, data->ceilingcolor);
+			if(j  < WINDOWW && j > 0 && i < WINDOWW && i > 0)
+				mlx_put_pixel(data->img, i, j, data->ceilingcolor);
 	if (data->player.angle >= 360)
 		data->player.angle -= 360;
 	else if (data->player.angle < 0)
 		data->player.angle += 360;
 	angle = data->player.angle - POV / 2;
-	if (angle < 0)
-		angle += 360;
-	if (angle >= 360)
-		angle -= 360;
 	draw = 0;
 	k = WINDOWW - 1;
 	while (k >= 0)
@@ -298,19 +304,20 @@ void game(t_data *data)
 		distance = hits(a,data) * cosf((a - data->player.angle) * M_PI / 180.0);
 		wallheight = WINDOWW / distance;
 		color = 0x964B00FF;
-		if (data->ray.hitside == VERTICALE && data->ray.angle < 180)
-			data->ray.texture = OUEST;
-		if (data->ray.hitside == VERTICALE && data->ray.angle >= 180)
+		if (data->ray.hitside == VERTICALE && data->ray.angle >= 0 && data->ray.angle <= 180)
 			data->ray.texture = EAST;
-		if (data->ray.hitside == HORIZONTALE && (data->ray.angle < 90 || data->ray.angle > 270))
-				data->ray.texture = SUD;
-		if (data->ray.hitside == HORIZONTALE && data->ray.angle >= 90 && data->ray.angle <= 270)
-				data->ray.texture = NORD;
-		draw_line(k, data->center - wallheight / 2, k, data->center + wallheight / 2, color, data);
+		else if (data->ray.hitside == VERTICALE && data->ray.angle >= 180 && data->ray.angle <= 360)
+			data->ray.texture = OUEST;
+		else if (data->ray.hitside == HORIZONTALE && data->ray.angle >= 90 && data->ray.angle <= 270)
+			data->ray.texture = NORD;
+		else
+			data->ray.texture = SUD;
+		render_texture(data, k, wallheight);
 		angle += POV / WINDOWW;
 		draw += POV / WINDOWW;
 		k--;
 	}
+	
 	draw_cursor(data);
 	draw_gun_normal(data);
 	draw_map(data, data->map.height, data->map.width, WINDOWW / 100, 0x00FF0F);
@@ -365,8 +372,11 @@ int	main(int c, char **v)
 	data_ptr->mouse.centermove = 0;
 	data_ptr->mouse.sensitivity = 0.1;
 	data_ptr->center = 666;
+
 	data_ptr->gamemode = STARTSCREEN;
 	data_ptr->mlx = mlx_init(WINDOWW, WINDOWW, "CUB3D!", 1);
+	load_cursor(data_ptr);
+	load_walls_textures(data_ptr);
 	load_normal_texture(data_ptr);
 	load_loading_texture(data_ptr);
 	data_ptr->map.map[4][5] = '1';

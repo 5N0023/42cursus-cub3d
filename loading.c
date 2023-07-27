@@ -19,6 +19,7 @@ void load_loading_texture(t_data *data)
 
 void startscreen(t_data *data)
 {
+    
     static int f;
     for (int i = 0;i < data->loading.frames[f]->width;i++)
     {
@@ -32,7 +33,7 @@ void startscreen(t_data *data)
     f++;
     if (f == 106)
     {
-        // mlx_set_mouse_pos(data->mlx, WINDOWW / 2, WINDOWW / 2);
+        mlx_set_mouse_pos(data->mlx, WINDOWW / 2, WINDOWW / 2);
 	    mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
         f = 0;
         data->gamemode = STARTMENU;

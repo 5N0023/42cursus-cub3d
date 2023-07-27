@@ -6,6 +6,7 @@ SOURCES =		main.c \
 				startmenu.c \
 				cursor.c \
 				options.c \
+				textures.c \
 
 OBJECTS = $(SOURCES:.c=.o)
 CC = cc

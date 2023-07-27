@@ -7,7 +7,8 @@ void startmenu(t_data *data)
     
     int x;
     int y;
-    if (data->mouse.x > 40 && data->mouse.x < 326 && data->mouse.y > 237 && data->mouse.y < 308)
+    mlx_get_mouse_pos(data->mlx, &x, &y);
+    if (x > 40 && x < 326 && y > 237 && y < 308)
     {
         texture = mlx_load_png("textures/startmenu/hover_start.png");
         image = mlx_texture_to_image(data->mlx, texture);
@@ -21,13 +22,13 @@ void startmenu(t_data *data)
         mlx_delete_image(data->mlx, image);
         if(data->mouse.click == 1)
         {
-            mlx_set_mouse_pos(data->mlx, data->player.angle, data->center);
+            mlx_set_mouse_pos(data->mlx, data->mouse.x, data->mouse.y);
             mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
             data->gamemode = GAME;
             data->mouse.click = 0;
         }
     }
-    else if (data->mouse.x > 40 && data->mouse.x < 421 && data->mouse.y > 472 && data->mouse.y < 552)
+    else if (x > 40 && x < 421 && y > 472 && y < 552)
     {
         texture = mlx_load_png("textures/startmenu/hover_options.png");
         image = mlx_texture_to_image(data->mlx, texture);
@@ -42,7 +43,7 @@ void startmenu(t_data *data)
         if (data->mouse.click == 1)
             data->gamemode = OPTIONS;
     }
-    else if (data->mouse.x > 40 && data->mouse.x < 214 && data->mouse.y > 707 && data->mouse.y < 777)
+    else if (x > 40 && x < 214 && y > 707 && y < 777)
     {
         texture = mlx_load_png("textures/startmenu/hover_exit.png");
         image = mlx_texture_to_image(data->mlx, texture);

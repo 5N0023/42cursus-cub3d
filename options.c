@@ -120,27 +120,31 @@ void options(t_data *data)
 {
     mlx_texture_t *texture;
     mlx_image_t *image;
-    if (data->mouse.x > 841 && data->mouse.y > 130 && data->mouse.x < 891 && data->mouse.y < 180)
+
+    int x;
+    int y;
+    mlx_get_mouse_pos(data->mlx, &x, &y);
+    if (x > 841 && y > 130 && x < 891 && y < 180)
     {
         if (data->mouse.click == 1 && data->mouse.sensitivity < 1)
             data->mouse.sensitivity += 0.01;
     }
-    if (data->mouse.x > 605 && data->mouse.y > 130 && data->mouse.x < 640 && data->mouse.y < 180)
+    if (x > 605 && y > 130 && x < 640 && y < 180)
     {
         if (data->mouse.click == 1 && data->mouse.sensitivity > 0.01)
             data->mouse.sensitivity -= 0.01;
     }
-    if (data->mouse.x > 841 && data->mouse.y > 330 && data->mouse.x < 891 && data->mouse.y < 380)
+    if (x > 841 && y > 330 && x < 891 && y < 380)
     {
         if (data->player.speed < 0.1 && data->mouse.click == 1)
             data->player.speed += 0.001;
     }
-    if (data->mouse.x > 605 && data->mouse.y > 330 && data->mouse.x < 650 && data->mouse.y < 380)
+    if (x > 605 && y > 330 && x < 650 && y < 380)
     {
         if (data->player.speed > 0.001 && data->mouse.click == 1)
             data->player.speed -= 0.001;
     }
-    if (data->mouse.x > 573 && data->mouse.y > 919 && data->mouse.x < 938 && data->mouse.y < 956)
+    if (x > 573 && y > 919 && x < 938 && y < 956)
     {
         if (data->mouse.click == 1)
             data->gamemode = STARTMENU;

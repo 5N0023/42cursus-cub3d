@@ -151,10 +151,11 @@ double	hits(double angle,t_data *data)
 
 	xray = data->player.x;
 	yray = data->player.y;
-	if (angle >= 360)
-		angle -= 360;
-	else if (angle < 0)
+	while(angle < 0)
 		angle += 360;
+	while(angle > 360)
+		angle -= 360;
+	data->ray.angle = angle;
 	vhitx = WINDOWW;
 	vhity = WINDOWW;
 	hhitx = WINDOWW;
@@ -173,10 +174,10 @@ double	hits(double angle,t_data *data)
 		castrayhorizontal(xray, yray, angle, data);
 	hhitx = xray;
 	hhity = yray;
-	data->ray.angle = angle;
+	
 	vdistance = sqrtf(powf((vhitx - data->player.x), 2) + powf((vhity - data->player.y), 2));
 	hdistance = sqrtf(powf((hhitx - data->player.x), 2) + powf((hhity - data->player.y), 2));
-	if (hdistance < vdistance)
+	if (hdistance <= vdistance)
 	{
 		data->ray.x = hhitx;
 		data->ray.y = hhity;

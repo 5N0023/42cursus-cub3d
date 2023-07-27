@@ -57,6 +57,7 @@ struct				s_mouse
 	int				anglemove;
 	int				centermove;
 	double			sensitivity;
+	mlx_image_t		*cursor;
 }					t_mouse;
 
 struct s_normal
@@ -115,6 +116,10 @@ struct				s_texture
 	char		*sud;
 	char		*east;
 	char		*ouest;
+	mlx_image_t	*nordimg;
+	mlx_image_t	*sudimg;
+	mlx_image_t	*eastimg;
+	mlx_image_t	*ouestimg;
 };
 
 struct				s_loading
@@ -175,5 +180,8 @@ void startmenu(t_data *data);
 void load_startmenu_texture(t_data *data);
 void draw_cursor(t_data *data);
 void options(t_data *data);
+void load_cursor(t_data *data);
+void render_texture(t_data *data,int x,double wallheight);
+void load_walls_textures(t_data *data);
 #include "parsing/includes/parsing.h"
 #endif
