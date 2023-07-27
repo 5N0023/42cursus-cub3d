@@ -14,7 +14,11 @@ LIBFT = libft/libft.a
 MLX42 = MLX42/libmlx42.a
 PARSER = parsing/parser.a
 
-all : $(NAME)
+all :  parser $(NAME)
+
+parser:
+	@make -s -C parsing
+
 $(NAME):$(OBJECTS)
 	gcc $(OBJECTS) $(MLX42) $(PARSER) -Iinclude -lglfw -L$(shell brew --prefix glfw)/lib -I$(shell brew --prefix glfw)/include -o $(NAME)
 
@@ -22,11 +26,13 @@ $(NAME):$(OBJECTS)
 	@$(CC)  -c $< -o $@
 
 clean:
+	make -s -C parsing clean
 	rm -f $(OBJECTS)
 	
 fclean: clean
+	make -s -C parsing fclean
 	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all bonus libft clean fclean re
+.PHONY: all clean fclean re
