@@ -31,6 +31,21 @@ void render_nord(t_data *data,int x,double wallheight)
         if (y >= 0 && y < WINDOWW)
             mlx_put_pixel(data->img, x, y, color);
     }
+     int i = 0;
+    if(data->center - wallheight / 2 > 0)
+    {
+        i = data->center - wallheight / 2;
+        for (int y = 0; y < i; y++)
+            if (y >= 0 && y < WINDOWW)
+                mlx_put_pixel(data->img, x, y, data->ceilingcolor);
+    }
+    if (data->center + wallheight / 2 < WINDOWW)
+    {
+        i = data->center + wallheight / 2;
+        for (int y = i; y < WINDOWW; y++)
+        if (y >= 0 && y < WINDOWW)
+            mlx_put_pixel(data->img, x, y, data->floorcolor);
+    }
 
 }
 void render_sud(t_data *data,int x,double wallheight)
@@ -47,6 +62,21 @@ void render_sud(t_data *data,int x,double wallheight)
             k = 999;
         if (y >= 0 && y < WINDOWW)
             mlx_put_pixel(data->img, x, y, color);
+    }
+     int i = 0;
+    if(data->center - wallheight / 2 > 0)
+    {
+        i = data->center - wallheight / 2;
+        for (int y = 0; y < i; y++)
+            if (y >= 0 && y < WINDOWW)
+                mlx_put_pixel(data->img, x, y, data->ceilingcolor);
+    }
+    if (data->center + wallheight / 2 < WINDOWW)
+    {
+        i = data->center + wallheight / 2;
+        for (int y = i; y < WINDOWW; y++)
+        if (y >= 0 && y < WINDOWW)
+            mlx_put_pixel(data->img, x, y, data->floorcolor);
     }
 }
 
@@ -65,6 +95,21 @@ void render_east(t_data *data,int x,double wallheight)
         if (y >= 0 && y < WINDOWW)
             mlx_put_pixel(data->img, x, y, color);
     }
+    int i = 0;
+   if(data->center - wallheight / 2 > 0)
+    {
+        i = data->center - wallheight / 2;
+        for (int y = 0; y < i; y++)
+            if (y >= 0 && y < WINDOWW)
+                mlx_put_pixel(data->img, x, y, data->ceilingcolor);
+    }
+    if (data->center + wallheight / 2 < WINDOWW)
+    {
+        i = data->center + wallheight / 2;
+        for (int y = i; y < WINDOWW; y++)
+            if (y >= 0 && y < WINDOWW)
+                mlx_put_pixel(data->img, x, y, data->floorcolor);
+    }
 }
 
 void render_ouest(t_data *data,int x,double wallheight)
@@ -81,6 +126,21 @@ void render_ouest(t_data *data,int x,double wallheight)
             k = 999;
         if (y >= 0 && y < WINDOWW)
             mlx_put_pixel(data->img, x, y, color);
+    }
+    int i = 0;
+    if(data->center - wallheight / 2 > 0)
+    {
+        i = data->center - wallheight / 2;
+        for (int y = 0; y < i; y++)
+            if (y >= 0 && y < WINDOWW)
+                mlx_put_pixel(data->img, x, y, data->ceilingcolor);
+    }
+    if (data->center + wallheight / 2 < WINDOWW)
+    {
+        i = data->center + wallheight / 2;
+        for (int y = i; y < WINDOWW; y++)
+        if (y >= 0 && y < WINDOWW)
+            mlx_put_pixel(data->img, x, y, data->floorcolor);
     }
 }
 

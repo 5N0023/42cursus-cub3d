@@ -283,14 +283,6 @@ void game(t_data *data)
 	move_player(data);	
 	
 	POV = 60;
-	for (int i = 0; i < WINDOWW; i++)
-		for (int j = data->center; j < WINDOWW; j++)
-			if(j  < WINDOWW && j > 0 && i < WINDOWW && i > 0)
-				mlx_put_pixel(data->img, i, j, data->floorcolor);
-	for (int i = 0; i < WINDOWW; i++)
-		for (int j = 0; j < data->center; j++)
-			if(j  < WINDOWW && j > 0 && i < WINDOWW && i > 0)
-				mlx_put_pixel(data->img, i, j, data->ceilingcolor);
 	if (data->player.angle >= 360)
 		data->player.angle -= 360;
 	else if (data->player.angle < 0)
