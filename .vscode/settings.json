@@ -1,7 +1,13 @@
 {
     "files.associations": {
         "format": "c",
-        "__bit_reference": "c"
+        "__bit_reference": "c",
+        "parsing.h": "c",
+        "cub3d.h": "c",
+        "cub3d": "c",
+        "locale": "c",
+        "string": "c"
     },
-    "C_Cpp.errorSquiggles": "disabled"
+    "C_Cpp.errorSquiggles": "disabled",
+    "C_Cpp.dimInactiveRegions": false
 }
