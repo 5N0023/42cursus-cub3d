@@ -234,17 +234,19 @@ mlx_keyfunc	key_hook(mlx_key_data_t key, t_data *data)
 		data->player.apress = 0;
 	if (key.key == MLX_KEY_R && key.action == MLX_PRESS)
 		data->player.gun.state = RELOAD;
-	if (key.key == MLX_KEY_P && key.action == MLX_PRESS && (data->gamemode == GAME || data->gamemode == STARTMENU))
+	if (key.key == MLX_KEY_P && key.action == MLX_PRESS && (data->state == GAME || data->state == STARTMENU))
 	{
-		if(data->gamemode == STARTMENU)
+		if(data->state == STARTMENU)
 		{
-			data->gamemode = GAME;
+			data->state = GAME;
 			mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
 		}
 		else
 			{mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
-			data->gamemode = STARTMENU;}
+			data->state = STARTMENU;}
 	}
+	if (key.key == MLX_KEY_F && key.action == MLX_PRESS)
+		door_frames_contorller(data);
 	return (NULL);
 }
 
@@ -259,7 +261,7 @@ mlx_mousefunc	key_mouse(mouse_key_t button, action_t action,
 }
 mlx_cursorfunc	key_cursor(double x, double y, t_data *data)
 {
-	if(data->gamemode == GAME)
+	if(data->state == GAME)
 	{data->mouse.x = x;
 	data->mouse.y = y;}
 	return (NULL);
@@ -282,6 +284,7 @@ void game(t_data *data)
 	int		color;
 	move_player(data);	
 	
+	door_frames_setter(data);
 	POV = 60;
 	if (data->player.angle >= 360)
 		data->player.angle -= 360;
@@ -293,14 +296,15 @@ void game(t_data *data)
 	while (k >= 0)
 	{
 		a = angle;
-		distance = hits(a,data) * cosf((a - data->player.angle) * M_PI / 180.0);
+		hits(a,data);
+		distance = data->ray.distance * cosf((a - data->player.angle) * M_PI / 180.0);
 		wallheight = WINDOWW / distance;
 		color = 0x964B00FF;
-		if (data->ray.hitside == VERTICALE && data->ray.angle >= 0 && data->ray.angle <= 180)
+		if (data->ray.hitside == VERTICALE && data->ray.angle > 0 && data->ray.angle < 180)
 			data->ray.texture = EAST;
-		else if (data->ray.hitside == VERTICALE && data->ray.angle >= 180 && data->ray.angle <= 360)
+		else if (data->ray.hitside == VERTICALE && data->ray.angle > 180 && data->ray.angle < 360)
 			data->ray.texture = OUEST;
-		else if (data->ray.hitside == HORIZONTALE && data->ray.angle >= 90 && data->ray.angle <= 270)
+		else if (data->ray.hitside == HORIZONTALE && data->ray.angle > 90 && data->ray.angle < 270)
 			data->ray.texture = NORD;
 		else
 			data->ray.texture = SUD;
@@ -310,28 +314,29 @@ void game(t_data *data)
 		k--;
 	}
 	
+	valorant_mode(data);
 	draw_cursor(data);
-	draw_gun_normal(data);
+	// if (data->gamemode == NORMAL)
+		// draw_gun_normal(data);
+	// else if (data->gamemode == VALORANT)
 	draw_map(data, data->map.height, data->map.width, WINDOWW / 100, 0x00FF0F);
 	
 	
 }
 
 
-
 int	my_mlx_loop_hook(t_data *data)
 {
-	\
 	if (data->img != NULL)
 		mlx_delete_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, WINDOWW, WINDOWW);
-	if (data->gamemode == STARTSCREEN)
+	if (data->state == STARTSCREEN)
 		startscreen(data);
-	if (data->gamemode == GAME)
+	if (data->state == GAME)
 		game(data);
-	if (data->gamemode == STARTMENU)
+	if (data->state == STARTMENU)
 		startmenu(data);
-	if (data->gamemode == OPTIONS)
+	if (data->state == OPTIONS)
 		options(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 	return (0);
@@ -346,7 +351,6 @@ int	main(int c, char **v)
 	data_ptr = &data;
 	if(parser(c, v, data_ptr))
 		return (0);
-	// exit(0);
 	data_ptr->player.speed = 0.01;
 	data_ptr->player.rotation = 0.01;
 	data_ptr->player.wpress = 0;
@@ -354,7 +358,7 @@ int	main(int c, char **v)
 	data_ptr->player.dpress = 0;
 	data_ptr->player.apress = 0;
 	data_ptr->player.gun.state = 0;
-	data_ptr->player.speed = 0.025;
+	data_ptr->player.speed = 0.05;
 	data_ptr->mouse.x = 0;
 	data_ptr->mouse.y = 0;
 	data_ptr->mouse.oldx = 0;
@@ -365,14 +369,15 @@ int	main(int c, char **v)
 	data_ptr->mouse.sensitivity = 0.1;
 	data_ptr->center = 666;
 
-	data_ptr->gamemode = STARTSCREEN;
+	data_ptr->gamemode = NORMAL;
+	data_ptr->state = STARTSCREEN;
 	data_ptr->mlx = mlx_init(WINDOWW, WINDOWW, "CUB3D!", 1);
 	load_cursor(data_ptr);
 	load_walls_textures(data_ptr);
-	load_normal_texture(data_ptr);
+	load_valorant_texture(data_ptr);
+	// load_normal_texture(data_ptr);
+	door_textures(data_ptr);
 	load_loading_texture(data_ptr);
-	data_ptr->map.map[4][5] = '1';
-	data_ptr->map.map[5][4] = '1';
 	data_ptr->img = NULL;
 	mlx_loop_hook(data_ptr->mlx, (void *)my_mlx_loop_hook, data_ptr);
 	mlx_key_hook(data_ptr->mlx, (void *)key_hook, data_ptr);

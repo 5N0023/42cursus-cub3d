@@ -6,7 +6,11 @@
         "cub3d.h": "c",
         "cub3d": "c",
         "locale": "c",
-        "string": "c"
+        "string": "c",
+        "__cxx_version": "c",
+        "__hash_table": "c",
+        "functional": "c",
+        "type_traits": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "C_Cpp.dimInactiveRegions": false

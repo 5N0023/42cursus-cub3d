@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:12 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/07/27 08:09:48 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/07/30 22:52:40 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static int	ft_fill_int(char *arr)
 			return (ft_free_array(c), ERROR);
 		i++;
 	}
-	printf("r = %d, g = %d, b = %d\n", ft_atoi(c[0]), ft_atoi(c[1]), ft_atoi(c[2]));
 	ret = ft_pixel(ft_atoi(c[0]), ft_atoi(c[1]), ft_atoi(c[2]), 0xFF);
 	return (ft_free_array(c), ret);
 }

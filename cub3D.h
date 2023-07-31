@@ -27,6 +27,12 @@
 # define RESUME 2
 # define OPTIONS 8
 # define NONE 0
+# define CLOSED 1
+# define OPENED 0
+# define OPENING 2
+# define CLOSING 3
+# define NS 0
+# define WE 1
 
 # include "MLX42/MLX42.h"
 # include <math.h>
@@ -45,6 +51,11 @@ struct				s_ray
 	double			dy;
 	int				hitside;
 	int				texture;
+	double				doorhitx;
+	double				doorhity;
+	int				doorhit;
+	int doorhitside;
+	double doordistance;
 };
 
 struct				s_mouse
@@ -67,25 +78,30 @@ struct s_normal
 	mlx_image_t		**bullets;
 	int 			bullet;
 };
+
+typedef struct s_doors
+{
+	int 			frame;
+	int				state;
+	int				x;
+	int				y;
+	int 			side;
+} t_doors;
+
 struct  s_valorant
 {
-	mlx_image_t		**gunshoot;
-	mlx_image_t		**gunreload;
-	int 			bullet;
+	mlx_image_t		**ult;
+	mlx_image_t		**katana;
+	int 			knifes;
+	int 			ultiframe;
+	int 			katanaframe;
 };
 
-struct s_csgo
-{
-	mlx_image_t		**gunshoot;
-	mlx_image_t		**gunreload;
-	int 			bullet;
-};
 
 struct				s_gun
 {
 	struct s_normal	normal;
 	struct s_valorant valorant;
-	struct s_csgo	csgo;
 	int				state;
 };
 
@@ -108,6 +124,9 @@ struct				s_map
 	char			**map;
 	size_t			width;
 	size_t			height;
+	t_doors			*doors;
+	int 			doors_count;
+	
 };
 
 struct				s_texture
@@ -120,6 +139,7 @@ struct				s_texture
 	mlx_image_t	*sudimg;
 	mlx_image_t	*eastimg;
 	mlx_image_t	*ouestimg;
+	mlx_image_t	**door;
 };
 
 struct				s_loading
@@ -183,5 +203,12 @@ void options(t_data *data);
 void load_cursor(t_data *data);
 void render_texture(t_data *data,int x,double wallheight);
 void load_walls_textures(t_data *data);
+void door_textures(t_data *data);
+int door_state(t_data *data, int x, int y);
+int get_door_frame(t_data *data);
+void door_frames_setter(t_data *data);
+void door_frames_contorller(t_data *data);
+void valorant_mode(t_data *data);
+void load_valorant_texture(t_data *data);
 #include "parsing/includes/parsing.h"
 #endif

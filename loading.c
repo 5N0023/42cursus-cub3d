@@ -36,6 +36,6 @@ void startscreen(t_data *data)
         mlx_set_mouse_pos(data->mlx, WINDOWW / 2, WINDOWW / 2);
 	    mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
         f = 0;
-        data->gamemode = STARTMENU;
+        data->state = STARTMENU;
     }
 }

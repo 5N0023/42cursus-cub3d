@@ -24,7 +24,7 @@ void startmenu(t_data *data)
         {
             mlx_set_mouse_pos(data->mlx, data->mouse.x, data->mouse.y);
             mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
-            data->gamemode = GAME;
+            data->state = GAME;
             data->mouse.click = 0;
         }
     }
@@ -41,7 +41,7 @@ void startmenu(t_data *data)
         }
         mlx_delete_image(data->mlx, image);
         if (data->mouse.click == 1)
-            data->gamemode = OPTIONS;
+            data->state = OPTIONS;
     }
     else if (x > 40 && x < 214 && y > 707 && y < 777)
     {

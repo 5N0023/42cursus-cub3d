@@ -147,7 +147,7 @@ void options(t_data *data)
     if (x > 573 && y > 919 && x < 938 && y < 956)
     {
         if (data->mouse.click == 1)
-            data->gamemode = STARTMENU;
+            data->state = STARTMENU;
     }
     texture = mlx_load_png("textures/options.png");
     

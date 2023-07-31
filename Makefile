@@ -1,12 +1,15 @@
 NAME = cub3D
 SOURCES =		main.c \
 				load_normal.c	\
+				load_valorant.c \
 				cast_rays.c	\
 				loading.c \
 				startmenu.c \
 				cursor.c \
 				options.c \
 				textures.c \
+				door.c \
+				valorant.c
 
 OBJECTS = $(SOURCES:.c=.o)
 CC = cc

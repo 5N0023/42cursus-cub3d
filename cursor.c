@@ -20,6 +20,6 @@ void draw_cursor(t_data *data)
         for(int j = 0;j < data->mouse.cursor->height;j++){
             unsigned pixel = get_pixel(data->mouse.cursor, i, j);
             if(pixel)
-                mlx_put_pixel(data->img, i+500-13, WINDOWW/2+j+150, pixel);}
+                mlx_put_pixel(data->img, i+500-13, WINDOWW/2+j+202, pixel);}
     }
 }

@@ -6,11 +6,56 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:20:53 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/07/27 08:09:15 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/07/30 22:52:47 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/parsing.h"
+
+int find_doors(t_data *data)
+{
+	int count = 0;
+	for(size_t i = 0;i < data->map.height; i++)
+	{
+		for(size_t j = 0; j < data->map.width; j++)
+		{
+			if (data->map.map[i][j] == 'D' || data->map.map[i][j] == 'd')
+				count++;
+		}
+	}
+	data->map.doors = malloc(sizeof(t_doors) * count);
+	data->map.doors_count = count;
+	count = 0;
+	for(size_t i = 0;i < data->map.height; i++)
+	{
+		for(size_t j = 0; j < data->map.width; j++)
+		{
+			if (data->map.map[i][j] == 'D' || data->map.map[i][j] == 'd')
+				{
+					if(data->map.map[i][j] == 'D')
+						{
+							data->map.doors[count].x = j;
+							data->map.doors[count].y = i;
+							data->map.doors[count].state = CLOSED;
+							data->map.doors[count].frame = 0;
+							data->map.doors[count].side = NS;
+							count++;
+						}
+					else if(data->map.map[i][j] == 'd')
+						{
+							data->map.doors[count].x = j;
+							data->map.doors[count].y = i;
+							data->map.doors[count].state = CLOSED;
+							data->map.doors[count].frame = 0;
+							data->map.doors[count].side = WE;
+							count++;
+						}
+				}
+		}
+	}
+	return (0);
+}
+
 
 int find_player_pos(t_data *data)
 {
@@ -56,7 +101,7 @@ int	parser(int c, char **v, t_data *data)
 	data->texture.ouest = pars->west;
 	data->texture.east = pars->east;
 	data->texture.nord = pars->north;
-	if(find_player_pos(data))
+	if(find_player_pos(data) || find_doors(data))
 	{
 		printf("no player found\n");
 		ft_free_array(pars->map.map);
