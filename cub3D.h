@@ -41,6 +41,16 @@
 # include <string.h>
 # include <unistd.h>
 
+typedef struct s_doorlist
+{
+	double			doorhitx;
+	double			doorhity;
+	int				doorhit;
+	int 			doorhitside;
+	double 			doordistance;
+	struct s_doorlist *next;
+} t_doorlist;
+
 struct				s_ray
 {
 	double			x;
@@ -51,11 +61,7 @@ struct				s_ray
 	double			dy;
 	int				hitside;
 	int				texture;
-	double				doorhitx;
-	double				doorhity;
-	int				doorhit;
-	int doorhitside;
-	double doordistance;
+	t_doorlist		*doorlist;
 };
 
 struct				s_mouse
@@ -205,10 +211,13 @@ void render_texture(t_data *data,int x,double wallheight);
 void load_walls_textures(t_data *data);
 void door_textures(t_data *data);
 int door_state(t_data *data, int x, int y);
-int get_door_frame(t_data *data);
+int get_door_frame(t_doorlist *tmp,t_data *data);
 void door_frames_setter(t_data *data);
-void door_frames_contorller(t_data *data);
-void valorant_mode(t_data *data);
-void load_valorant_texture(t_data *data);
+void door_frames_controller(t_data *data);
+void add_back_to_doors(t_data *data, double x, double y,int side);
+void sort_door_list(t_data *data);
+void free_door_list(t_data *data);
+double	collision(double angle,t_data *data);
+
 #include "parsing/includes/parsing.h"
 #endif

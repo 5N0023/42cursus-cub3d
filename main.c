@@ -139,8 +139,10 @@ void	move_player(t_data *data)
 
 	if (data->player.spress)
 	{
-		distance1 = hits(data->player.angle + 10 + 180,data);
-		distance2 = hits(data->player.angle - 10 + 180,data);
+		distance1 = collision(data->player.angle + 10 + 180,data);
+		free_door_list(data);
+		distance2 = collision(data->player.angle - 10 + 180,data);
+		free_door_list(data);
 		if (distance1 > 0.2 && distance2 > 0.2)
 		{
 			data->player.x += cosf((data->player.angle + 90) * M_PI / 180.0) * data->player.speed;
@@ -149,8 +151,10 @@ void	move_player(t_data *data)
 	}
 	if (data->player.wpress)
 	{
-		distance1 = hits(data->player.angle + 10, data);
-		distance2 = hits(data->player.angle - 10,data);
+		distance1 = collision(data->player.angle + 10, data);
+		free_door_list(data);
+		distance2 = collision(data->player.angle - 10,data);
+		free_door_list(data);
 		if (distance1 > 0.2 && distance2 > 0.2)
 		{
 			data->player.x -= cosf((data->player.angle + 90) * M_PI / 180.0) * data->player.speed;
@@ -159,8 +163,10 @@ void	move_player(t_data *data)
 	}
 	if (data->player.dpress)
 	{
-		distance1 = hits(data->player.angle + 10 - 90,data);
-		distance2 = hits(data->player.angle - 10 - 90,data);
+		distance1 = collision(data->player.angle + 10 - 90,data);
+		free_door_list(data);
+		distance2 = collision(data->player.angle - 10 - 90,data);
+		free_door_list(data);
 		if (distance1 > 0.2 && distance2 > 0.2)
 		{
 			data->player.x -= cosf((data->player.angle)*M_PI / 180.0) * data->player.speed;
@@ -169,8 +175,10 @@ void	move_player(t_data *data)
 	}
 	if (data->player.apress)
 	{
-		distance1 = hits(data->player.angle + 10 + 90,data);
-		distance2 = hits(data->player.angle - 10 + 90,data);
+		distance1 = collision(data->player.angle + 10 + 90,data);
+		free_door_list(data);
+		distance2 = collision(data->player.angle - 10 + 90,data);
+		free_door_list(data);
 		if (distance1 > 0.2 && distance2 > 0.2)
 		{
 			data->player.x += cosf((data->player.angle)*M_PI / 180.0) * data->player.speed;
@@ -246,7 +254,7 @@ mlx_keyfunc	key_hook(mlx_key_data_t key, t_data *data)
 			data->state = STARTMENU;}
 	}
 	if (key.key == MLX_KEY_F && key.action == MLX_PRESS)
-		door_frames_contorller(data);
+		door_frames_controller(data);
 	return (NULL);
 }
 
@@ -314,11 +322,8 @@ void game(t_data *data)
 		k--;
 	}
 	
-	valorant_mode(data);
 	draw_cursor(data);
-	// if (data->gamemode == NORMAL)
-		// draw_gun_normal(data);
-	// else if (data->gamemode == VALORANT)
+	draw_gun_normal(data);
 	draw_map(data, data->map.height, data->map.width, WINDOWW / 100, 0x00FF0F);
 	
 	
@@ -367,15 +372,14 @@ int	main(int c, char **v)
 	data_ptr->mouse.anglemove = 0;
 	data_ptr->mouse.centermove = 0;
 	data_ptr->mouse.sensitivity = 0.1;
-	data_ptr->center = 666;
+	data_ptr->center = 500;
 
 	data_ptr->gamemode = NORMAL;
 	data_ptr->state = STARTSCREEN;
 	data_ptr->mlx = mlx_init(WINDOWW, WINDOWW, "CUB3D!", 1);
 	load_cursor(data_ptr);
 	load_walls_textures(data_ptr);
-	load_valorant_texture(data_ptr);
-	// load_normal_texture(data_ptr);
+	load_normal_texture(data_ptr);
 	door_textures(data_ptr);
 	load_loading_texture(data_ptr);
 	data_ptr->img = NULL;

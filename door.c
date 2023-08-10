@@ -1,11 +1,11 @@
 #include"cub3D.h"
 
 
-int get_door_frame(t_data *data)
+int get_door_frame(t_doorlist *tmp,t_data *data)
 {
     for(int i = 0;i < data->map.doors_count;i++)
     {
-        if(data->map.doors[i].x == (int)data->ray.doorhitx && data->map.doors[i].y == (int)data->ray.doorhity)
+        if(data->map.doors[i].x == (int)tmp->doorhitx && data->map.doors[i].y == (int)tmp->doorhity)
             return (data->map.doors[i].frame);
     }
     return (0);
@@ -66,14 +66,34 @@ void door_frames_setter(t_data *data)
     }
 }
 
-void door_frames_contorller(t_data *data)
+void free_door_list(t_data *data)
+{
+    t_doorlist *tmp;
+    t_doorlist *tmp2;
+
+    tmp = data->ray.doorlist;
+    while (tmp != NULL)
+    {
+        tmp2 = tmp->next;
+        free(tmp);
+        tmp = tmp2;
+    }
+    data->ray.doorlist = NULL;
+}
+
+void door_frames_controller(t_data *data)
 {
     hits(data->player.angle,data);
-    if (data->ray.doorhit == 1)
+    t_doorlist *tmp;
+    tmp = data->ray.doorlist;
+    if (tmp)
+        while(tmp->next)
+            tmp = tmp->next;
+    if (tmp)
     {
     for(int i = 0;i < data->map.doors_count;i++)
     {
-        if (data->map.doors[i].x == (int)data->ray.doorhitx && data->map.doors[i].y == (int)data->ray.doorhity && data->ray.doordistance < 3 && data->ray.doordistance > 0.2)
+        if (data->map.doors[i].x == (int)tmp->doorhitx && data->map.doors[i].y == (int)tmp->doorhity && tmp->doordistance < 3 && tmp->doordistance > 0.2)
        {
         if (data->map.doors[i].state == OPENING)
             data->map.doors[i].state = CLOSING;
@@ -83,7 +103,75 @@ void door_frames_contorller(t_data *data)
             data->map.doors[i].state = OPENING;
         else if (data->map.doors[i].state == OPENED)
             data->map.doors[i].state = CLOSING;
-            }
+        }
     }
     }
+    free_door_list(data);
 }
+
+void add_back_to_doors(t_data *data, double x, double y,int side)
+{
+    t_doorlist *new;
+    t_doorlist *last;
+
+    new = malloc(sizeof(t_doorlist));
+    new->doorhitx = x;
+    new->doorhity = y;
+    new->doorhitside = side;
+    new->doordistance = sqrtf(pow(data->player.x - x, 2) + pow(data->player.y - y, 2));
+    new->next = NULL;
+    if (data->ray.doorlist == NULL)
+    {
+        data->ray.doorlist = new;
+        return;
+    }
+    last = data->ray.doorlist;
+    while (last->next != NULL)
+        last = last->next;
+    last->next = new;
+}
+
+void swap(t_doorlist *a, t_doorlist *b)
+{
+    t_doorlist tmp;
+    tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+void reverse_door_list(t_data *data)
+{
+    t_doorlist *prev;
+    t_doorlist *current;
+    t_doorlist *next;
+
+    prev = NULL;
+    current = data->ray.doorlist;
+    while (current != NULL)
+    {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next; 
+    }
+    data->ray.doorlist = prev;
+}
+
+void sort_door_list(t_data *data)
+{
+    t_doorlist *tmp;
+    
+    tmp = data->ray.doorlist;
+    while (tmp != NULL)
+    {
+        if (tmp->next != NULL && tmp->doordistance > tmp->next->doordistance)
+        {
+            swap(tmp, tmp->next);
+            tmp = data->ray.doorlist;
+        }
+        else
+            tmp = tmp->next;
+    }
+    reverse_door_list(data);
+}
+

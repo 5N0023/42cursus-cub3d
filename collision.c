@@ -1,18 +1,18 @@
 #include"cub3D.h"
 
 
-double			hitx = 0;
-double			hity = 0;
-double			xray = -1;
-double			yray = -1;
-int				hit = 0;
-double			hhitx = 0;
-double			hhity = 0;
-double			vhitx = 0;
-double			vhity = 0;
+double			_hitx = 0;
+double			_hity = 0;
+double			_xray = -1;
+double			_yray = -1;
+int				_hit = 0;
+double			_h_hitx = 0;
+double			h_hity = 0;
+double			v_hitx = 0;
+double			v_hity = 0;
 
 
-void	castrayvertical(double x, double y, double angle, t_data *data)
+static void	castrayvertical(double x, double y, double angle, t_data *data)
 {
 	double	pa;
 
@@ -49,25 +49,25 @@ void	castrayvertical(double x, double y, double angle, t_data *data)
 				dy = (int)y - 1;
 		}
 	}
-	xray = dx;
-	yray = dy;
-	if (xray < 0 || xray > data->map.width || yray < 0 || yray > data->map.height)
+	_xray = dx;
+	_yray = dy;
+	if (_xray < 0 || _xray > data->map.width || _yray < 0 || _yray > data->map.height)
 	{
-		hit = 1;
-		xray = dx;
-		yray = dy;
+		_hit = 1;
+		_xray = dx;
+		_yray = dy;
 		return ;
 	}
 	if ((pa >= 180 && pa <= 360))
 		if (data->map.map[(int)dy][(int)dx - 1] == '1' || data->map.map[(int)dy][(int)dx - 1] == '*')
-			hit = 1;
+			_hit = 1;
 	if (data->map.map[(int)dy][(int)dx] == '1' || data->map.map[(int)dy][(int)dx] == '*')
-		hit = 1;
+		_hit = 1;
 	if (data->map.map[(int)dy][(int)dx] == 'd')
 		add_back_to_doors(data,  dx,  dy, WE);
 }
 
-void	castrayhorizontal(double x, double y, double angle, t_data *data)
+static void	castrayhorizontal(double x, double y, double angle, t_data *data)
 {
 	double	pa;
 
@@ -106,87 +106,87 @@ void	castrayhorizontal(double x, double y, double angle, t_data *data)
 				dx = (int)x;
 		}
 	}
-	xray = dx;
-	yray = dy;
-	if (xray < 0 || xray > data->map.width || yray < 0 || yray > data->map.height)
+	_xray = dx;
+	_yray = dy;
+	if (_xray < 0 || _xray > data->map.width || _yray < 0 || _yray > data->map.height)
 	{
-		hit = 1;
-		xray = dx;
-		yray = dy;
+		_hit = 1;
+		_xray = dx;
+		_yray = dy;
 		return ;
 	}
 	if (pa > 90 && pa < 270)
 		{
 			if (data->map.map[(int)dy - 1][(int)dx] == '1' || data->map.map[(int)dy - 1][(int)dx] == '*')
-				hit = 1;
+				_hit = 1;
 		}
 	if (data->map.map[(int)dy][(int)dx] == '1' || data->map.map[(int)dy][(int)dx] == '*')
-		hit = 1;
+		_hit = 1;
 	if (data->map.map[(int)dy][(int)dx] == 'D')
 		add_back_to_doors(data, dx, dy,NS);
 	
 }
 
-double	hits(double angle,t_data *data)
+double	collision(double angle,t_data *data)
 {
-	double	vhitx;
-	double	vhity;
-	double	hhitx;
-	double	hhity;
+	double	v_hitx;
+	double	v_hity;
+	double	_h_hitx;
+	double	h_hity;
 	double	vdistance;
 	double	hdistance;
 	double	distance;
-	t_hit	vhit;
+	t_hit	v_hit;
 
-	vhit.hitx = WINDOWW;
-	vhit.hity = WINDOWW;
-	vhit.x = data->player.x;
-	vhit.hit = 0;
-	vhit.y = data->player.y;
-	vhit.dx = WINDOWW;
-	vhit.dy = WINDOWW;
+	v_hit.hitx = WINDOWW;
+	v_hit.hity = WINDOWW;
+	v_hit.x = data->player.x;
+	v_hit.hit = 0;
+	v_hit.y = data->player.y;
+	v_hit.dx = WINDOWW;
+	v_hit.dy = WINDOWW;
 
 
-	xray = data->player.x;
-	yray = data->player.y;
+	_xray = data->player.x;
+	_yray = data->player.y;
 	while(angle <= 0)
 		angle += 360;
 	while(angle >= 360)
 		angle -= 360;
 	data->ray.angle = angle;
-	vhitx = WINDOWW;
-	vhity = WINDOWW;
-	hhitx = WINDOWW;
-	hhity = WINDOWW;
-	xray = data->player.x;
-	yray = data->player.y;
-	hit = 0;
+	v_hitx = WINDOWW;
+	v_hity = WINDOWW;
+	_h_hitx = WINDOWW;
+	h_hity = WINDOWW;
+	_xray = data->player.x;
+	_yray = data->player.y;
+	_hit = 0;
 	data->ray.doorlist = NULL;
-	while (!hit)
-		castrayvertical(xray, yray, angle, data);
-	vhitx = xray;
-	vhity = yray;
-	xray = data->player.x;
-	yray = data->player.y;
-	hit = 0;
-	while (!hit)
-		castrayhorizontal(xray, yray, angle, data);
-	hhitx = xray;
-	hhity = yray;
+	while (!_hit)
+		castrayvertical(_xray, _yray, angle, data);
+	v_hitx = _xray;
+	v_hity = _yray;
+	_xray = data->player.x;
+	_yray = data->player.y;
+	_hit = 0;
+	while (!_hit)
+		castrayhorizontal(_xray, _yray, angle, data);
+	_h_hitx = _xray;
+	h_hity = _yray;
 	sort_door_list(data);
-	vdistance = sqrtf(powf((vhitx - data->player.x), 2) + powf((vhity - data->player.y), 2));
-	hdistance = sqrtf(powf((hhitx - data->player.x), 2) + powf((hhity - data->player.y), 2));
-	if (hdistance * cosf((angle - data->player.angle) * M_PI / 180.0) < vdistance* cosf((angle - data->player.angle) * M_PI / 180.0))
+	vdistance = sqrtf(powf((v_hitx - data->player.x), 2) + powf((v_hity - data->player.y), 2));
+	hdistance = sqrtf(powf((_h_hitx - data->player.x), 2) + powf((h_hity - data->player.y), 2));
+	if (hdistance < vdistance)
 	{
-		data->ray.x = hhitx;
-		data->ray.y = hhity;
+		data->ray.x = _h_hitx;
+		data->ray.y = h_hity;
 		data->ray.distance = hdistance;
 		data->ray.hitside = HORIZONTALE;
 	}
 	else
 	{
-		data->ray.x = vhitx;
-		data->ray.y = vhity;
+		data->ray.x = v_hitx;
+		data->ray.y = v_hity;
 		data->ray.distance = vdistance;
 		data->ray.hitside = VERTICALE;
 	}

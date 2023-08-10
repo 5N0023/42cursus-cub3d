@@ -9,7 +9,7 @@ SOURCES =		main.c \
 				options.c \
 				textures.c \
 				door.c \
-				valorant.c
+				collision.c \
 
 OBJECTS = $(SOURCES:.c=.o)
 CC = cc

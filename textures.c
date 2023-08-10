@@ -49,17 +49,17 @@ void render_nord(t_data *data,int x,double wallheight)
 }
 
 
-void render_door_NE(t_data *data,int x,double wallheight)
+void render_door_NS(t_data *data,int x,double wallheight,t_doorlist *tmp)
 {
     int pixelsline;
-    pixelsline = (int)((data->ray.doorhitx - (int)data->ray.doorhitx) * 250);
+    pixelsline = (int)((tmp->doorhitx - (int)tmp->doorhitx) * 250);
     double k = 0;
     for(int y = data->center - wallheight / 2; y < data->center + wallheight / 2; y++)
     {
         int color;
-        if(data->ray.doordistance < 0.2 && door_state(data,data->ray.doorhitx,data->ray.doorhity) == OPENED)
+        if(tmp->doordistance < 0.2 && door_state(data,tmp->doorhitx,tmp->doorhity) == OPENED)
             break;
-        color = get_pixel(data->texture.door[get_door_frame(data)],pixelsline,(int)k);
+        color = get_pixel(data->texture.door[get_door_frame(tmp,data)],pixelsline,(int)k);
         k += 250 / wallheight;
         if(k >= 250)
             k = 249;
@@ -69,18 +69,18 @@ void render_door_NE(t_data *data,int x,double wallheight)
 
 }
 
-void render_door_WE(t_data *data,int x,double wallheight)
+void render_door_WE(t_data *data,int x,double wallheight,t_doorlist *tmp)
 {
     int pixelsline;
-    pixelsline = (int)((data->ray.doorhity - (int)data->ray.doorhity) * 250);
+    pixelsline = (int)((tmp->doorhity - (int)tmp->doorhity) * 250);
     double k = 0;
     double y = data->center - wallheight / 2;
     while(y < data->center + wallheight / 2)
     {
         int color;
-        if(data->ray.doordistance < 0.3 && door_state(data,data->ray.doorhitx,data->ray.doorhity) == OPENED)
+        if(tmp->doordistance < 0.3 && door_state(data,tmp->doorhitx,tmp->doorhity) == OPENED)
             break;
-        color = get_pixel(data->texture.door[get_door_frame(data)],pixelsline,(int)k);
+        color = get_pixel(data->texture.door[get_door_frame(tmp,data)],pixelsline,(int)k);
         k += 250 / wallheight;
         if(k >= 250)
             k = 249;
@@ -198,16 +198,20 @@ void render_texture(t_data *data,int x,double wallheight)
         render_east(data,x,wallheight);
     else if(data->ray.texture == OUEST)
         render_ouest(data,x,wallheight);
-    if(data->ray.doorhit  && data->ray.doorhitside == NS && data->ray.distance > data->ray.doordistance)
+    if (data->ray.doorlist)
     {
-        data->ray.doordistance = data->ray.doordistance * cosf((data->ray.angle - data->player.angle) * M_PI / 180.0); 
-        wallheight = WINDOWW / data->ray.doordistance;
-        render_door_NE(data,x,wallheight);
+        t_doorlist *tmp;
+        tmp = data->ray.doorlist;
+        while(tmp)
+        {
+            tmp->doordistance *= cosf((data->ray.angle - data->player.angle) * M_PI / 180);
+            wallheight = WINDOWW / tmp->doordistance;
+            if(tmp->doorhitside == NS && tmp->doordistance <= data->ray.distance)
+                render_door_NS(data,x,wallheight,tmp);
+            else if(tmp->doorhitside == WE &&tmp->doordistance < data->ray.distance)
+                render_door_WE(data,x,wallheight,tmp);
+            tmp = tmp->next;
+        }
     }
-    else if(data->ray.doorhit  && data->ray.doorhitside == WE&& data->ray.distance > data->ray.doordistance)
-    {
-        data->ray.doordistance = data->ray.doordistance * cosf((data->ray.angle - data->player.angle) * M_PI / 180.0); 
-        wallheight = WINDOWW / data->ray.doordistance;
-        render_door_WE(data,x,wallheight);
-    }
+    free_door_list(data);
 }
