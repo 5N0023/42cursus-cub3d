@@ -193,7 +193,7 @@ void render_texture(t_data *data,int x,double wallheight)
     if(data->ray.texture == NORD)
         render_nord(data,x,wallheight);
     else if(data->ray.texture == SUD)
-            render_sud(data,x,wallheight);
+        render_sud(data,x,wallheight);
     else if(data->ray.texture == EAST)
         render_east(data,x,wallheight);
     else if(data->ray.texture == OUEST)
@@ -206,9 +206,9 @@ void render_texture(t_data *data,int x,double wallheight)
         {
             tmp->doordistance *= cosf((data->ray.angle - data->player.angle) * M_PI / 180);
             wallheight = WINDOWW / tmp->doordistance;
-            if(tmp->doorhitside == NS && tmp->doordistance <= data->ray.distance)
+            if(tmp->doorhitside == NS && tmp->doordistance < data->ray.distance*cosf((data->ray.angle - data->player.angle) * M_PI / 180))
                 render_door_NS(data,x,wallheight,tmp);
-            else if(tmp->doorhitside == WE &&tmp->doordistance < data->ray.distance)
+            if(tmp->doorhitside == WE &&tmp->doordistance < data->ray.distance*cosf((data->ray.angle - data->player.angle) * M_PI / 180))
                 render_door_WE(data,x,wallheight,tmp);
             tmp = tmp->next;
         }

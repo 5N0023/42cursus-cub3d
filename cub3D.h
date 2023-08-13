@@ -4,7 +4,6 @@
 # define SPEED 0.1
 # define WINDOWW 1000
 # define ROTATION 0.1
-# define FOV 60
 # define RAY 1000
 # define NORD 0
 # define SUD 1
@@ -172,6 +171,7 @@ typedef struct s_hit
 	double			hity;
 	int				hit;
 	double			distance;
+	double			angle;
 }					t_hit;
 
 
@@ -215,9 +215,11 @@ int get_door_frame(t_doorlist *tmp,t_data *data);
 void door_frames_setter(t_data *data);
 void door_frames_controller(t_data *data);
 void add_back_to_doors(t_data *data, double x, double y,int side);
-void sort_door_list(t_data *data);
+void sort_door_list(t_data *data, int reverse);
 void free_door_list(t_data *data);
 double	collision(double angle,t_data *data);
+void	castrayvertical(t_hit *vhit, t_data *data);
+void	castrayhorizontal(t_hit *hhit,t_data *data);
 
 #include "parsing/includes/parsing.h"
 #endif

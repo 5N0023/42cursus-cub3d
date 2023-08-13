@@ -282,30 +282,28 @@ void drawpixels(t_data *data, int k, double draw, double wallheight)
 }
 void game(t_data *data)
 {
-	double	POV;
+	double	FOV;
 	double	angle;
 	double	draw;
 	int		k;
-	double	a;
 	double	distance;
 	double	wallheight;
 	int		color;
 	move_player(data);	
 	
 	door_frames_setter(data);
-	POV = 60;
-	if (data->player.angle >= 360)
+	FOV = 60;
+	while (data->player.angle >= 360)
 		data->player.angle -= 360;
-	else if (data->player.angle < 0)
+	while (data->player.angle < 0)
 		data->player.angle += 360;
-	angle = data->player.angle - POV / 2;
+	angle = data->player.angle - FOV / 2;
 	draw = 0;
 	k = WINDOWW - 1;
 	while (k >= 0)
 	{
-		a = angle;
-		hits(a,data);
-		distance = data->ray.distance * cosf((a - data->player.angle) * M_PI / 180.0);
+		hits(angle,data);
+		distance = data->ray.distance * cosf((angle - data->player.angle) * M_PI / 180.0);
 		wallheight = WINDOWW / distance;
 		color = 0x964B00FF;
 		if (data->ray.hitside == VERTICALE && data->ray.angle > 0 && data->ray.angle < 180)
@@ -317,15 +315,14 @@ void game(t_data *data)
 		else
 			data->ray.texture = SUD;
 		render_texture(data, k, wallheight);
-		angle += POV / WINDOWW;
-		draw += POV / WINDOWW;
+		angle += FOV / WINDOWW;
+		draw += FOV / WINDOWW;
 		k--;
 	}
 	
 	draw_cursor(data);
 	draw_gun_normal(data);
 	draw_map(data, data->map.height, data->map.width, WINDOWW / 100, 0x00FF0F);
-	
 	
 }
 

@@ -3,9 +3,12 @@
 void load_loading_texture(t_data *data)
 {
 	mlx_texture_t *texture;
-    data->loading.frames = malloc(sizeof(mlx_image_t*) * 105);
+    int i;
     char path2[50] = "textures/loading/frame_000.png";
-    for(int i = 0;i < 106;i++)
+
+    i = 0;
+    data->loading.frames = malloc(sizeof(mlx_image_t*) * 105);
+    while(i < 106)
     {
         texture = mlx_load_png(path2);
         data->loading.frames[i] = mlx_texture_to_image(data->mlx, texture);
@@ -14,20 +17,27 @@ void load_loading_texture(t_data *data)
         path2[23] = (i+1) / 100 + '0';
         path2[24] = ((1+i) / 10) % 10 + '0';
         path2[25] = (1 +i) % 10 + '0';
+        i++;
     }
 }
 
 void startscreen(t_data *data)
 {
-    
     static int f;
-    for (int i = 0;i < data->loading.frames[f]->width;i++)
+    int i;
+    int j;
+
+    i = 0;
+    while (i < data->loading.frames[f]->width)
     {
-        for (int j = 0;j < data->loading.frames[f]->height;j++)
+        j = 0;
+        while (j < data->loading.frames[f]->height)
         {
             unsigned pixel = get_pixel(data->loading.frames[f], i, j);
             mlx_put_pixel(data->img, i, j, pixel);
+            j++;
         }
+        i++;
     }
     mlx_delete_image(data->mlx, data->loading.frames[f]);
     f++;

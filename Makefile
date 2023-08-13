@@ -10,6 +10,9 @@ SOURCES =		main.c \
 				textures.c \
 				door.c \
 				collision.c \
+				castrayver.c\
+				castrayhor.c\
+				draw_gun.c\
 
 OBJECTS = $(SOURCES:.c=.o)
 CC = cc
