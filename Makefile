@@ -1,7 +1,6 @@
 NAME = cub3D
 SOURCES =		main.c \
 				load_normal.c	\
-				load_valorant.c \
 				cast_rays.c	\
 				loading.c \
 				startmenu.c \
@@ -13,6 +12,7 @@ SOURCES =		main.c \
 				castrayver.c\
 				castrayhor.c\
 				draw_gun.c\
+				minimap.c\
 
 OBJECTS = $(SOURCES:.c=.o)
 CC = cc

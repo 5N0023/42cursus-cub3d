@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/13 14:58:31 by mlektaib          #+#    #+#             */
+/*   Updated: 2023/08/14 15:07:59 by mlektaib         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 #include <signal.h>
 
@@ -27,106 +39,6 @@ unsigned int get_pixel(mlx_image_t *img,int i,int j)
 	a = img->pixels[pos+3];
 	return(ft_pixel(r,g,b,a));
 }
-
-
-
-void draw_map(t_data *data, int x, int y, int size, int color)
-{
-	size = 20;
-    int playerX = (int)data->player.x;
-    int playerY = (int)data->player.y;
-    int halfRange = 5; 
-
-    for (int i = playerY - halfRange; i <= playerY + halfRange; i++)
-    {
-        for (int j = playerX - halfRange; j <= playerX + halfRange; j++)
-        {
-            if (i >= 0 && j >= 0 && j < data->map.width && i < data->map.height)
-            {
-				if(data->map.map[i][j] == '0')
-					color = 0x2E3357FF;
-                else
-					color = 0x1A0E13FF;
-                for (int k = 0; k < size; k++)
-                {
-                    for (int l = 0; l < size; l++)
-                    {
-                        int drawX = (j - (playerX - halfRange)) * size + l;
-                        int drawY = (i - (playerY - halfRange)) * size + k;
-                        mlx_put_pixel(data->img, drawX, drawY, color);
-                    }
-                }
-			}
-			else {
-				color = 0x1A0E13FF;
-				for (int k = 0; k < size; k++)
-                {
-                    for (int l = 0; l < size; l++)
-                    {
-                        int drawX = (j - (playerX - halfRange)) * size + l;
-                        int drawY = (i - (playerY - halfRange)) * size + k;
-                        mlx_put_pixel(data->img, drawX, drawY, color);
-                    }
-                }
-
-            }
-        }
-    }
-	x = halfRange * size + ((size - 8)/2);
-	y = halfRange * size  + ((size - 8)/2);
-	for (int i = 0; i < 8; i++)
-		for (int j = 0; j < 8; j++)
-			mlx_put_pixel(data->img, x + j, y + i, 0xFF0000FF);
-}
-
-void	draw_line(int x0, int y0, int x1, int y1, int color, t_data *data)
-{
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
-	int	k;
-	int	e2;
-
-	if (y0 < 0)
-		y0 = 0;
-	if (y0 >= WINDOWW)
-		y0 = WINDOWW - 1;
-	if (y1 < 0)
-		y1 = 0;
-	if (x0 < 0)
-		x0 = 0;
-	if (y1 >= WINDOWW)
-		y1 = WINDOWW - 1;
-	dx = abs(x1 - x0);
-	dy = abs(y1 - y0);
-	sx = (x0 < x1) ? 1 : -1;
-	sy = (y0 < y1) ? 1 : -1;
-	err = dx - dy;
-	k = 0;
-	while (1)
-	{
-		if(x0 >= 0 && x0 < WINDOWW && y0 >= 0 && y0 < WINDOWW)
-			mlx_put_pixel(data->img, x0, y0, color);
-		if (x0 == x1 && y0 == y1)
-			break ;
-		e2 = 2 * err;
-		if (e2 > -dy)
-		{
-			err -= dy;
-			x0 += sx;
-		}
-		if (e2 < dx)
-		{
-			err += dx;
-			y0 += sy;
-		}
-		k++;
-	}
-}
-
-
 void	move_player(t_data *data)
 {
 
@@ -306,9 +218,9 @@ void game(t_data *data)
 		distance = data->ray.distance * cosf((angle - data->player.angle) * M_PI / 180.0);
 		wallheight = WINDOWW / distance;
 		color = 0x964B00FF;
-		if (data->ray.hitside == VERTICALE && data->ray.angle > 0 && data->ray.angle < 180)
+		if (data->ray.hitside == VERTICALE && data->ray.angle >= 0 && data->ray.angle <= 180)
 			data->ray.texture = EAST;
-		else if (data->ray.hitside == VERTICALE && data->ray.angle > 180 && data->ray.angle < 360)
+		else if (data->ray.hitside == VERTICALE)
 			data->ray.texture = OUEST;
 		else if (data->ray.hitside == HORIZONTALE && data->ray.angle > 90 && data->ray.angle < 270)
 			data->ray.texture = NORD;
@@ -322,7 +234,7 @@ void game(t_data *data)
 	
 	draw_cursor(data);
 	draw_gun_normal(data);
-	draw_map(data, data->map.height, data->map.width, WINDOWW / 100, 0x00FF0F);
+	draw_map(data, 20, 0x00FF0F);
 	
 }
 

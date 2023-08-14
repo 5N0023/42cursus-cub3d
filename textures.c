@@ -4,14 +4,26 @@ void load_walls_textures(t_data *data)
 {
     mlx_texture_t *texture;
     mlx_image_t *img;
-    texture = mlx_load_png("textures/wall.png");
+    texture = mlx_load_png(data->texture.nord);
     img = mlx_texture_to_image(data->mlx, texture);
     mlx_resize_image(img, 250, 250);
-    mlx_delete_texture(texture);
     data->texture.nordimg = img;
+    mlx_delete_texture(texture);
+    texture = mlx_load_png(data->texture.sud);
+    img = mlx_texture_to_image(data->mlx, texture);
+    mlx_resize_image(img, 250, 250);
     data->texture.sudimg = img;
+    mlx_delete_texture(texture);
+    texture = mlx_load_png(data->texture.east);
+    img = mlx_texture_to_image(data->mlx, texture);
+    mlx_resize_image(img, 250, 250);
     data->texture.eastimg = img;
+    mlx_delete_texture(texture);
+    texture = mlx_load_png(data->texture.ouest);
+    img = mlx_texture_to_image(data->mlx, texture);
+    mlx_resize_image(img, 250, 250);
     data->texture.ouestimg = img;
+    mlx_delete_texture(texture);
 }
 
 void render_nord(t_data *data,int x,double wallheight)
@@ -131,7 +143,7 @@ void render_east(t_data *data,int x,double wallheight)
     for(int y = data->center - wallheight / 2; y < data->center + wallheight / 2; y++)
     {
         int color;
-        color = get_pixel(data->texture.ouestimg,pixelsline,(int)k);
+        color = get_pixel(data->texture.eastimg,pixelsline,(int)k);
         k += 250 / wallheight;
         if(k >= 250)
             k = 249;
@@ -192,12 +204,12 @@ void render_texture(t_data *data,int x,double wallheight)
 {
     if(data->ray.texture == NORD)
         render_nord(data,x,wallheight);
+    else if(data->ray.texture == OUEST)
+        render_ouest(data,x,wallheight);
     else if(data->ray.texture == SUD)
         render_sud(data,x,wallheight);
     else if(data->ray.texture == EAST)
         render_east(data,x,wallheight);
-    else if(data->ray.texture == OUEST)
-        render_ouest(data,x,wallheight);
     if (data->ray.doorlist)
     {
         t_doorlist *tmp;

@@ -27,7 +27,7 @@ void init_hits(t_hit *vhit, t_hit *hhit, t_data *data, double angle)
 
 void pick_distance(t_data *data, t_hit vhit, t_hit hhit, double angle)
 {
-	if (hhit.distance  * cosf((angle - data->player.angle) * M_PI / 180.0) < vhit.distance* cosf((angle - data->player.angle) * M_PI / 180.0))
+	if ((hhit.distance  * cosf((angle - data->player.angle) * M_PI / 180.0) < vhit.distance* cosf((angle - data->player.angle) * M_PI / 180.0))|| data->ray.angle == 0 || data->ray.angle == 180)
 	{
 		data->ray.x = hhit.x;
 		data->ray.y = hhit.y;

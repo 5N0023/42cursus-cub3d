@@ -220,6 +220,7 @@ void free_door_list(t_data *data);
 double	collision(double angle,t_data *data);
 void	castrayvertical(t_hit *vhit, t_data *data);
 void	castrayhorizontal(t_hit *hhit,t_data *data);
+void draw_map(t_data *data, int size, int color);
 
 #include "parsing/includes/parsing.h"
 #endif
