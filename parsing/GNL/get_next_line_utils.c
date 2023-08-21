@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:13:56 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/05/17 17:31:05 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/08/21 22:06:28 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_strlen_mod(char *str, int flag)
 	i = 0;
 	if (!str)
 		return (0);
-	if (flag == 0)
+	else if (flag == 0)
 	{
 		while (str[i])
 			i++;

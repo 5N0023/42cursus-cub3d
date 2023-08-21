@@ -50,6 +50,18 @@ typedef struct s_doorlist
 	struct s_doorlist *next;
 } t_doorlist;
 
+typedef struct s_spritelist
+{
+	double			spritehitx;
+	double			spritehity;
+	int				spritehit;
+	int 			spritehitside;
+	double 			spritedistance;
+	int				xstart;
+	struct s_spritelist *next;
+} t_spritelist;
+
+
 struct				s_ray
 {
 	double			x;
@@ -60,7 +72,8 @@ struct				s_ray
 	double			dy;
 	int				hitside;
 	int				texture;
-	t_doorlist		*doorlist;
+	t_doorlist			*doorlist;
+	t_spritelist		*spritelist;
 };
 
 struct				s_mouse
@@ -140,11 +153,13 @@ struct				s_texture
 	char		*sud;
 	char		*east;
 	char		*ouest;
+	int			spriteframe;
 	mlx_image_t	*nordimg;
 	mlx_image_t	*sudimg;
 	mlx_image_t	*eastimg;
 	mlx_image_t	*ouestimg;
 	mlx_image_t	**door;
+	mlx_image_t **sprite;
 };
 
 struct				s_loading
@@ -200,18 +215,22 @@ void load_normal_texture(t_data *data);
 unsigned int get_pixel(mlx_image_t *img,int i,int j);
 void draw_gun_normal(t_data *data);
 double	hits(double angle,t_data *data);
+void add_back_to_sprites(t_data *data, double x, double y,int side);
 void startscreen(t_data *data);
 void load_loading_texture(t_data *data);
 void startmenu(t_data *data);
 void load_startmenu_texture(t_data *data);
 void draw_cursor(t_data *data);
+void sort_sprites(t_data *data, int reverse);
 void options(t_data *data);
 void load_cursor(t_data *data);
 void render_texture(t_data *data,int x,double wallheight);
 void load_walls_textures(t_data *data);
 void door_textures(t_data *data);
 int door_state(t_data *data, int x, int y);
+void free_sprites_list(t_data *data);
 int get_door_frame(t_doorlist *tmp,t_data *data);
+void sprite_textures(t_data *data);
 void door_frames_setter(t_data *data);
 void door_frames_controller(t_data *data);
 void add_back_to_doors(t_data *data, double x, double y,int side);
@@ -221,6 +240,11 @@ double	collision(double angle,t_data *data);
 void	castrayvertical(t_hit *vhit, t_data *data);
 void	castrayhorizontal(t_hit *hhit,t_data *data);
 void draw_map(t_data *data, int size, int color);
+void initdefaultval(t_data *data_ptr);
+void game(t_data *data);
+void	move_player(t_data *data);
+int ft_pixel(int r, int g, int b, int a);
+mlx_keyfunc	key_hook(mlx_key_data_t key, t_data *data);
 
 #include "parsing/includes/parsing.h"
 #endif

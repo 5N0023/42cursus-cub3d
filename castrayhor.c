@@ -52,5 +52,10 @@ void	castrayhorizontal(t_hit *hhit,t_data *data)
 		hhit->hit = 1;
 	if (data->map.map[(int)hhit->dy][(int)hhit->dx] == 'D')
 		add_back_to_doors(data, hhit->dx, hhit->dy,NS);
+	if (hhit->angle > 90 && hhit->angle < 270)
+			if (data->map.map[(int)hhit->dy - 1][(int)hhit->dx] == 'B')
+				add_back_to_sprites(data, hhit->dx, hhit->dy,NORD);
+	if (data->map.map[(int)hhit->dy][(int)hhit->dx] == 'B')
+		add_back_to_sprites(data, hhit->dx, hhit->dy,SUD);
 
 }

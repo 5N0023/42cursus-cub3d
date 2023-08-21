@@ -6,18 +6,18 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:12 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/07/30 22:52:40 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/08/20 21:09:08 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
 
-static int	ft_pixel(int r, int g, int b, int a)
+int	ft_pixel(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-static int	ft_fill_int(char *arr)
+int	ft_fill_int(char *arr)
 {
 	char		**c;
 	int			i;

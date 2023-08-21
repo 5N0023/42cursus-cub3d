@@ -20,16 +20,22 @@ void put_mouse_sensitive(t_data *data,mlx_image_t *image)
 
     path[17] = first + '0';
     texture = mlx_load_png(path);
+    if(!texture)
+            exit(1);
     first_img = mlx_texture_to_image(data->mlx, texture);
     mlx_delete_texture(texture);
     mlx_resize_image(first_img, 50, 50);
     path[17] = second + '0';
     texture = mlx_load_png(path);
+    if(!texture)
+            exit(1);
     second_img = mlx_texture_to_image(data->mlx, texture);
     mlx_delete_texture(texture);
     mlx_resize_image(second_img, 50, 50);
     path[17] = third + '0';
     texture = mlx_load_png(path);
+    if(!texture)
+            exit(1);
     third_img = mlx_texture_to_image(data->mlx, texture);
     mlx_delete_texture(texture);
     mlx_resize_image(third_img, 50, 50);
@@ -76,16 +82,22 @@ void put_player_speed(t_data *data,mlx_image_t *image)
 
     path[17] = first + '0';
     texture = mlx_load_png(path);
+    if(!texture)
+            exit(1);
     first_img = mlx_texture_to_image(data->mlx, texture);
     mlx_delete_texture(texture);
     mlx_resize_image(first_img, 50, 50);
     path[17] = second + '0';
     texture = mlx_load_png(path);
+    if(!texture)
+            exit(1);
     second_img = mlx_texture_to_image(data->mlx, texture);
     mlx_delete_texture(texture);
     mlx_resize_image(second_img, 50, 50);
     path[17] = third + '0';
     texture = mlx_load_png(path);
+    if(!texture)
+            exit(1);
     third_img = mlx_texture_to_image(data->mlx, texture);
     mlx_delete_texture(texture);
     mlx_resize_image(third_img, 50, 50);
@@ -150,8 +162,10 @@ void options(t_data *data)
             data->state = STARTMENU;
     }
     texture = mlx_load_png("textures/options.png");
-    
+    if(!texture)
+            exit(1);
     image = mlx_texture_to_image(data->mlx, texture);
+    mlx_delete_texture(texture);
     mlx_resize_image(image, 1000, 1000);
     put_mouse_sensitive(data, image);
     put_player_speed(data,image);

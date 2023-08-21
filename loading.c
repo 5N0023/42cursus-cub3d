@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 14:58:36 by mlektaib          #+#    #+#             */
-/*   Updated: 2023/08/13 14:58:37 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/08/20 21:05:26 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void load_loading_texture(t_data *data)
     while(i < 106)
     {
         texture = mlx_load_png(path2);
+        if(!texture)
+            exit(1);
         data->loading.frames[i] = mlx_texture_to_image(data->mlx, texture);
         mlx_resize_image(data->loading.frames[i], 1000, 1000);
         mlx_delete_texture(texture);

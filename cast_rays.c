@@ -55,11 +55,13 @@ double	hits(double angle,t_data *data)
 	init_hits(&vhit, &hhit, data, angle);
 	data->ray.angle = angle;
 	data->ray.doorlist = NULL;
+	data->ray.spritelist = NULL;
 	while (!vhit.hit)
 		castrayvertical(&vhit, data);
 	while (!hhit.hit)
 		castrayhorizontal(&hhit, data);
 	sort_door_list(data, 1);
+	sort_sprites(data, 1);
 	vhit.distance = sqrtf(powf((vhit.x - data->player.x), 2) + powf((vhit.y- data->player.y), 2));
 	hhit.distance = sqrtf(powf((hhit.x - data->player.x), 2) + powf((hhit.y- data->player.y), 2));
 	pick_distance(data, vhit, hhit, angle);

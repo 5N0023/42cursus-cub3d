@@ -52,4 +52,10 @@ void	castrayvertical(t_hit *vhit, t_data *data)
 		vhit->hit = 1;
 	if (data->map.map[(int)vhit->dy][(int)vhit->dx] == 'd')
 		add_back_to_doors(data,  vhit->dx,  vhit->dy, WE);
+	if (vhit->angle  >= 180 && vhit->angle  <= 360)
+		if (data->map.map[(int)vhit->dy][(int)vhit->dx - 1] == 'B')
+			add_back_to_sprites(data,  vhit->dx - 1,  vhit->dy, OUEST);
+	if (data->map.map[(int)vhit->dy][(int)vhit->dx] == 'B')
+		add_back_to_sprites(data,  vhit->dx,  vhit->dy, EAST);
+	
 }

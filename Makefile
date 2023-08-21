@@ -13,6 +13,12 @@ SOURCES =		main.c \
 				castrayhor.c\
 				draw_gun.c\
 				minimap.c\
+				init.c\
+				game.c\
+				hooks.c\
+				pixels.c\
+				moveplayer.c\
+				sprite.c\
 
 OBJECTS = $(SOURCES:.c=.o)
 CC = cc

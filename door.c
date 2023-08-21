@@ -45,6 +45,8 @@ void door_textures(t_data *data)
         path2[21] = (i+1) / 10 + '0';
         path2[22] = (i+1) % 10 + '0';
         texture = mlx_load_png(path2);
+        if(!texture)
+            exit(1);
         data->texture.door[i] = mlx_texture_to_image(data->mlx, texture);
         mlx_resize_image(data->texture.door[i] , 250, 250);
         mlx_delete_texture(texture);
@@ -125,6 +127,7 @@ void door_frames_controller(t_data *data)
     }
     }
     free_door_list(data);
+    free_sprites_list(data);
 }
 
 void add_back_to_doors(t_data *data, double x, double y,int side)
@@ -149,7 +152,7 @@ void add_back_to_doors(t_data *data, double x, double y,int side)
     last->next = new;
 }
 
-void swap(t_doorlist *a, t_doorlist *b)
+static void swap(t_doorlist *a, t_doorlist *b)
 {
     t_doorlist tmp;
     tmp = *a;

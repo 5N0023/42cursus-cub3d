@@ -1,25 +1,35 @@
 #include "cub3D.h"
 
+
+extern double tester;
 void load_walls_textures(t_data *data)
 {
     mlx_texture_t *texture;
     mlx_image_t *img;
     texture = mlx_load_png(data->texture.nord);
+    if(!texture)
+            exit(1);
     img = mlx_texture_to_image(data->mlx, texture);
     mlx_resize_image(img, 250, 250);
     data->texture.nordimg = img;
     mlx_delete_texture(texture);
     texture = mlx_load_png(data->texture.sud);
+    if(!texture)
+            exit(1);
     img = mlx_texture_to_image(data->mlx, texture);
     mlx_resize_image(img, 250, 250);
     data->texture.sudimg = img;
     mlx_delete_texture(texture);
     texture = mlx_load_png(data->texture.east);
+    if(!texture)
+            exit(1);
     img = mlx_texture_to_image(data->mlx, texture);
     mlx_resize_image(img, 250, 250);
     data->texture.eastimg = img;
     mlx_delete_texture(texture);
     texture = mlx_load_png(data->texture.ouest);
+    if(!texture)
+            exit(1);
     img = mlx_texture_to_image(data->mlx, texture);
     mlx_resize_image(img, 250, 250);
     data->texture.ouestimg = img;
@@ -100,7 +110,6 @@ void render_door_WE(t_data *data,int x,double wallheight,t_doorlist *tmp)
             mlx_put_pixel(data->img, x, y, color);
         y++;
     }
-
 }
 
 void render_sud(t_data *data,int x,double wallheight)
@@ -200,6 +209,26 @@ void render_ouest(t_data *data,int x,double wallheight)
 }
 
 
+void render_sprite(t_data *data,double x,double spritesize,t_spritelist *tmp)
+{
+    double k = 0;
+
+    if(tester >= 250)
+        return;
+    for(int y = data->center - spritesize / 2; y < data->center + spritesize / 2; y++)
+    {
+        int color;
+        color = get_pixel(data->texture.sprite[data->texture.spriteframe],(int)tester,(int)k);
+        k += 250 / spritesize;
+        if(k >= 250)
+            k = 249;
+        if (y >= 0 && y < WINDOWW && color)
+            mlx_put_pixel(data->img, x, y, color);
+    }
+    tester += 250 / spritesize;
+}
+
+
 void render_texture(t_data *data,int x,double wallheight)
 {
     if(data->ray.texture == NORD)
@@ -225,5 +254,19 @@ void render_texture(t_data *data,int x,double wallheight)
             tmp = tmp->next;
         }
     }
+    if (data->ray.spritelist)
+    {
+        t_spritelist *tmp;
+        tmp = data->ray.spritelist;
+        // while(tmp)
+        // {
+            tmp->spritedistance *= cosf((data->ray.angle - data->player.angle) * M_PI / 180);
+            wallheight = WINDOWW / tmp->spritedistance;
+            if(tmp->spritedistance < data->ray.distance*cosf((data->ray.angle - data->player.angle) * M_PI / 180) && tmp->spritedistance/cosf((data->ray.angle - data->player.angle) * M_PI / 180)  > 1)
+                render_sprite(data,x,wallheight/2,tmp);
+        //     tmp = tmp->next;
+        // }
+    }
     free_door_list(data);
+    free_sprites_list(data);
 }

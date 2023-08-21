@@ -6,6 +6,8 @@ void load_cursor(t_data *data)
     mlx_image_t *image;
 
     texture = mlx_load_png("textures/cursor.png");
+    if(!texture)
+        exit(1);
     image = mlx_texture_to_image(data->mlx, texture);
     mlx_resize_image(image, 26, 26);
     data->mouse.cursor = image;

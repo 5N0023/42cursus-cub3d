@@ -11,7 +11,10 @@ void startmenu(t_data *data)
     if (x > 40 && x < 326 && y > 237 && y < 308)
     {
         texture = mlx_load_png("textures/startmenu/hover_start.png");
+        if(!texture)
+            exit(1);
         image = mlx_texture_to_image(data->mlx, texture);
+        mlx_delete_texture(texture);
         mlx_resize_image(image, 1000, 1000);
         for(int i = 0;i < 1000;i++)
         {
@@ -31,7 +34,10 @@ void startmenu(t_data *data)
     else if (x > 40 && x < 421 && y > 472 && y < 552)
     {
         texture = mlx_load_png("textures/startmenu/hover_options.png");
+        if(!texture)
+            exit(1);
         image = mlx_texture_to_image(data->mlx, texture);
+        mlx_delete_texture(texture);
         mlx_resize_image(image, 1000, 1000);
         for(int i = 0;i < 1000;i++)
         {
@@ -46,7 +52,10 @@ void startmenu(t_data *data)
     else if (x > 40 && x < 214 && y > 707 && y < 777)
     {
         texture = mlx_load_png("textures/startmenu/hover_exit.png");
+        if(!texture)
+            exit(1);
         image = mlx_texture_to_image(data->mlx, texture);
+        mlx_delete_texture(texture);
         mlx_resize_image(image, 1000, 1000);
         for(int i = 0;i < 1000;i++)
         {
@@ -61,7 +70,10 @@ void startmenu(t_data *data)
     else
     {
     texture = mlx_load_png("textures/startmenu/start_menu.png");
+    if(!texture)
+            exit(1);
     image = mlx_texture_to_image(data->mlx, texture);
+    mlx_delete_texture(texture);
     mlx_resize_image(image, 1000, 1000);
     for(int i = 0;i < image->width;i++)
     {

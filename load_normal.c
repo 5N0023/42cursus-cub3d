@@ -13,6 +13,8 @@ void load_reload_animation(t_data *data)
     while(i < 46)
     {
         texture = mlx_load_png(path);
+        if(!texture)
+            exit(1);
         data->player.gun.normal.gunreload[i] = mlx_texture_to_image(data->mlx, texture);
         mlx_resize_image(data->player.gun.normal.gunreload[i], 640, 400);
         mlx_delete_texture(texture);
@@ -33,6 +35,8 @@ void load_shoot_animation(t_data *data)
     while(i < 9)
     {
         texture = mlx_load_png(path);
+        if(!texture)
+            exit(1);
         data->player.gun.normal.gunshoot[i] = mlx_texture_to_image(data->mlx, texture);
         mlx_resize_image(data->player.gun.normal.gunshoot[i], 640, 400);
         mlx_delete_texture(texture);
@@ -53,6 +57,8 @@ void load_bullets_count(t_data *data)
     while(i < 25)
     {
         texture = mlx_load_png(path);
+        if(!texture)
+            exit(1);
         data->player.gun.normal.bullets[i] = mlx_texture_to_image(data->mlx, texture);
         mlx_resize_image(data->player.gun.normal.bullets[i], 100, 100);
         mlx_delete_texture(texture);
