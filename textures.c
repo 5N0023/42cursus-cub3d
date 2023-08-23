@@ -2,6 +2,41 @@
 
 
 extern double tester;
+
+
+void draw_door(mlx_image_t *img,int pixelsline,double wallheight,t_data *data,int x)
+{
+    double k = img->height/2;
+    int y = data->center;
+    while( y < data->center + wallheight / 2 && y < WINDOWW)
+    {
+        int color;
+        
+        color = get_pixel(img,pixelsline,(int)k);
+        k += 250 / wallheight;
+        if(k >= 250)
+            k = 249;
+        if (y >= 0 && y < WINDOWW)
+            mlx_put_pixel(data->img, x, y, color);
+        y++;
+    }
+    y = data->center;
+    k = img->height/2;
+    while( y > data->center - wallheight / 2 && y >= 0)
+    {
+        int color;
+        
+        color = get_pixel(img,pixelsline,(int)k);
+        k -= 250 / wallheight;
+        if(k < 0)
+            k = 0;
+        if (y >= 0 && y < WINDOWW)
+            mlx_put_pixel(data->img, x, y, color);
+        y--;
+    }
+}
+
+
 void load_walls_textures(t_data *data)
 {
     mlx_texture_t *texture;
@@ -40,19 +75,8 @@ void render_nord(t_data *data,int x,double wallheight)
 {
     int pixelsline;
     pixelsline = (int)((data->ray.x - (int)data->ray.x) * 250);
-    double k = 0;
-    for(int y = data->center - wallheight / 2; y < data->center + wallheight / 2; y++)
-    {
-        int color;
-        
-        color = get_pixel(data->texture.nordimg,pixelsline,(int)k);
-        k += 250 / wallheight;
-        if(k >= 250)
-            k = 249;
-        if (y >= 0 && y < WINDOWW)
-            mlx_put_pixel(data->img, x, y, color);
-    }
-     int i = 0;
+    draw_door(data->texture.nordimg,pixelsline,wallheight,data,x);
+    int i = 0;
     if(data->center - wallheight / 2 > 0)
     {
         i = data->center - wallheight / 2;
@@ -75,33 +99,11 @@ void render_door_NS(t_data *data,int x,double wallheight,t_doorlist *tmp)
 {
     int pixelsline;
     pixelsline = (int)((tmp->doorhitx - (int)tmp->doorhitx) * 250);
-    double k = 0;
-    for(int y = data->center - wallheight / 2; y < data->center + wallheight / 2; y++)
+    double k = data->texture.door[0]->height /2;
+    double y = data->center;
+    while(y < data->center + wallheight / 2 && y < WINDOWW)
     {
         int color;
-        if(tmp->doordistance < 0.2 && door_state(data,tmp->doorhitx,tmp->doorhity) == OPENED)
-            break;
-        color = get_pixel(data->texture.door[get_door_frame(tmp,data)],pixelsline,(int)k);
-        k += 250 / wallheight;
-        if(k >= 250)
-            k = 249;
-        if (y >= 0 && y < WINDOWW && color)
-            mlx_put_pixel(data->img, x, y, color);
-    }
-
-}
-
-void render_door_WE(t_data *data,int x,double wallheight,t_doorlist *tmp)
-{
-    int pixelsline;
-    pixelsline = (int)((tmp->doorhity - (int)tmp->doorhity) * 250);
-    double k = 0;
-    double y = data->center - wallheight / 2;
-    while(y < data->center + wallheight / 2)
-    {
-        int color;
-        if(tmp->doordistance < 0.3 && door_state(data,tmp->doorhitx,tmp->doorhity) == OPENED)
-            break;
         color = get_pixel(data->texture.door[get_door_frame(tmp,data)],pixelsline,(int)k);
         k += 250 / wallheight;
         if(k >= 250)
@@ -110,23 +112,61 @@ void render_door_WE(t_data *data,int x,double wallheight,t_doorlist *tmp)
             mlx_put_pixel(data->img, x, y, color);
         y++;
     }
+
+    k = data->texture.door[0]->height /2;
+    y = data->center;
+    while(y > data->center - wallheight / 2 && y >= 0)
+    {
+        int color;
+        color = get_pixel(data->texture.door[get_door_frame(tmp,data)],pixelsline,(int)k);
+        k -= 250 / wallheight;
+        if(k < 0)
+            k = 0;
+        if (y >= 0 && y < WINDOWW && color)
+            mlx_put_pixel(data->img, x, y, color);
+        y--;
+    }
+
+}
+
+void render_door_WE(t_data *data,int x,double wallheight,t_doorlist *tmp)
+{
+    int pixelsline;
+    pixelsline = (int)((tmp->doorhity - (int)tmp->doorhity) * 250);
+    double k = data->texture.door[0]->height /2;
+    double y = data->center;
+    while(y < data->center + wallheight / 2 && y < WINDOWW)
+    {
+        int color;
+        color = get_pixel(data->texture.door[get_door_frame(tmp,data)],pixelsline,(int)k);
+        k += 250 / wallheight;
+        if(k >= 250)
+            k = 249;
+        if (y >= 0 && y < WINDOWW && color)
+            mlx_put_pixel(data->img, x, y, color);
+        y++;
+    }
+
+    k = data->texture.door[0]->height /2;
+    y = data->center;
+    while(y > data->center - wallheight / 2 && y >= 0)
+    {
+        int color;
+        color = get_pixel(data->texture.door[get_door_frame(tmp,data)],pixelsline,(int)k);
+        k -= 250 / wallheight;
+        if(k < 0)
+            k = 0;
+        if (y >= 0 && y < WINDOWW && color)
+            mlx_put_pixel(data->img, x, y, color);
+        y--;
+    }
 }
 
 void render_sud(t_data *data,int x,double wallheight)
 {
     int pixelsline;
     pixelsline = (int)((data->ray.x - (int)data->ray.x) * 250);
-    double k = 0;
-    for(int y = data->center - wallheight / 2; y < data->center + wallheight / 2; y++)
-    {
-        int color;
-        color = get_pixel(data->texture.sudimg,pixelsline,(int)k);
-        k += 250 / wallheight;
-        if(k >= 250)
-            k = 249;
-        if (y >= 0 && y < WINDOWW)
-            mlx_put_pixel(data->img, x, y, color);
-    }
+    draw_door(data->texture.sudimg,pixelsline,wallheight,data,x);
      int i = 0;
     if(data->center - wallheight / 2 > 0)
     {
@@ -148,17 +188,7 @@ void render_east(t_data *data,int x,double wallheight)
 {
     int pixelsline;
     pixelsline = ((int)((data->ray.y - (int)data->ray.y) * 250));
-    double k = 0;
-    for(int y = data->center - wallheight / 2; y < data->center + wallheight / 2; y++)
-    {
-        int color;
-        color = get_pixel(data->texture.eastimg,pixelsline,(int)k);
-        k += 250 / wallheight;
-        if(k >= 250)
-            k = 249;
-        if (y >= 0 && y < WINDOWW)
-            mlx_put_pixel(data->img, x, y, color);
-    }
+    draw_door(data->texture.eastimg,pixelsline,wallheight,data,x);
     int i = 0;
    if(data->center - wallheight / 2 > 0)
     {
@@ -180,17 +210,7 @@ void render_ouest(t_data *data,int x,double wallheight)
 {
     int pixelsline;
     pixelsline = ((int)((data->ray.y - (int)data->ray.y) * 250));
-    double k = 0;
-    for(int y = data->center - wallheight / 2; y < data->center + wallheight / 2; y++)
-    {
-        int color;
-        color = get_pixel(data->texture.ouestimg,pixelsline,(int)k);
-        k += 250 / wallheight;
-        if(k >= 250)
-            k = 249;
-        if (y >= 0 && y < WINDOWW)
-            mlx_put_pixel(data->img, x, y, color);
-    }
+    draw_door(data->texture.eastimg,pixelsline,wallheight,data,x);
     int i = 0;
     if(data->center - wallheight / 2 > 0)
     {
