@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:24:25 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/07/26 21:06:29 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/08/30 18:56:16 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	parse_map(char **map, t_pars **data)
 	while (map[++i])
 		while ((int)ft_strlen(map[i]) < longest_line)
 			map[i] = ft_strjoin(map[i], "*");
-	if (check_for_tabs(map) == ERROR)
-		return (ERROR);
+	// if (check_for_tabs(map) == ERROR)
+	// 	return (ERROR);
 	if (check_map(map) == -1)
 		return (ERROR);
 	(*data)->map.map = ft_allocate_clone(map);

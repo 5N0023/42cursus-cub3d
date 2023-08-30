@@ -1,74 +1,82 @@
 #include "cub3D.h"
 
-void	move_player(t_data *data)
+void movebackward(t_data *data)
 {
-
 	double	distance1;
 	double	distance2;
-	while (data->player.angle >= 360)
-		data->player.angle -= 360;
-	while (data->player.angle < 0)
-		data->player.angle += 360;
 
-	if (data->player.spress)
-	{
 		distance1 = collision(data->player.angle + 10 + 180,data);
 		free_door_list(data);
-		free_sprites_list(data);
 		distance2 = collision(data->player.angle - 10 + 180,data);
 		free_door_list(data);
-		free_sprites_list(data);
 		if (distance1 > 0.2 && distance2 > 0.2)
 		{
-			data->player.x += cosf((data->player.angle + 90) * M_PI / 180.0) * data->player.speed;
+		data->player.x += cos((data->player.angle + 90) * M_PI / 180.0) * data->player.speed;
 			data->player.y -= sinf((data->player.angle + 90) * M_PI / 180.0) * data->player.speed;
 		}
 	}
-	if (data->player.wpress)
+
+void movefoward(t_data *data)
 	{
+	double	distance1;
+	double	distance2;
+
 		distance1 = collision(data->player.angle + 10, data);
 		free_door_list(data);
-		free_sprites_list(data);
 		distance2 = collision(data->player.angle - 10,data);
 		free_door_list(data);
-		free_sprites_list(data);
 		if (distance1 > 0.2 && distance2 > 0.2)
 		{
-			data->player.x -= cosf((data->player.angle + 90) * M_PI / 180.0) * data->player.speed;
+		data->player.x -= cos((data->player.angle + 90) * M_PI / 180.0) * data->player.speed;
 			data->player.y += sinf((data->player.angle + 90) * M_PI / 180.0) * data->player.speed;
 		}
 	}
-	if (data->player.dpress)
+void moveleft(t_data *data)
 	{
+	double	distance1;
+	double	distance2;
+
 		distance1 = collision(data->player.angle + 10 - 90,data);
 		free_door_list(data);
-		free_sprites_list(data);
 		distance2 = collision(data->player.angle - 10 - 90,data);
 		free_door_list(data);
-		free_sprites_list(data);
 		if (distance1 > 0.2 && distance2 > 0.2)
 		{
-			data->player.x -= cosf((data->player.angle)*M_PI / 180.0) * data->player.speed;
+		data->player.x -= cos((data->player.angle)*M_PI / 180.0) * data->player.speed;
 			data->player.y += sinf((data->player.angle)*M_PI / 180.0) * data->player.speed;
 		}
 	}
-	if (data->player.apress)
+
+
+void moveright(t_data *data)
 	{
+	double	distance1;
+	double	distance2;
+
 		distance1 = collision(data->player.angle + 10 + 90,data);
 		free_door_list(data);
-		free_sprites_list(data);
 		distance2 = collision(data->player.angle - 10 + 90,data);
 		free_door_list(data);
-		free_sprites_list(data);
 		if (distance1 > 0.2 && distance2 > 0.2)
 		{
-			data->player.x += cosf((data->player.angle)*M_PI / 180.0) * data->player.speed;
+		data->player.x += cos((data->player.angle)*M_PI / 180.0) * data->player.speed;
 			data->player.y -= sinf((data->player.angle)*M_PI / 180.0) * data->player.speed;
 		}
 	}
-	if(data->mouse.oldx != data->mouse.x)
+
+void	move_player(t_data *data)
+{
+	normalize_angle(&data->player.angle);
+	if (data->player.spress)
+		movebackward(data);
+	if (data->player.wpress)
+		movefoward(data);
+	if (data->player.dpress)
+		moveleft(data);
+	if (data->player.apress)
+		moveright(data);
 			data->player.angle = (data->mouse.x * -data->mouse.sensitivity);
-    data->center  = WINDOWW / 2 + data->mouse.y * -data->mouse.sensitivity;
+    data->center  = 715 + data->mouse.y * -(data->mouse.sensitivity + 0.5);
 	if(data->center <= -500)
 	{
 		data->center = -500;
@@ -76,7 +84,6 @@ void	move_player(t_data *data)
 	}
 	if(data->center >= WINDOWW + 500)
 	{
-
 		data->center = WINDOWW + 500;
 		mlx_set_mouse_pos(data->mlx, data->mouse.x, data->mouse.y);
 	}
@@ -84,8 +91,4 @@ void	move_player(t_data *data)
 		data->player.gun.state = SHOOT;
 	data->mouse.oldx = data->mouse.x;
 	data->mouse.oldy = data->mouse.y;
-	while (data->player.angle >= 360)
-		data->player.angle -= 360;
-	while (data->player.angle < 0)
-		data->player.angle += 360;
 }

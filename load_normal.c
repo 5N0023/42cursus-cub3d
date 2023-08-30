@@ -32,7 +32,7 @@ void load_shoot_animation(t_data *data)
 
     i = 0;
     data->player.gun.normal.gunshoot = malloc(sizeof(mlx_image_t*) * 10);
-    while(i < 9)
+    while(i < 10)
     {
         texture = mlx_load_png(path);
         if(!texture)

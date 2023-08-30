@@ -112,7 +112,7 @@ void door_frames_controller(t_data *data)
     {
    while(i < data->map.doors_count)
     {
-        if (data->map.doors[i].x == (int)tmp->doorhitx && data->map.doors[i].y == (int)tmp->doorhity && tmp->doordistance < 3 && tmp->doordistance > 0.2)
+        if (data->map.doors[i].x == (int)tmp->doorhitx && data->map.doors[i].y == (int)tmp->doorhity && tmp->doordistance < 3 && tmp->doordistance > 0.15)
        {
         if (data->map.doors[i].state == OPENING)
             data->map.doors[i].state = CLOSING;
@@ -127,7 +127,6 @@ void door_frames_controller(t_data *data)
     }
     }
     free_door_list(data);
-    free_sprites_list(data);
 }
 
 void add_back_to_doors(t_data *data, double x, double y,int side)

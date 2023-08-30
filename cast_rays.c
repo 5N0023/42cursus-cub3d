@@ -27,7 +27,7 @@ void init_hits(t_hit *vhit, t_hit *hhit, t_data *data, double angle)
 
 void pick_distance(t_data *data, t_hit vhit, t_hit hhit, double angle)
 {
-	if ((hhit.distance  * cosf((angle - data->player.angle) * M_PI / 180.0) < vhit.distance* cosf((angle - data->player.angle) * M_PI / 180.0))|| data->ray.angle == 0 || data->ray.angle == 180)
+	if ((hhit.distance  * cos((angle - data->player.angle) * M_PI / 180.0) < vhit.distance* cos((angle - data->player.angle) * M_PI / 180.0))|| data->ray.angle == 0 || data->ray.angle == 180)
 	{
 		data->ray.x = hhit.x;
 		data->ray.y = hhit.y;
@@ -55,13 +55,11 @@ double	hits(double angle,t_data *data)
 	init_hits(&vhit, &hhit, data, angle);
 	data->ray.angle = angle;
 	data->ray.doorlist = NULL;
-	data->ray.spritelist = NULL;
 	while (!vhit.hit)
 		castrayvertical(&vhit, data);
 	while (!hhit.hit)
 		castrayhorizontal(&hhit, data);
 	sort_door_list(data, 1);
-	sort_sprites(data, 1);
 	vhit.distance = sqrtf(powf((vhit.x - data->player.x), 2) + powf((vhit.y- data->player.y), 2));
 	hhit.distance = sqrtf(powf((hhit.x - data->player.x), 2) + powf((hhit.y- data->player.y), 2));
 	pick_distance(data, vhit, hhit, angle);

@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 14:58:31 by mlektaib          #+#    #+#             */
-/*   Updated: 2023/08/21 23:23:08 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:00:50 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,17 @@ mlx_cursorfunc	key_cursor(double x, double y, t_data *data)
 
 int	game_loop(t_data *data)
 {
-	tester =0;
+	tester = 0;
 	if (data->img != NULL)
 		mlx_delete_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, WINDOWW, WINDOWW);
 	if (data->state == STARTSCREEN)
 		startscreen(data);
 	if (data->state == GAME)
+	{
+		printf("center: %f\n", data->center);	
 		game(data);
+	}
 	if (data->state == STARTMENU)
 		startmenu(data);
 	if (data->state == OPTIONS)
@@ -64,14 +67,12 @@ int	main(int c, char **v)
 	atexit(checkleaks);
 	if(parser(c, v, data_ptr))
 		return (0);
-	initdefaultval(data_ptr);
-	data_ptr->gamemode = NORMAL;
-	data_ptr->state = STARTSCREEN;
-	data_ptr->mlx = mlx_init(WINDOWW, WINDOWW, "CUB3D!", 1);
+	
+	
+	data_ptr->mlx = initdefaultval(data_ptr);
 	load_cursor(data_ptr);
 	load_walls_textures(data_ptr);
 	load_normal_texture(data_ptr);
-	sprite_textures(data_ptr);
 	door_textures(data_ptr);
 	load_loading_texture(data_ptr);
 	data_ptr->img = NULL;
@@ -81,6 +82,6 @@ int	main(int c, char **v)
 	mlx_set_cursor_mode(data_ptr->mlx, MLX_MOUSE_DISABLED);
 	mlx_cursor_hook(data_ptr->mlx, (void *)key_cursor, data_ptr);
 	mlx_loop(data_ptr->mlx);
-	mlx_terminate(data_ptr->mlx);
+	mlx_terminate(data.mlx);
 	exit (0);
 }

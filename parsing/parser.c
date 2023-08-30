@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:20:53 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/08/14 15:32:16 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:09:54 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int	parser(int c, char **v, t_data *data)
 	data->map.map = pars->map.map;
 	data->map.width = pars->map.width;
 	data->map.height = pars->map.height;
+	printf("width = %zu\n", data->map.width);
+	printf("height = %zu\n", data->map.height);
 	data->floorcolor = pars->floorcolor;
 	data->ceilingcolor = pars->ceilingcolor;
 	data->texture.sud = pars->south;

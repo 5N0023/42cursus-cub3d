@@ -1,30 +1,25 @@
 #include "cub3D.h"
 
-void game(t_data *data)
+void normalize_angle(double *angle)
 {
-	double	FOV;
-	double	angle;
-	double	draw;
-	int		k;
-	double	distance;
-	double	wallheight;
-	int		color;
-	move_player(data);	
+	if (*angle > 360)
+		*angle -= 360;
+	if (*angle < 0)
+		*angle += 360;
+}
 	
-	door_frames_setter(data);
-	FOV = 60;
-	while (data->player.angle >= 360)
-		data->player.angle -= 360;
-	while (data->player.angle < 0)
-		data->player.angle += 360;
-	angle = data->player.angle - FOV / 2;
-	draw = 0;
+
+void reneder_walls(t_data *data,double FOV, double angle)
+{
+	int k;
+	double wallheight;
+	int color;
+
 	k = WINDOWW - 1;
 	while (k >= 0)
 	{
 		hits(angle,data);
-		distance = data->ray.distance * cosf((angle - data->player.angle) * M_PI / 180.0);
-		wallheight = WINDOWW / distance;
+		wallheight = WINDOWW / (data->ray.distance * cos((angle - data->player.angle) * M_PI / 180.0));
 		color = 0x964B00FF;
 		if (data->ray.hitside == VERTICALE && data->ray.angle >= 0 && data->ray.angle <= 180)
 			data->ray.texture = EAST;
@@ -36,12 +31,26 @@ void game(t_data *data)
 			data->ray.texture = SUD;
 		render_texture(data, k, wallheight);
 		angle += FOV / WINDOWW;
-		draw += FOV / WINDOWW;
 		k--;
 	}
-	data->texture.spriteframe++;
-	if (data->texture.spriteframe == 29)
-		data->texture.spriteframe = 0;
+}
+
+
+void game(t_data *data)
+{
+	double	FOV;
+	double	angle;
+	double	draw;
+	double	wallheight;
+	int		color;
+
+	move_player(data);	
+	door_frames_setter(data);
+	FOV = 60;
+	normalize_angle(&data->player.angle);
+	angle = data->player.angle - FOV / 2;
+	normalize_angle(&data->player.angle);
+	reneder_walls(data,FOV,angle);
 	draw_cursor(data);
 	draw_gun_normal(data);
 	draw_map(data, 20, 0x00FF0F);

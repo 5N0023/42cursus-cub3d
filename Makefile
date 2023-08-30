@@ -18,7 +18,6 @@ SOURCES =		main.c \
 				hooks.c\
 				pixels.c\
 				moveplayer.c\
-				sprite.c\
 
 OBJECTS = $(SOURCES:.c=.o)
 CC = cc
@@ -32,7 +31,7 @@ parser:
 	@make -s -C parsing
 
 $(NAME):$(OBJECTS)
-	gcc $(OBJECTS) $(MLX42) $(PARSER) -Iinclude -lglfw -L$(shell brew --prefix glfw)/lib -I$(shell brew --prefix glfw)/include -o $(NAME)
+	gcc $(OBJECTS) $(MLX42) $(PARSER)  -Iinclude -lglfw -L$(shell brew --prefix glfw)/lib -I$(shell brew --prefix glfw)/include -o $(NAME)
 
 %.o: %.c 
 	@$(CC)  -c $< -o $@

@@ -20,7 +20,7 @@ SOURCE = parser.c GNL/get_next_line.c GNL/get_next_line_utils.c \
 			libft/ft_toupper.c libft/ft_tolower.c libft/ft_strchr.c libft/ft_strrchr.c \
 			libft/ft_strncmp.c libft/ft_strnstr.c libft/ft_atoi.c libft/ft_calloc.c \
 			libft/ft_strdup.c libft/ft_substr.c libft/ft_split.c libft/ft_free.c\
-			parsing/checker_path_extention.c parsing/parser.c\
+			parsing/parser.c\
 			parsing/color_parser.c parsing/map_parser.c parsing/texture_parser.c parsing/map_reading.c \
 			parsing/parsing_utils.c parsing/checking_function.c
 

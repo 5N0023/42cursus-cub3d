@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 14:58:36 by mlektaib          #+#    #+#             */
-/*   Updated: 2023/08/20 21:05:26 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:01:03 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@ void load_loading_texture(t_data *data)
 {
 	mlx_texture_t *texture;
     int i;
-    char path2[50] = "textures/loading/frame_000.png";
+    char path[50] = "textures/loading/frame_000.png";
 
     i = 0;
     data->loading.frames = malloc(sizeof(mlx_image_t*) * 105);
     while(i < 106)
     {
-        texture = mlx_load_png(path2);
+        texture = mlx_load_png(path);
         if(!texture)
             exit(1);
         data->loading.frames[i] = mlx_texture_to_image(data->mlx, texture);
         mlx_resize_image(data->loading.frames[i], 1000, 1000);
         mlx_delete_texture(texture);
-        path2[23] = (i+1) / 100 + '0';
-        path2[24] = ((1+i) / 10) % 10 + '0';
-        path2[25] = (1 +i) % 10 + '0';
+        path[23] = (i+1) / 100 + '0';
+        path[24] = ((1+i) / 10) % 10 + '0';
+        path[25] = (1 +i) % 10 + '0';
         i++;
     }
 }
@@ -57,8 +57,8 @@ void startscreen(t_data *data)
     f++;
     if (f == 106)
     {
-        mlx_set_mouse_pos(data->mlx, WINDOWW / 2, WINDOWW / 2);
 	    mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
+        mlx_set_mouse_pos(data->mlx, WINDOWW / 2, WINDOWW / 2);
         f = 0;
         data->state = STARTMENU;
     }

@@ -110,7 +110,7 @@ void draw_gun_normal(t_data *data)
     else if (data->player.gun.state == SHOOT && data->player.gun.normal.bullet > 0)
     {
         shoot_animation(data,&f,&k);
-        if (f == 8)
+        if (f == 10)
         {
             f = 0;
             k = 0;

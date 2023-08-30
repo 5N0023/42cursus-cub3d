@@ -25,8 +25,8 @@ void startmenu(t_data *data)
         mlx_delete_image(data->mlx, image);
         if(data->mouse.click == 1)
         {
-            mlx_set_mouse_pos(data->mlx, data->mouse.x, data->mouse.y);
             mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
+            mlx_set_mouse_pos(data->mlx, data->mouse.x, data->mouse.y);
             data->state = GAME;
             data->mouse.click = 0;
         }
@@ -65,7 +65,7 @@ void startmenu(t_data *data)
         }
         mlx_delete_image(data->mlx, image);
         if(data->mouse.click == 1)
-            exit(0);
+            mlx_close_window(data->mlx);
     }
     else
     {

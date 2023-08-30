@@ -229,26 +229,6 @@ void render_ouest(t_data *data,int x,double wallheight)
 }
 
 
-void render_sprite(t_data *data,double x,double spritesize,t_spritelist *tmp)
-{
-    double k = 0;
-
-    if(tester >= 250)
-        return;
-    for(int y = data->center - spritesize / 2; y < data->center + spritesize / 2; y++)
-    {
-        int color;
-        color = get_pixel(data->texture.sprite[data->texture.spriteframe],(int)tester,(int)k);
-        k += 250 / spritesize;
-        if(k >= 250)
-            k = 249;
-        if (y >= 0 && y < WINDOWW && color)
-            mlx_put_pixel(data->img, x, y, color);
-    }
-    tester += 250 / spritesize;
-}
-
-
 void render_texture(t_data *data,int x,double wallheight)
 {
     if(data->ray.texture == NORD)
@@ -265,28 +245,14 @@ void render_texture(t_data *data,int x,double wallheight)
         tmp = data->ray.doorlist;
         while(tmp)
         {
-            tmp->doordistance *= cosf((data->ray.angle - data->player.angle) * M_PI / 180);
+            tmp->doordistance *= cos((data->ray.angle - data->player.angle) * M_PI / 180);
             wallheight = WINDOWW / tmp->doordistance;
-            if(tmp->doorhitside == NS && tmp->doordistance < data->ray.distance*cosf((data->ray.angle - data->player.angle) * M_PI / 180))
+            if(tmp->doorhitside == NS && tmp->doordistance < data->ray.distance*cos((data->ray.angle - data->player.angle) * M_PI / 180))
                 render_door_NS(data,x,wallheight,tmp);
-            if(tmp->doorhitside == WE &&tmp->doordistance < data->ray.distance*cosf((data->ray.angle - data->player.angle) * M_PI / 180))
+            if(tmp->doorhitside == WE &&tmp->doordistance < data->ray.distance*cos((data->ray.angle - data->player.angle) * M_PI / 180))
                 render_door_WE(data,x,wallheight,tmp);
             tmp = tmp->next;
         }
     }
-    if (data->ray.spritelist)
-    {
-        t_spritelist *tmp;
-        tmp = data->ray.spritelist;
-        // while(tmp)
-        // {
-            tmp->spritedistance *= cosf((data->ray.angle - data->player.angle) * M_PI / 180);
-            wallheight = WINDOWW / tmp->spritedistance;
-            if(tmp->spritedistance < data->ray.distance*cosf((data->ray.angle - data->player.angle) * M_PI / 180) && tmp->spritedistance/cosf((data->ray.angle - data->player.angle) * M_PI / 180)  > 1)
-                render_sprite(data,x,wallheight/2,tmp);
-        //     tmp = tmp->next;
-        // }
-    }
     free_door_list(data);
-    free_sprites_list(data);
 }
