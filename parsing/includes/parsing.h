@@ -52,5 +52,6 @@ int		parse_map(char **map, t_pars **data);
 int		check_map(char **map);
 char	**map_reader(char *file_name);
 t_pars	*ft_map_parser(char *file_name);
+void	ft_free_textures(t_pars **p);
 
 #endif

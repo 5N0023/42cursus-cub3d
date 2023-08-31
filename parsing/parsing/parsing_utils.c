@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:09:32 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/07/26 21:06:30 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:45:28 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	**ft_allocate_clone(char **original)
 	int		i;
 	char	**map;
 
-	map = malloc(sizeof(char **) * ft_arr_len(original) + 1);
+	map = malloc(sizeof(char *) * (ft_arr_len(original) + 1));
 	if (!map)
 		return (NULL);
 	i = 0;

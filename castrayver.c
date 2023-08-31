@@ -3,33 +3,33 @@
 static void find_dx(t_hit *vhit)
 {
 	if (vhit->angle <= 90 && vhit->angle >= 0)
-		vhit->dx = (int)vhit->x + 1;
+		vhit->dx = floor(vhit->x) + 1;
 	else if (vhit->angle >= 0 && vhit->angle <= 180)
-		vhit->dx = (int)vhit->x + 1;
+		vhit->dx = floor(vhit->x) + 1;
 	else if (vhit->angle >= 180 && vhit->angle <= 360)
 	{
-		if (vhit->dx == (int)vhit->x)
-			vhit->dx = (int)vhit->x - 1;
+		if (vhit->dx == floor(vhit->x))
+			vhit->dx = floor(vhit->x) - 1;
 		else
-			vhit->dx = (int)vhit->x;
+			vhit->dx = floor(vhit->x);
 	}
 }
 
 static void find_dy(t_hit *vhit)
 {
 	if (vhit->angle != 0 && vhit->angle != 180 && vhit->angle != 360)
-		vhit->dy = vhit->y + (vhit->dx - vhit->x) / tanf(vhit->angle * M_PI / 180.0);
+		vhit->dy = vhit->y + (vhit->dx - vhit->x) / tan(vhit->angle * TO_RAD);
 	else if (vhit->angle == 0 || vhit->angle == 180 || vhit->angle == 360)
 	{
 		vhit->dx = vhit->x;
 		if (vhit->angle == 0 || vhit->angle == 360)
-			vhit->dy = (int)vhit->y + 1;
+			vhit->dy = floor(vhit->y) + 1;
 		else
 		{
-			if (vhit->dy != (int)vhit->y)
-				vhit->dy = (int)vhit->y;
+			if (vhit->dy != floor(vhit->y))
+				vhit->dy = floor(vhit->y);
 			else
-				vhit->dy = (int)vhit->y - 1;
+				vhit->dy = floor(vhit->y) - 1;
 		}
 	}
 }

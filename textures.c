@@ -4,7 +4,7 @@
 extern double tester;
 
 
-void draw_door(mlx_image_t *img,int pixelsline,double wallheight,t_data *data,int x)
+void draw_wall(mlx_image_t *img,int pixelsline,double wallheight,t_data *data,int x)
 {
     double k = img->height/2;
     int y = data->center;
@@ -75,7 +75,7 @@ void render_nord(t_data *data,int x,double wallheight)
 {
     int pixelsline;
     pixelsline = (int)((data->ray.x - (int)data->ray.x) * 250);
-    draw_door(data->texture.nordimg,pixelsline,wallheight,data,x);
+    draw_wall(data->texture.nordimg,pixelsline,wallheight,data,x);
     int i = 0;
     if(data->center - wallheight / 2 > 0)
     {
@@ -166,7 +166,7 @@ void render_sud(t_data *data,int x,double wallheight)
 {
     int pixelsline;
     pixelsline = (int)((data->ray.x - (int)data->ray.x) * 250);
-    draw_door(data->texture.sudimg,pixelsline,wallheight,data,x);
+    draw_wall(data->texture.sudimg,pixelsline,wallheight,data,x);
      int i = 0;
     if(data->center - wallheight / 2 > 0)
     {
@@ -188,7 +188,7 @@ void render_east(t_data *data,int x,double wallheight)
 {
     int pixelsline;
     pixelsline = ((int)((data->ray.y - (int)data->ray.y) * 250));
-    draw_door(data->texture.eastimg,pixelsline,wallheight,data,x);
+    draw_wall(data->texture.eastimg,pixelsline,wallheight,data,x);
     int i = 0;
    if(data->center - wallheight / 2 > 0)
     {
@@ -210,7 +210,7 @@ void render_ouest(t_data *data,int x,double wallheight)
 {
     int pixelsline;
     pixelsline = ((int)((data->ray.y - (int)data->ray.y) * 250));
-    draw_door(data->texture.eastimg,pixelsline,wallheight,data,x);
+    draw_wall(data->texture.eastimg,pixelsline,wallheight,data,x);
     int i = 0;
     if(data->center - wallheight / 2 > 0)
     {

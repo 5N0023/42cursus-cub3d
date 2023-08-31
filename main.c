@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 14:58:31 by mlektaib          #+#    #+#             */
-/*   Updated: 2023/08/30 19:00:50 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/08/31 15:06:38 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,11 @@ int	main(int c, char **v)
 {
 	t_data	data;
 	t_data *data_ptr;
+	
 	data_ptr = &data;
 	atexit(checkleaks);
 	if(parser(c, v, data_ptr))
 		return (0);
-	
-	
 	data_ptr->mlx = initdefaultval(data_ptr);
 	load_cursor(data_ptr);
 	load_walls_textures(data_ptr);

@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 16:53:44 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/07/27 08:08:10 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:46:05 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,25 @@
 
 // the stuct that is going to hold the info like textures on colors
 
+enum e_grid
+{
+	X,
+	Y
+};
 
+enum	e_side
+{
+	NORTH_T,
+	SOUTH_T,
+	EAST_T,
+	WEST_T
+};
+
+enum e_iter
+{
+	I,
+	J
+};
 
 struct				s_mapp
 {
@@ -45,5 +63,6 @@ typedef struct s_pars
 	char			*west;
 	char			*east;
 	char			*north;
+	
 }					t_pars;
 #endif

@@ -28,7 +28,7 @@
 # define CLOSING 3
 # define NS 0
 # define WE 1
-
+# define TO_RAD  (M_PI / 180.0)
 # include "MLX42/MLX42.h"
 # include <math.h>
 # include <stdio.h>
@@ -215,6 +215,10 @@ void	move_player(t_data *data);
 int ft_pixel(int r, int g, int b, int a);
 mlx_keyfunc	key_hook(mlx_key_data_t key, t_data *data);
 void normalize_angle(double *angle);
+void put_mouse_sensitive(t_data *data,mlx_image_t *image);
+void put_number_pos(mlx_image_t *image,mlx_image_t *img,int x,int y);
+void put_player_speed(t_data *data,mlx_image_t *image);
+void put_to_dataimg(t_data *data,mlx_image_t *image,int x,int y);
 
 #include "parsing/includes/parsing.h"
 #endif

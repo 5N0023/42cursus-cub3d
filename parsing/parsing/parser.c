@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 21:25:11 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/07/27 08:11:48 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:40:43 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,25 @@ int	check_texture(char **map, t_pars **data, int *i)
 		while (txt[++j])
 		{
 			arr = ft_split(map[*i], ' ');
-			if (ft_strncmp(txt[j], arr[0], ft_strlen(map[*i])) == 0 && arr[2] == NULL)
+			if (ft_strncmp(txt[j], arr[0], ft_strlen(map[*i])) == 0
+				&& arr[2] == NULL)
 				counter += put_texture_in_place(txt[j], arr, data);
 			ft_free_array(arr);
 		}
 		(*i)++;
 	}
 	if (counter != 4)
-		return (ft_free_array(txt) , ERROR);
+		return (ft_free_array(txt), ERROR);
 	return (ft_free_array(txt), SUCCESS);
 }
 
-int color_filler(char *color, t_pars **data)
+int	color_filler(char *color, t_pars **data)
 {
 	char	**arr;
 
 	arr = ft_split(color, ' ');
 	if (arr[2])
-		return (-5);
+		return (ft_free_array(arr), -5);
 	if (ft_strncmp("F", arr[0], ft_strlen(arr[0])) == 0)
 	{
 		(*data)->floorcolor = parse_color(color);
@@ -78,7 +79,7 @@ int color_filler(char *color, t_pars **data)
 	return (ft_free_array(arr), 1);
 }
 
-int	color_parser(char	**map, t_pars **data, int *i)
+int	color_parser(char **map, t_pars **data, int *i)
 {
 	int		counter;
 	int		j;

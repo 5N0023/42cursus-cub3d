@@ -18,6 +18,8 @@ SOURCES =		main.c \
 				hooks.c\
 				pixels.c\
 				moveplayer.c\
+				options_sens.c\
+				options_ps.c\
 
 OBJECTS = $(SOURCES:.c=.o)
 CC = cc

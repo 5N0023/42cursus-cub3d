@@ -14,3 +14,22 @@ unsigned int get_pixel(mlx_image_t *img,int i,int j)
 	a = img->pixels[pos+3];
 	return(ft_pixel(r,g,b,a));
 }
+
+void put_to_dataimg(t_data *data,mlx_image_t *image,int x,int y)
+{
+	int  i;
+	int j;
+
+	i = 0;
+	while(i < image->width)
+	{
+		j = 0;
+		while(j < image->height)
+		{
+			unsigned pixel = get_pixel(image, i, j);
+			mlx_put_pixel(data->img, i+x, j+y, pixel);
+			j++;
+		}
+		i++;
+	}
+}

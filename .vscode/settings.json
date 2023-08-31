@@ -11,7 +11,13 @@
         "__hash_table": "c",
         "functional": "c",
         "type_traits": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "array": "c",
+        "iterator": "c",
+        "string_view": "c",
+        "vector": "c",
+        "memory": "c",
+        "utility": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "C_Cpp.dimInactiveRegions": false

@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:12 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/08/20 21:09:08 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:39:50 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_pixel(int r, int g, int b, int a)
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-int	ft_fill_int(char *arr)
+static int	ft_fill_int(char *arr)
 {
 	char		**c;
 	int			i;
@@ -28,7 +28,7 @@ int	ft_fill_int(char *arr)
 	ret = 0;
 	c = ft_split(arr, ',');
 	if (ft_arr_len(c) != 3)
-		return (ERROR);
+		return (ft_free_array(c), ERROR);
 	while (c[i])
 	{
 		j = 0;
@@ -42,7 +42,7 @@ int	ft_fill_int(char *arr)
 			return (ft_free_array(c), ERROR);
 		i++;
 	}
-	ret = ft_pixel(ft_atoi(c[0]), ft_atoi(c[1]), ft_atoi(c[2]), 0xFF);
+	ret = ft_pixel(ft_atoi(c[0]), ft_atoi(c[1]), ft_atoi(c[2]), 255);
 	return (ft_free_array(c), ret);
 }
 
@@ -62,7 +62,7 @@ int	parse_color(char *color)
 	while (_color[1][++i])
 		(_color[1][i] == ',') && v++;
 	if (v != 2)
-		return (ERROR);
+		return (ft_free_array(_color), ERROR);
 	ret = ft_fill_int(_color[1]);
 	if (ret == -1)
 		return (ft_free_array(_color), ERROR);

@@ -19,7 +19,7 @@ void reneder_walls(t_data *data,double FOV, double angle)
 	while (k >= 0)
 	{
 		hits(angle,data);
-		wallheight = WINDOWW / (data->ray.distance * cos((angle - data->player.angle) * M_PI / 180.0));
+		wallheight = WINDOWW / (data->ray.distance * cos((angle - data->player.angle) * TO_RAD));
 		color = 0x964B00FF;
 		if (data->ray.hitside == VERTICALE && data->ray.angle >= 0 && data->ray.angle <= 180)
 			data->ray.texture = EAST;
