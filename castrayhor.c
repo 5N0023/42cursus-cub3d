@@ -50,6 +50,6 @@ void	castrayhorizontal(t_hit *hhit,t_data *data)
 				hhit->hit = 1;
 	if (data->map.map[(int)hhit->dy][(int)hhit->dx] == '1' || data->map.map[(int)hhit->dy][(int)hhit->dx] == '*')
 		hhit->hit = 1;
-	if (data->map.map[(int)hhit->dy][(int)hhit->dx] == 'D')
+	if (data->map.map[(int)hhit->y][(int)hhit->x] == 'D')
 		add_back_to_doors(data, hhit->dx, hhit->dy,NS);
 }

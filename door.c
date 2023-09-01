@@ -89,6 +89,8 @@ void free_door_list(t_data *data)
     t_doorlist *tmp2;
 
     tmp = data->ray.doorlist;
+    if(!tmp)
+        return;
     while (tmp != NULL)
     {
         tmp2 = tmp->next;
@@ -108,6 +110,11 @@ void door_frames_controller(t_data *data)
     if (tmp)
         while(tmp->next)
             tmp = tmp->next;
+    if(!tmp)
+    {
+        free_door_list(data);
+        return;
+    }
     if (tmp)
     {
    while(i < data->map.doors_count)
@@ -179,19 +186,6 @@ void reverse_door_list(t_data *data)
 
 void sort_door_list(t_data *data, int reverse)
 {
-    t_doorlist *tmp;
-    
-    tmp = data->ray.doorlist;
-    while (tmp != NULL)
-    {
-        if (tmp->next != NULL && tmp->doordistance > tmp->next->doordistance)
-        {
-            swap(tmp, tmp->next);
-            tmp = data->ray.doorlist;
-        }
-        else
-            tmp = tmp->next;
-    }
     if (reverse)
         reverse_door_list(data);
 }

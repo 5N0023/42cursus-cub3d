@@ -66,7 +66,16 @@ double	collision(double angle,t_data *data)
 	pick_col_distance(data, vhit, hhit, angle);
 	ret = data->ray.distance;
 	if(data->ray.doorlist)
+	{
 		if (data->ray.doorlist->doordistance < data->ray.distance && door_state(data, data->ray.doorlist->doorhitx, data->ray.doorlist->doorhity) != OPENED)
 			ret = data->ray.doorlist->doordistance;
+		if (data->ray.doorlist->doordistance < data->ray.distance && door_state(data, data->ray.doorlist->doorhitx, data->ray.doorlist->doorhity) == OPENED)
+		{
+			if(data->ray.doorlist->doorhitside == WE && (data->ray.doorlist->doorhity - floor(data->ray.doorlist->doorhity) < 0.2 || data->ray.doorlist->doorhity - floor(data->ray.doorlist->doorhity) > 0.8))
+					ret = data->ray.doorlist->doordistance;
+			if(data->ray.doorlist->doorhitside == NS && (data->ray.doorlist->doorhitx - floor(data->ray.doorlist->doorhitx) < 0.2 || data->ray.doorlist->doorhitx - floor(data->ray.doorlist->doorhitx) > 0.8))
+					ret = data->ray.doorlist->doordistance;
+		}
+	}
 	return (ret);
 }
