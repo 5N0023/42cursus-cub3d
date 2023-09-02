@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:06:05 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/08/30 19:40:23 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/02 19:57:58 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ char	**map_reader(char *file_name)
 	if (!map)
 		return (printf("error in allocation (malloc failed)")
 			, free(map), exit(1), NULL);
-	while (j <= i)
+	while (j < i)
 	{
 		map[j] = get_next_line(file);
 		_replace(map[j]);
 		j++;
 	}
+	map[j] = NULL;
 	return (close(file), map);
 }
+

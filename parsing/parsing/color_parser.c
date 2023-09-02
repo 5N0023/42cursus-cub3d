@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:12 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/08/30 19:39:50 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/02 20:04:51 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,30 @@ int	parse_color(char *color)
 	if (ret == -1)
 		return (ft_free_array(_color), ERROR);
 	return (ft_free_array(_color), ret);
+}
+
+int	color(char *line, t_pars **ret)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (ft_strncmp(line + i, "F", 1) == 0 && (*ret)->floorcolor == -1)
+	{
+		(*ret)->floorcolor = parse_color(line);
+		if ((*ret)->floorcolor == ERROR)
+			return (0);
+		else
+			return (1);
+	}
+	if (ft_strncmp(line + i, "C", 1) == 0 && (*ret)->ceilingcolor == -1)
+	{
+		(*ret)->ceilingcolor = parse_color(line);
+		if ((*ret)->ceilingcolor == ERROR)
+			return (0);
+		else
+			return (1);
+	}
+	return (1);
 }

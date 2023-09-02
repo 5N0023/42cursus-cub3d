@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 14:58:23 by mlektaib          #+#    #+#             */
-/*   Updated: 2023/08/13 14:58:24 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/02 20:40:24 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void draw_map(t_data *data, int size, int color)
             {
 				if(data->map.map[i][j] == '0')
 					color = 0x2E3357FF;
+                else if (data->map.map[i][j] == 'd' || data->map.map[i][j] == 'D')
+                    color = 0x5D2906FF;
                 else
 					color = 0x1A0E13FF;
                 for (int k = 0; k < size; k++)
@@ -53,9 +55,9 @@ void draw_map(t_data *data, int size, int color)
             }
         }
     }
-	int x = halfRange * size + ((size - 8)/2);
-	int y = halfRange * size  + ((size - 8)/2);
-	for (int i = 0; i < 8; i++)
-		for (int j = 0; j < 8; j++)
+	int x = halfRange * size + ((size - 4)/2);
+	int y = halfRange * size  + ((size - 4)/2);
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
 			mlx_put_pixel(data->img, x + j, y + i, 0xFF0000FF);
 }

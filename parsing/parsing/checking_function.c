@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 15:58:14 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/08/30 19:39:36 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/02 19:57:03 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,26 @@ int	check_for_tabs(char **map)
 		j = -1;
 		while (map[i][++j])
 		{
-			if (not_map_element(map[i][j]))
+			if (not_map_element(map[i][j]) && map[i][j] != '\n')
 				return (ERROR);
 			if (map[i][j] == ' ')
+				map[i][j] = '*';
+			if (map[i][j] == '\n' && ft_strlen(map[i]) > 1)
 				map[i][j] = '*';
 			if (map[i][j] == '\t')
 				return (ERROR);
 		}
+	}
+	return (1);
+}
+
+int	check_aftermap(char **p, int i)
+{
+	while (p[i])
+	{
+		if (ft_strncmp(p[i], "\n", 1) != 0)
+			return (-1);
+		i++;
 	}
 	return (1);
 }
@@ -48,7 +61,7 @@ int	check_map(char **p)
 	int		j;
 
 	i = -1;
-	while (p[++i])
+	while (p[++i] && ft_strncmp(p[i], "\n", 1) != 0)
 	{
 		j = -1;
 		while (p[i][++j])
@@ -68,5 +81,5 @@ int	check_map(char **p)
 			}
 		}
 	}
-	return (1);
+	return (check_aftermap(p, i));
 }

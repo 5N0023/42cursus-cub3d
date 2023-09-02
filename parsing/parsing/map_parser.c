@@ -6,39 +6,67 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:24:25 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/08/30 19:43:39 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/02 20:02:50 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
 
+int	skip_spaces_and_compare(char *line, char *txt)
+{
+	int	i;
+
+	i = 0;
+	if (line == NULL)
+		return (1);
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (ft_strncmp(line + i, txt, ft_strlen(txt)) == 0)
+		return (0);
+	return (1);
+}
+
+t_pars	*map_part(int *iter, char **map, t_pars *ret)
+{
+	iter[1] = 0;
+	if (iter[2] != 6)
+		return (printf("error in map elements\n"), 
+			ft_free_array(map), ft_free_textures(&ret), free(ret), NULL);
+	while (map[iter[1]] && checker(map[iter[1]]) == 0)
+		iter[1]++;
+	if (parse_map(map + iter[1], &ret) == -1)
+		return (ft_free_textures(&ret),
+			free(ret), printf("error in map\n"), NULL);
+	return (ft_free_array(map), ret);
+}
+
 t_pars	*ft_map_parser(char *file_name)
 {
 	char	**map;
+	char	**txt;
 	t_pars	*ret;
-	int		i;
+	int		iter[3];
 
-	i = 0;
+	iter[0] = -1;
+	iter[2] = 0;
 	ret = allocate_struct();
 	if (!ret)
 		return (NULL);
 	map = map_reader(file_name);
-	while (map[i] && ft_strncmp(map[i], "\n", 1) == 0)
-		i++;
-	if (texture_parser(map, &ret, &i) == ERROR)
-		return (printf("error in textures\n"),
-			ft_free_array(map), free(ret), NULL);
-	while (map[i] && ft_strncmp(map[i], "\n", 1) == 0)
-		i++;
-	if (color_parser(map, &ret, &i) == ERROR)
-		return (printf("error in color\n"), ft_free_array(map),
-			ft_free_textures(&ret), free(ret), NULL);
-	while (map[i] && ft_strncmp(map[i], "\n", 1) == 0)
-		i++;
-	if (parse_map(map + i, &ret) == ERROR)
-		return (printf("error in map\n"), ft_free_textures(&ret),
-			ft_free_array(map), free(ret), NULL);
-	return (ft_free_array(map), ret);
+	txt = ft_split("NO SO WE EA F C", ' ');
+	while (txt[++iter[0]])
+	{
+		iter[1] = -1;
+		while (++iter[1] < ft_arr_len(map))
+		{
+			while (map[iter[1]] && ft_strncmp(map[iter[1]], "\n", 1) == 0)
+				iter[1]++;
+			if (skip_spaces_and_compare(map[iter[1]], txt[iter[0]]) == 0)
+				iter[2] += check_type(txt[iter[0]], map[iter[1]], &ret);
+		}
+	}
+	ft_free_array(txt);
+	return (map_part(iter, map, ret));
 }
 
 int	get_player_direction(char **m)
@@ -75,7 +103,9 @@ int	parse_map(char **map, t_pars **data)
 
 	longest_line = ft_longest_line(map);
 	if (longest_line == ERROR)
+	{
 		return (ERROR);
+	}
 	i = -1;
 	while (map[++i])
 		while ((int)ft_strlen(map[i]) < longest_line)
@@ -84,11 +114,10 @@ int	parse_map(char **map, t_pars **data)
 		return (ERROR);
 	if (check_map(map) == -1)
 		return (ERROR);
-	if (get_player_direction(map)== -1)
+	if (get_player_direction(map) == -1)
 		return (ERROR);
 	(*data)->map.map = ft_allocate_clone(map);
 	(*data)->map.height = ft_arr_len(map);
 	(*data)->map.width = longest_line;
 	return (1);
 }
-

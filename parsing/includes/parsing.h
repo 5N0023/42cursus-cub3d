@@ -40,7 +40,10 @@ t_pars	*allocate_struct(void);
 
 //parsing functions
 int     parser(int c, char **v, t_data *data);
+int	checker(char *line);
+int	check_type(char *txt, char *line, t_pars **ret);
 int		parse_color(char *color);
+int	color(char *line, t_pars **ret);
 int		parse_texture(char *txt);
 int		texture_parser(char **map, t_pars **data, int *i);
 int		check_file_extention(char *file);

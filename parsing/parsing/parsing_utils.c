@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:09:32 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/08/30 19:45:28 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/02 20:04:59 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ int	ft_longest_line(char **arr)
 	{
 		if (ft_strlen(arr[i]) > (size_t)line_length)
 			line_length = ft_strlen(arr[i]);
-		if (ft_strncmp(arr[i], "\n", 1) == 0 && i != ft_arr_len(arr))
-			return (ERROR);
+		if (ft_strncmp(arr[i], "\n", 1) == 0 && i != ft_arr_len(arr)
+			&& arr[i + 1] && ft_strncmp(arr[i + 1], "\n", 1))
+			return (-1);
 		i++;
 	}
 	return (line_length);
