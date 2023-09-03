@@ -36,15 +36,16 @@ void door_textures(t_data *data)
 {
     mlx_texture_t *texture;
     int i;
+    char *path;
 
     i = 0;
     data->texture.door = malloc(sizeof(mlx_image_t*) * 35);
-    char path2[50] = "textures/door/frame-000.png";
+    path = ft_strdup("textures/door/frame-000.png");
     while(i < 35)
     {
-        path2[21] = (i+1) / 10 + '0';
-        path2[22] = (i+1) % 10 + '0';
-        texture = mlx_load_png(path2);
+        path[21] = (i+1) / 10 + '0';
+        path[22] = (i+1) % 10 + '0';
+        texture = mlx_load_png(path);
         if(!texture)
             exit(1);
         data->texture.door[i] = mlx_texture_to_image(data->mlx, texture);
@@ -52,6 +53,7 @@ void door_textures(t_data *data)
         mlx_delete_texture(texture);
         i++;
     }
+    free(path);
 }
 
 void door_frames_setter(t_data *data)
@@ -100,6 +102,21 @@ void free_door_list(t_data *data)
     data->ray.doorlist = NULL;
 }
 
+void door_remote(t_data *data, int i,t_doorlist *tmp)
+{
+    if (data->map.doors[i].x == (int)tmp->doorhitx && data->map.doors[i].y == (int)tmp->doorhity && tmp->doordistance < 3 && tmp->doordistance > 0.15)
+       {
+        if (data->map.doors[i].state == OPENING)
+            data->map.doors[i].state = CLOSING;
+       else if (data->map.doors[i].state == CLOSING)
+            data->map.doors[i].state = OPENING;
+        else if (data->map.doors[i].state == CLOSED)
+            data->map.doors[i].state = OPENING;
+        else if (data->map.doors[i].state == OPENED)
+            data->map.doors[i].state = CLOSING;
+        }
+}
+
 void door_frames_controller(t_data *data)
 {
     t_doorlist *tmp;
@@ -117,21 +134,11 @@ void door_frames_controller(t_data *data)
     }
     if (tmp)
     {
-   while(i < data->map.doors_count)
-    {
-        if (data->map.doors[i].x == (int)tmp->doorhitx && data->map.doors[i].y == (int)tmp->doorhity && tmp->doordistance < 3 && tmp->doordistance > 0.15)
-       {
-        if (data->map.doors[i].state == OPENING)
-            data->map.doors[i].state = CLOSING;
-       else if (data->map.doors[i].state == CLOSING)
-            data->map.doors[i].state = OPENING;
-        else if (data->map.doors[i].state == CLOSED)
-            data->map.doors[i].state = OPENING;
-        else if (data->map.doors[i].state == OPENED)
-            data->map.doors[i].state = CLOSING;
-        }
-        i++;
-    }
+        while(i < data->map.doors_count)
+            {
+                door_remote(data, i,tmp);
+                i++;
+            }
     }
     free_door_list(data);
 }

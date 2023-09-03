@@ -16,12 +16,22 @@ void load_cursor(t_data *data)
 
 void draw_cursor(t_data *data)
 {
+    int i;
+    int j;
+    int pixel;
+
+    i = 0;
    
-    for(int i = 0;i < data->mouse.cursor->width;i++)
+    while(i < data->mouse.cursor->width)
     {
-        for(int j = 0;j < data->mouse.cursor->height;j++){
-            unsigned pixel = get_pixel(data->mouse.cursor, i, j);
+        j = 0;
+        while(j < data->mouse.cursor->height)
+        {
+            pixel = get_pixel(data->mouse.cursor, i, j);
             if(pixel)
-                mlx_put_pixel(data->img, i+500-13, WINDOWW/2+j+202, pixel);}
+                mlx_put_pixel(data->img, i+500-13, WINDOWW/2+j+202, pixel);
+            j++;
+        }
+        i++;
     }
 }

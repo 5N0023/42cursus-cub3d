@@ -5,6 +5,7 @@ void reload_animation(t_data *data, int *f)
 {
     int i;
     int j;
+    int pixel;
 
     i = 0;
     while(i < data->player.gun.normal.gunreload[*f/2]->width)
@@ -12,7 +13,7 @@ void reload_animation(t_data *data, int *f)
             j = 0;
             while(j < data->player.gun.normal.gunreload[*f/2]->height)
             {
-                unsigned pixel = get_pixel(data->player.gun.normal.gunreload[*f/2], i, j);
+                pixel = get_pixel(data->player.gun.normal.gunreload[*f/2], i, j);
                 if (pixel)
                     mlx_put_pixel(data->img, i+200, j+(WINDOWW - data->player.gun.normal.gunreload[*f/2]->height), pixel);
                 j++;
@@ -32,6 +33,7 @@ void draw_bullets_count(t_data *data)
 {
     int i;
     int j;
+    int pixel;
 
     i = 0;
     while(i < data->player.gun.normal.bullets[data->player.gun.normal.bullet]->height)
@@ -39,7 +41,7 @@ void draw_bullets_count(t_data *data)
             j = 0;
             while(j < data->player.gun.normal.bullets[data->player.gun.normal.bullet]->height)
             {
-                unsigned pixel = get_pixel(data->player.gun.normal.bullets[data->player.gun.normal.bullet], i, j);
+                pixel = get_pixel(data->player.gun.normal.bullets[data->player.gun.normal.bullet], i, j);
                 if (pixel)
                     mlx_put_pixel(data->img, i+50, j+(WINDOWW -data->player.gun.normal.bullets[data->player.gun.normal.bullet]->height), pixel);
                     
@@ -53,6 +55,7 @@ void shoot_animation(t_data *data, int *f, int *k)
 {
     int  i;
     int j;
+    int pixel;
 
     i = 0;
     while(i < data->player.gun.normal.gunshoot[*f]->width)
@@ -60,7 +63,7 @@ void shoot_animation(t_data *data, int *f, int *k)
             j = 0;
             while(j < data->player.gun.normal.gunshoot[*f]->height)
             {
-                unsigned pixel = get_pixel(data->player.gun.normal.gunshoot[*f], i, j);
+                pixel = get_pixel(data->player.gun.normal.gunshoot[*f], i, j);
                 if (pixel)
                     mlx_put_pixel(data->img, i+200, j+(WINDOWW - data->player.gun.normal.gunshoot[*f]->height), pixel);
             j++;        
@@ -80,6 +83,7 @@ void gun_texture(t_data *data,int *f,int *k)
 {
     int i;
     int j;
+    int pixel;
 
     i = 0;
     *f = 0;
@@ -89,7 +93,7 @@ void gun_texture(t_data *data,int *f,int *k)
             j = 0;
             while(j < data->player.gun.normal.gunshoot[5]->height)
             {
-                unsigned pixel = get_pixel(data->player.gun.normal.gunshoot[5], i, j);
+                pixel = get_pixel(data->player.gun.normal.gunshoot[5], i, j);
                 if (pixel)
                     mlx_put_pixel(data->img, i+200, j+(WINDOWW - data->player.gun.normal.gunshoot[5]->height), pixel);
             j++;        

@@ -50,6 +50,7 @@ typedef struct s_doorlist
 struct				s_ray
 {
 	double			x;
+	int				windowx;
 	double			y;
 	double			angle;
 	double			distance;
@@ -219,6 +220,8 @@ void put_mouse_sensitive(t_data *data,mlx_image_t *image);
 void put_number_pos(mlx_image_t *image,mlx_image_t *img,int x,int y);
 void put_player_speed(t_data *data,mlx_image_t *image);
 void put_to_dataimg(t_data *data,mlx_image_t *image,int x,int y);
+void render_door_WE(t_data *data,int x,double wallheight,t_doorlist *tmp);
+void render_door_NS(t_data *data,int x,double wallheight,t_doorlist *tmp);
 
 #include "parsing/includes/parsing.h"
 #endif

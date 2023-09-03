@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 14:58:36 by mlektaib          #+#    #+#             */
-/*   Updated: 2023/08/30 19:01:03 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/03 21:12:03 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ void load_loading_texture(t_data *data)
 {
 	mlx_texture_t *texture;
     int i;
-    char path[50] = "textures/loading/frame_000.png";
-
+    char *path;
+    
+    path = ft_strdup("textures/loading/frame_000.png");
     i = 0;
     data->loading.frames = malloc(sizeof(mlx_image_t*) * 105);
     while(i < 106)
@@ -33,6 +34,7 @@ void load_loading_texture(t_data *data)
         path[25] = (1 +i) % 10 + '0';
         i++;
     }
+    free(path);
 }
 
 void startscreen(t_data *data)
@@ -40,18 +42,17 @@ void startscreen(t_data *data)
     static int f;
     int i;
     int j;
+    int pixel;
 
-    i = 0;
-    while (i < data->loading.frames[f]->width)
+    i = -1;
+    while (++i < data->loading.frames[f]->width)
     {
-        j = 0;
-        while (j < data->loading.frames[f]->height)
+        j = -1;
+        while (++j < data->loading.frames[f]->height)
         {
-            unsigned pixel = get_pixel(data->loading.frames[f], i, j);
+            pixel = get_pixel(data->loading.frames[f], i, j);
             mlx_put_pixel(data->img, i, j, pixel);
-            j++;
         }
-        i++;
     }
     mlx_delete_image(data->mlx, data->loading.frames[f]);
     f++;

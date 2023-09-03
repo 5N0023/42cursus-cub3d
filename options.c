@@ -27,6 +27,7 @@ void put_options_img(t_data *data,mlx_image_t *image)
 {
     int i;
     int j;
+    int pixel;
     
     i=0;
     while(i < image->width)
@@ -34,7 +35,7 @@ void put_options_img(t_data *data,mlx_image_t *image)
         j = 0;
         while(j < image->height)
         {
-            unsigned pixel = get_pixel(image, i, j);
+            pixel = get_pixel(image, i, j);
             mlx_put_pixel(data->img, i, j, pixel);
             j++;    
         }

@@ -4,10 +4,11 @@
 
 void load_reload_animation(t_data *data)
 {
-    char path[50] = "textures/normal/reload/frame_01_delay-0.02s.png";
+    char *path;
     int i;
     mlx_texture_t *texture;
 
+    path = ft_strdup("textures/normal/reload/frame_01_delay-0.02s.png");
     i = 0;
     data->player.gun.normal.gunreload = malloc(sizeof(mlx_image_t*) * 47);
     while(i < 46)
@@ -22,14 +23,16 @@ void load_reload_animation(t_data *data)
         path[30] = (i+1) % 10 + '0';
         i++;
     }
+    free(path);
 }
 
 void load_shoot_animation(t_data *data)
 {
-    char path[50] = "textures/normal/shoot/frame_00.png";
+    char *path;
     mlx_texture_t *texture;
     int i;
 
+    path  = ft_strdup("textures/normal/shoot/frame_00.png");
     i = 0;
     data->player.gun.normal.gunshoot = malloc(sizeof(mlx_image_t*) * 10);
     while(i < 10)
@@ -44,14 +47,16 @@ void load_shoot_animation(t_data *data)
         path[29] = (i+1) % 10 + '0';
         i++;
     }
+    free(path);
 }
 
 void load_bullets_count(t_data *data)
 {
     mlx_texture_t *texture;
     int i;
-    char path[50] = "textures/normal/bullets/00.png";
+    char *path;
 
+    path = ft_strdup("textures/normal/bullets/00.png");
     i = 0;
     data->player.gun.normal.bullets = malloc(sizeof(mlx_image_t*) * 25);
     while(i < 25)
@@ -66,6 +71,7 @@ void load_bullets_count(t_data *data)
         path[25] = (i+1) % 10 + '0';
         i++;
     }
+    free(path);
 }
 
 void load_normal_texture(t_data *data)

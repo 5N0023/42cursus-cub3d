@@ -20,6 +20,7 @@ SOURCES =		main.c \
 				moveplayer.c\
 				options_sens.c\
 				options_ps.c\
+				render_doors.c\
 
 OBJECTS = $(SOURCES:.c=.o)
 CC = cc

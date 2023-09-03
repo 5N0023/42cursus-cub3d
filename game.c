@@ -53,6 +53,6 @@ void game(t_data *data)
 	reneder_walls(data,FOV,angle);
 	draw_cursor(data);
 	draw_gun_normal(data);
-	draw_map(data, 20, 0x00FF0F);
+	draw_map(data, 200, 0x00FF0F);
 	
 }

@@ -49,12 +49,7 @@ void hover_exit(t_data *data)
     image = mlx_texture_to_image(data->mlx, texture);
     mlx_delete_texture(texture);
     mlx_resize_image(image, 1000, 1000);
-    for(int i = 0;i < 1000;i++)
-    {
-        for(int j = 0;j < 1000;j++){
-            unsigned pixel = get_pixel(image, i, j);
-            mlx_put_pixel(data->img, i, j, pixel);}
-    }
+    put_to_dataimg(data, image, 0, 0);
     mlx_delete_image(data->mlx, image);
     if(data->mouse.click == 1)
         mlx_close_window(data->mlx);
@@ -71,12 +66,7 @@ void nothing_hovered(t_data *data)
     image = mlx_texture_to_image(data->mlx, texture);
     mlx_delete_texture(texture);
     mlx_resize_image(image, 1000, 1000);
-    for(int i = 0;i < image->width;i++)
-    {
-        for(int j = 0;j < image->height;j++){
-            unsigned pixel = get_pixel(image, i, j);
-            mlx_put_pixel(data->img, i, j, pixel);}
-    }
+    put_to_dataimg(data, image, 0, 0);
     mlx_delete_image(data->mlx, image);
 }
 

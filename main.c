@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 14:58:31 by mlektaib          #+#    #+#             */
-/*   Updated: 2023/08/31 20:22:35 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/03 20:59:38 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ int	game_loop(t_data *data)
 	if (data->state == STARTSCREEN)
 		startscreen(data);
 	if (data->state == GAME)
-	{
-		printf("center: %f\n", data->center);	
 		game(data);
-	}
 	if (data->state == STARTMENU)
 		startmenu(data);
 	if (data->state == OPTIONS)
@@ -55,6 +52,29 @@ int	game_loop(t_data *data)
 void checkleaks(void)
 {
 	system("leaks cub3D");
+}
+
+
+void clear_leaks(t_data *data)
+{
+	int i;
+
+	free(data->texture.door);
+	free(data->player.gun.normal.bullets);
+	free(data->player.gun.normal.gunshoot);
+	free(data->player.gun.normal.gunreload);
+	free(data->loading.frames);
+	free(data->texture.nord);
+	free(data->texture.sud);
+	free(data->texture.east);
+	free(data->texture.ouest);
+	i = 0;
+	while(i < data->map.height)
+	{
+		free(data->map.map[i]);
+		i++;
+	}
+	free(data->map.map);
 }
 
 
@@ -81,5 +101,6 @@ int	main(int c, char **v)
 	mlx_cursor_hook(data_ptr->mlx, (void *)key_cursor, data_ptr);
 	mlx_loop(data_ptr->mlx);
 	mlx_terminate(data.mlx);
-	exit (0);
+	clear_leaks(data_ptr);
+	return (0);
 }

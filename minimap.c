@@ -6,58 +6,70 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 14:58:23 by mlektaib          #+#    #+#             */
-/*   Updated: 2023/09/02 20:40:24 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/03 20:33:31 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+
+void draw_player_minimap(t_data *data, int size)
+{
+    int i;
+    int j;
+    int newplayerX;
+    int newplayerY;
+    
+    i = 0;
+    newplayerY = (size / 2) - 3;
+    newplayerX = (size / 2) - 3;
+    while(newplayerX + i < ((size / 2)) + 3)
+    {
+        j = 0;
+        while(newplayerY + j <((size / 2)) + 3)
+        {
+            mlx_put_pixel(data->img, newplayerX + i, newplayerY + j, 0xFF0000FF);
+            j++;
+        }
+        i++;
+    }
+}
+
+void draw_minimap(t_data *data, int size,double startx, double starty)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while(i < size)
+    {
+        j = 0;
+        startx = data->player.x - 5;
+        while(j < size)
+        {
+           
+            if(startx >= 0 && starty >= 0 && startx < data->map.width && starty < data->map.height)
+            {
+                if (data->map.map[(int)starty][(int)startx] == '1')
+                    mlx_put_pixel(data->img,  j,  i, 0x998970FF);
+                else if (data->map.map[(int)starty][(int)startx] == 'd' || data->map.map[(int)starty][(int)startx] == 'D' )
+                    mlx_put_pixel(data->img,  j,  i, 0x5d2906FF);
+            }
+            startx += 0.05;
+            j++;
+        }
+        starty +=0.05;
+        i++;
+    }
+}
+
 void draw_map(t_data *data, int size, int color)
 {
-    int playerX = (int)data->player.x;
-    int playerY = (int)data->player.y;
-    int halfRange = 5; 
-
-    for (int i = playerY - halfRange; i <= playerY + halfRange; i++)
-    {
-        for (int j = playerX - halfRange; j <= playerX + halfRange; j++)
-        {
-            if (i >= 0 && j >= 0 && j < data->map.width && i < data->map.height)
-            {
-				if(data->map.map[i][j] == '0')
-					color = 0x2E3357FF;
-                else if (data->map.map[i][j] == 'd' || data->map.map[i][j] == 'D')
-                    color = 0x5D2906FF;
-                else
-					color = 0x1A0E13FF;
-                for (int k = 0; k < size; k++)
-                {
-                    for (int l = 0; l < size; l++)
-                    {
-                        int drawX = (j - (playerX - halfRange)) * size + l;
-                        int drawY = (i - (playerY - halfRange)) * size + k;
-                        mlx_put_pixel(data->img, drawX, drawY, color);
-                    }
-                }
-			}
-			else {
-				color = 0x1A0E13FF;
-				for (int k = 0; k < size; k++)
-                {
-                    for (int l = 0; l < size; l++)
-                    {
-                        int drawX = (j - (playerX - halfRange)) * size + l;
-                        int drawY = (i - (playerY - halfRange)) * size + k;
-                        mlx_put_pixel(data->img, drawX, drawY, color);
-                    }
-                }
-
-            }
-        }
-    }
-	int x = halfRange * size + ((size - 4)/2);
-	int y = halfRange * size  + ((size - 4)/2);
-	for (int i = 0; i < 4; i++)
-		for (int j = 0; j < 4; j++)
-			mlx_put_pixel(data->img, x + j, y + i, 0xFF0000FF);
+    double startx;
+    double starty;
+    
+    startx = data->player.x - 5;
+    starty = data->player.y - 5;
+    draw_minimap(data, size, startx, starty);
+    draw_player_minimap(data, size);
 }
