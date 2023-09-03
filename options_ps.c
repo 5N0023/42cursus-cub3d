@@ -19,33 +19,15 @@ void calcul_ps_num(t_data *data, int numbers[3])
     numbers[2] = playerspeed % 10;
 }
 
+
 void load_numbers_ps(t_data *data, mlx_image_t *numbers_img[3], int numbers[3])
 {
-    mlx_texture_t *texture;
     char *path;
 
     path = ft_strdup("textures/numbers/0.png");
-    path[17] = numbers[0] + '0';
-    texture = mlx_load_png(path);
-    if(!texture)
-        exit(1);
-    numbers_img[0] = mlx_texture_to_image(data->mlx, texture);
-    mlx_delete_texture(texture);
-    mlx_resize_image(numbers_img[0], 50, 50);
-    path[17] = numbers[1] + '0';
-    texture = mlx_load_png(path);
-    if(!texture)
-        exit(1);
-    numbers_img[1] = mlx_texture_to_image(data->mlx, texture);
-    mlx_delete_texture(texture);
-    mlx_resize_image(numbers_img[1], 50, 50);
-    path[17] = numbers[2] + '0';
-    texture = mlx_load_png(path);
-     if(!texture)
-        exit(1);
-    numbers_img[2] = mlx_texture_to_image(data->mlx, texture);
-    mlx_delete_texture(texture);
-    mlx_resize_image(numbers_img[2], 50, 50);
+    numbers_img[0] = get_number_image(path, numbers[0], data);
+    numbers_img[1] = get_number_image(path, numbers[1], data);
+    numbers_img[2] = get_number_image(path, numbers[2], data);
     free(path);
 }
 
@@ -54,7 +36,6 @@ void put_player_speed(t_data *data,mlx_image_t *image)
     mlx_image_t *img;
     mlx_image_t *numbers_img[3];
     int numbers[3];
-
 
     calcul_ps_num(data, numbers);
     load_numbers_ps(data, numbers_img, numbers);

@@ -222,6 +222,7 @@ void put_player_speed(t_data *data,mlx_image_t *image);
 void put_to_dataimg(t_data *data,mlx_image_t *image,int x,int y);
 void render_door_WE(t_data *data,int x,double wallheight,t_doorlist *tmp);
 void render_door_NS(t_data *data,int x,double wallheight,t_doorlist *tmp);
+mlx_image_t *get_number_image(char *path, int number,t_data *data);
 
 #include "parsing/includes/parsing.h"
 #endif
