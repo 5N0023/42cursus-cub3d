@@ -1,6 +1,6 @@
 #include "cub3D.h"
 
-void hooks_handler(mlx_key_data_t key,t_data *data)
+void	hooks_handler(mlx_key_data_t key, t_data *data)
 {
 	if (key.key == MLX_KEY_ESCAPE)
 		mlx_close_window(data->mlx);
@@ -30,13 +30,13 @@ void hooks_handler(mlx_key_data_t key,t_data *data)
 mlx_keyfunc	key_hook(mlx_key_data_t key, t_data *data)
 {
 	hooks_handler(key, data);
-	if (key.key == MLX_KEY_P && key.action == MLX_PRESS && (data->state == GAME || data->state == STARTMENU))
+	if (key.key == MLX_KEY_P && key.action == MLX_PRESS && (data->state == GAME
+			|| data->state == STARTMENU))
 	{
-		
 		if (data->state == GAME)
 		{
-				mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
-				data->state = STARTMENU;
+			mlx_set_cursor_mode(data->mlx, MLX_MOUSE_NORMAL);
+			data->state = STARTMENU;
 		}
 	}
 	if (key.key == MLX_KEY_F && key.action == MLX_PRESS)

@@ -12,7 +12,7 @@
 
 #include "cub3D.h"
 
-double tester;
+double			tester;
 
 mlx_mousefunc	key_mouse(mouse_key_t button, action_t action,
 		modifier_key_t modifier_key, t_data *data)
@@ -25,9 +25,11 @@ mlx_mousefunc	key_mouse(mouse_key_t button, action_t action,
 }
 mlx_cursorfunc	key_cursor(double x, double y, t_data *data)
 {
-	if(data->state == GAME)
-	{data->mouse.x = x;
-	data->mouse.y = y;}
+	if (data->state == GAME)
+	{
+		data->mouse.x = x;
+		data->mouse.y = y;
+	}
 	return (NULL);
 }
 
@@ -49,15 +51,14 @@ int	game_loop(t_data *data)
 	return (0);
 }
 
-void checkleaks(void)
+void	checkleaks(void)
 {
 	system("leaks cub3D");
 }
 
-
-void clear_leaks(t_data *data)
+void	clear_leaks(t_data *data)
 {
-	int i;
+	int	i;
 
 	free(data->texture.door);
 	free(data->player.gun.normal.bullets);
@@ -69,7 +70,7 @@ void clear_leaks(t_data *data)
 	free(data->texture.east);
 	free(data->texture.ouest);
 	i = 0;
-	while(i < data->map.height)
+	while (i < data->map.height)
 	{
 		free(data->map.map[i]);
 		i++;
@@ -77,15 +78,14 @@ void clear_leaks(t_data *data)
 	free(data->map.map);
 }
 
-
 int	main(int c, char **v)
 {
 	t_data	data;
-	t_data *data_ptr;
-	
+	t_data	*data_ptr;
+
 	data_ptr = &data;
 	atexit(checkleaks);
-	if(parser(c, v, data_ptr))
+	if (parser(c, v, data_ptr))
 		return (1);
 	data_ptr->mlx = initdefaultval(data_ptr);
 	load_cursor(data_ptr);

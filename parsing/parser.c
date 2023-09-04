@@ -61,10 +61,8 @@ int find_doors(t_data *data)
 {
 	size_t i;
 	size_t j;
-	int count;
 	
 	i=0;
-	count = 0;
 	data->map.doors_count = doors_count(data);
 	if(data->map.doors_count == 0)
 		return (0);

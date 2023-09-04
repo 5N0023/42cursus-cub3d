@@ -1,6 +1,6 @@
 #include "cub3D.h"
 
-static void find_dx(t_hit *vhit)
+static void	find_dx(t_hit *vhit)
 {
 	if (vhit->angle <= 90 && vhit->angle >= 0)
 		vhit->dx = floor(vhit->x) + 1;
@@ -15,7 +15,7 @@ static void find_dx(t_hit *vhit)
 	}
 }
 
-static void find_dy(t_hit *vhit)
+static void	find_dy(t_hit *vhit)
 {
 	if (vhit->angle != 0 && vhit->angle != 180 && vhit->angle != 360)
 		vhit->dy = vhit->y + (vhit->dx - vhit->x) / tan(vhit->angle * TO_RAD);
@@ -36,20 +36,23 @@ static void find_dy(t_hit *vhit)
 
 void	castrayvertical(t_hit *vhit, t_data *data)
 {
-    find_dx(vhit);
+	find_dx(vhit);
 	find_dy(vhit);
 	vhit->x = vhit->dx;
 	vhit->y = vhit->dy;
-	if (vhit->x <= 0 || vhit->x >= data->map.width || vhit->y <= 0 || vhit->y >= data->map.height)
+	if (vhit->x <= 0 || vhit->x >= data->map.width || vhit->y <= 0
+		|| vhit->y >= data->map.height)
 	{
 		vhit->hit = 1;
 		return ;
 	}
-	if (vhit->angle  >= 180 && vhit->angle  <= 360)
-		if (data->map.map[(int)vhit->dy][(int)vhit->dx - 1] == '1' || data->map.map[(int)vhit->dy][(int)vhit->dx - 1] == '*')
+	if (vhit->angle >= 180 && vhit->angle <= 360)
+		if (data->map.map[(int)vhit->dy][(int)vhit->dx - 1] == '1'
+			|| data->map.map[(int)vhit->dy][(int)vhit->dx - 1] == '*')
 			vhit->hit = 1;
-	if (data->map.map[(int)vhit->dy][(int)vhit->dx] == '1' || data->map.map[(int)vhit->dy][(int)vhit->dx] == '*')
+	if (data->map.map[(int)vhit->dy][(int)vhit->dx] == '1'
+		|| data->map.map[(int)vhit->dy][(int)vhit->dx] == '*')
 		vhit->hit = 1;
 	if (data->map.map[(int)vhit->y][(int)vhit->x] == 'd')
-		add_back_to_doors(data,  vhit->dx,  vhit->dy, WE);
+		add_back_to_doors(data, vhit->dx, vhit->dy, WE);
 }

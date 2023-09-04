@@ -1,8 +1,7 @@
-#include"cub3D.h"
+#include "cub3D.h"
 
-void init_hits(t_hit *vhit, t_hit *hhit, t_data *data, double angle)
+void	init_hits(t_hit *vhit, t_hit *hhit, t_data *data, double angle)
 {
-	
 	vhit->hitx = WINDOWW;
 	vhit->hity = WINDOWW;
 	vhit->x = data->player.x;
@@ -25,13 +24,15 @@ void init_hits(t_hit *vhit, t_hit *hhit, t_data *data, double angle)
 	hhit->angle = angle;
 }
 
-void pick_distance(t_data *data, t_hit vhit, t_hit hhit, double angle)
+void	pick_distance(t_data *data, t_hit vhit, t_hit hhit, double angle)
 {
-	if ((hhit.distance  * cos((angle - data->player.angle) * TO_RAD) < vhit.distance* cos((angle - data->player.angle) * TO_RAD))|| data->ray.angle == 0 || data->ray.angle == 180)
+	if ((hhit.distance * cos((angle - data->player.angle)
+				* TO_RAD) < vhit.distance * cos((angle - data->player.angle)
+				* TO_RAD)) || data->ray.angle == 0 || data->ray.angle == 180)
 	{
 		data->ray.x = hhit.x;
 		data->ray.y = hhit.y;
-		data->ray.distance = hhit.distance ;
+		data->ray.distance = hhit.distance;
 		data->ray.hitside = HORIZONTALE;
 	}
 	else
@@ -43,14 +44,14 @@ void pick_distance(t_data *data, t_hit vhit, t_hit hhit, double angle)
 	}
 }
 
-double	hits(double angle,t_data *data)
+double	hits(double angle, t_data *data)
 {
 	t_hit	vhit;
 	t_hit	hhit;
-	
-	while(angle <= 0)
+
+	while (angle <= 0)
 		angle += 360;
-	while(angle >= 360)
+	while (angle >= 360)
 		angle -= 360;
 	init_hits(&vhit, &hhit, data, angle);
 	data->ray.angle = angle;
@@ -60,8 +61,10 @@ double	hits(double angle,t_data *data)
 	while (!vhit.hit)
 		castrayvertical(&vhit, data);
 	sort_door_list(data, 1);
-	vhit.distance = sqrtf(powf((vhit.x - data->player.x), 2) + powf((vhit.y- data->player.y), 2));
-	hhit.distance = sqrtf(powf((hhit.x - data->player.x), 2) + powf((hhit.y- data->player.y), 2));
+	vhit.distance = sqrtf(powf((vhit.x - data->player.x), 2) + powf((vhit.y
+					- data->player.y), 2));
+	hhit.distance = sqrtf(powf((hhit.x - data->player.x), 2) + powf((hhit.y
+					- data->player.y), 2));
 	pick_distance(data, vhit, hhit, angle);
 	return (data->ray.distance);
 }

@@ -1,8 +1,8 @@
 #include "cub3D.h"
 
-mlx_t *initdefaultval(t_data *data_ptr)
+mlx_t	*initdefaultval(t_data *data_ptr)
 {
-    data_ptr->player.speed = 0.01;
+	data_ptr->player.speed = 0.01;
 	data_ptr->player.rotation = 0.01;
 	data_ptr->player.wpress = 0;
 	data_ptr->player.spress = 0;
@@ -21,5 +21,5 @@ mlx_t *initdefaultval(t_data *data_ptr)
 	data_ptr->center = 715;
 	data_ptr->gamemode = NORMAL;
 	data_ptr->state = STARTSCREEN;
-	return(mlx_init(WINDOWW, WINDOWW, "CUB3D!", 0));
+	return (mlx_init(WINDOWW, WINDOWW, "CUB3D!", 0));
 }
