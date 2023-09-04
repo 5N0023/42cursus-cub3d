@@ -77,8 +77,6 @@ void	load_bullets_count(t_data *data)
 
 void	load_normal_texture(t_data *data)
 {
-	mlx_texture_t *texture;
-
 	data->player.gun.normal.bullet = 24;
 	load_reload_animation(data);
 	load_shoot_animation(data);

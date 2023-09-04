@@ -24,7 +24,7 @@ void	init_collision(t_hit *vhit, t_hit *hhit, t_data *data, double angle)
 	hhit->angle = angle;
 }
 
-void	pick_col_distance(t_data *data, t_hit vhit, t_hit hhit, double angle)
+void	pick_col_distance(t_data *data, t_hit vhit, t_hit hhit)
 {
 	if (hhit.distance < vhit.distance)
 	{
@@ -78,7 +78,6 @@ double	collision(double angle, t_data *data)
 {
 	t_hit	vhit;
 	t_hit	hhit;
-	double	ret;
 
 	while (angle <= 0)
 		angle += 360;
@@ -96,6 +95,6 @@ double	collision(double angle, t_data *data)
 					- data->player.y), 2));
 	hhit.distance = sqrtf(powf((hhit.x - data->player.x), 2) + powf((hhit.y
 					- data->player.y), 2));
-	pick_col_distance(data, vhit, hhit, angle);
+	pick_col_distance(data, vhit, hhit);
 	return (pick_return_value(data));
 }

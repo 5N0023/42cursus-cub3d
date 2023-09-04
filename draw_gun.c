@@ -2,8 +2,8 @@
 
 void	reload_animation(t_data *data, int *f)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
 	int	pixel;
 
 	i = 0;
@@ -32,8 +32,8 @@ void	reload_animation(t_data *data, int *f)
 
 void	draw_bullets_count(t_data *data)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
 	int	pixel;
 
 	i = 0;
@@ -56,8 +56,8 @@ void	draw_bullets_count(t_data *data)
 
 void	shoot_animation(t_data *data, int *f, int *k)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
 	int	pixel;
 
 	i = 0;
@@ -84,8 +84,8 @@ void	shoot_animation(t_data *data, int *f, int *k)
 
 void	gun_texture(t_data *data, int *f, int *k)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
 	int	pixel;
 
 	i = 0;

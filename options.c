@@ -29,8 +29,8 @@ void	click_handler(t_data *data)
 
 void	put_options_img(t_data *data, mlx_image_t *image)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
 	int	pixel;
 
 	i = 0;

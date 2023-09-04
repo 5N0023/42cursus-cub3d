@@ -2,7 +2,6 @@
 
 unsigned int	get_pixel(mlx_image_t *img, int i, int j)
 {
-	int	pixel;
 	int	pos;
 
 	pos = (j * 4 * img->width) + i * 4;
@@ -12,8 +11,8 @@ unsigned int	get_pixel(mlx_image_t *img, int i, int j)
 
 void	put_to_dataimg(t_data *data, mlx_image_t *image, int x, int y)
 {
-	int i;
-	int j;
+	size_t i;
+	size_t j;
 
 	i = 0;
 	while (i < image->width)

@@ -64,7 +64,7 @@ void	draw_minimap(t_data *data, int size, double startx, double starty)
 	}
 }
 
-void	draw_map(t_data *data, int size, int color)
+void	draw_map(t_data *data, int size)
 {
 	double	startx;
 	double	starty;

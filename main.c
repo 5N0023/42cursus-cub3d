@@ -17,6 +17,7 @@ double			tester;
 mlx_mousefunc	key_mouse(mouse_key_t button, action_t action,
 		modifier_key_t modifier_key, t_data *data)
 {
+	(void)modifier_key;
 	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
 		data->mouse.click = 1;
 	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_RELEASE)
@@ -58,7 +59,7 @@ void	checkleaks(void)
 
 void	clear_leaks(t_data *data)
 {
-	int	i;
+	size_t	i;
 
 	free(data->texture.door);
 	free(data->player.gun.normal.bullets);

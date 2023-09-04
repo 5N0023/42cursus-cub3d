@@ -201,7 +201,7 @@ void					free_door_list(t_data *data);
 double					collision(double angle, t_data *data);
 void					castrayvertical(t_hit *vhit, t_data *data);
 void					castrayhorizontal(t_hit *hhit, t_data *data);
-void					draw_map(t_data *data, int size, int color);
+void					draw_map(t_data *data, int size);
 mlx_t					*initdefaultval(t_data *data_ptr);
 void					game(t_data *data);
 void					move_player(t_data *data);

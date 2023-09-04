@@ -24,6 +24,7 @@ SOURCES =		main.c \
 
 OBJECTS = $(SOURCES:.c=.o)
 CC = cc
+FLAGS = -Wall -Wextra -Werror
 LIBFT = libft/libft.a
 MLX42 = MLX42/libmlx42.a
 PARSER = parsing/parser.a
@@ -34,10 +35,10 @@ parser:
 	@make -s -C parsing
 
 $(NAME):$(OBJECTS)
-	gcc $(OBJECTS) $(MLX42) $(PARSER)  -Iinclude -lglfw -L$(shell brew --prefix glfw)/lib -I$(shell brew --prefix glfw)/include -o $(NAME)
+	gcc $(OBJECTS)  $(MLX42) $(PARSER)  -Iinclude -lglfw -L$(shell brew --prefix glfw)/lib -I$(shell brew --prefix glfw)/include -o $(NAME)
 
 %.o: %.c 
-	@$(CC)  -c $< -o $@
+	@$(CC) $(FLAGS)  -c $< -o $@
 
 clean:
 	make -s -C parsing clean

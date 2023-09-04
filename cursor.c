@@ -16,8 +16,8 @@ void	load_cursor(t_data *data)
 
 void	draw_cursor(t_data *data)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
 	int	pixel;
 
 	i = 0;

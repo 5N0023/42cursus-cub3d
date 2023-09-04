@@ -20,7 +20,13 @@
         "utility": "c",
         "bitset": "c",
         "chrono": "c",
-        "unordered_map": "c"
+        "unordered_map": "c",
+        "__split_buffer": "c",
+        "deque": "c",
+        "initializer_list": "c",
+        "queue": "c",
+        "random": "c",
+        "span": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "C_Cpp.dimInactiveRegions": false

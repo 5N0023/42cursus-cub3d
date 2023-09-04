@@ -12,7 +12,6 @@ void	reneder_walls(t_data *data, double FOV, double angle)
 {
 	int		k;
 	double	wallheight;
-	int		color;
 
 	k = WINDOWW - 1;
 	while (k >= 0)
@@ -20,7 +19,6 @@ void	reneder_walls(t_data *data, double FOV, double angle)
 		hits(angle, data);
 		wallheight = WINDOWW / (data->ray.distance * cos((angle
 						- data->player.angle) * TO_RAD));
-		color = 0x964B00FF;
 		if (data->ray.hitside == VERTICALE && data->ray.angle >= 0
 			&& data->ray.angle <= 180)
 			data->ray.texture = EAST;
@@ -41,9 +39,6 @@ void	game(t_data *data)
 {
 	double FOV;
 	double angle;
-	double draw;
-	double wallheight;
-	int color;
 
 	move_player(data);
 	door_frames_setter(data);
@@ -54,5 +49,5 @@ void	game(t_data *data)
 	reneder_walls(data, FOV, angle);
 	draw_cursor(data);
 	draw_gun_normal(data);
-	draw_map(data, 200, 0x00FF0F);
+	draw_map(data, 200);
 }

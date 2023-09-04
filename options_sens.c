@@ -2,8 +2,8 @@
 
 void	put_number_pos(mlx_image_t *image, mlx_image_t *img, int x, int y)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
 	int	pixel;
 
 	i = 0;
@@ -13,7 +13,7 @@ void	put_number_pos(mlx_image_t *image, mlx_image_t *img, int x, int y)
 		while (j < img->height)
 		{
 			pixel = get_pixel(img, i, j);
-			if (pixel << 24)
+			if (pixel << 24 != 0)
 				mlx_put_pixel(image, i + x, j + y, pixel);
 			j++;
 		}
@@ -67,7 +67,6 @@ void	load_numbers_sen(t_data *data, mlx_image_t *numbers_img[3],
 
 void	put_mouse_sensitive(t_data *data, mlx_image_t *image)
 {
-	mlx_image_t *img;
 	mlx_image_t *numbers_img[3];
 	int numbers[3];
 

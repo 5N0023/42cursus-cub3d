@@ -211,8 +211,8 @@ size_t	door_list_size(t_doorlist *head)
 }
 void	array_bubble_sort(t_doorlist **arr, size_t size)
 {
-	int	j;
-	int	k;
+	size_t	j;
+	size_t	k;
 
 	j = 0;
 	while (j < size - 1)

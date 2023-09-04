@@ -40,8 +40,8 @@ void	load_loading_texture(t_data *data)
 void	startscreen(t_data *data)
 {
 	static int	f;
-	int			i;
-	int			j;
+	size_t			i;
+	size_t			j;
 	int			pixel;
 
 	i = -1;
