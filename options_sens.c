@@ -4,7 +4,7 @@ void	put_number_pos(mlx_image_t *image, mlx_image_t *img, int x, int y)
 {
 	size_t	i;
 	size_t	j;
-	int	pixel;
+	int		pixel;
 
 	i = 0;
 	while (i < img->width)

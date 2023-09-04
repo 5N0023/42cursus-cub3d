@@ -31,8 +31,8 @@ void	load_numbers_ps(t_data *data, mlx_image_t *numbers_img[3],
 
 void	put_player_speed(t_data *data, mlx_image_t *image)
 {
-	mlx_image_t *numbers_img[3];
-	int numbers[3];
+	mlx_image_t	*numbers_img[3];
+	int			numbers[3];
 
 	calcul_ps_num(data, numbers);
 	load_numbers_ps(data, numbers_img, numbers);

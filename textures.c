@@ -10,64 +10,45 @@ void	draw_wall(mlx_image_t *img, int pixelsline, double wallheight,
 	int		color;
 
 	k = img->height / 2;
-	y = data->center;
-	while (y < data->center + wallheight / 2 && y < WINDOWW)
+	y = data->center - 1;
+	while (++y < data->center + wallheight / 2 && y < WINDOWW)
 	{
 		color = get_pixel(img, pixelsline, (int)k);
 		k += 250 / wallheight;
-		if (k >= 250)
-			k = 249;
-		if (y >= 0 && y < WINDOWW)
+		if (y >= 0 && y < WINDOWW && k >= 0 && k < 250)
 			mlx_put_pixel(data->img, x, y, color);
-		y++;
 	}
-	y = data->center;
+	y = data->center + 1;
 	k = img->height / 2;
-	while (y > data->center - wallheight / 2 && y >= 0)
+	while (--y > data->center - wallheight / 2 && y >= 0)
 	{
 		color = get_pixel(img, pixelsline, (int)k);
 		k -= 250 / wallheight;
-		if (k < 0)
-			k = 0;
-		if (y >= 0 && y < WINDOWW)
+		if (y >= 0 && y < WINDOWW && k >= 0 && k < 250)
 			mlx_put_pixel(data->img, x, y, color);
-		y--;
 	}
 }
 
-void	load_walls_textures(t_data *data)
+mlx_image_t	*load_wall_texture_path(char *path, t_data *data)
 {
 	mlx_texture_t	*texture;
 	mlx_image_t		*img;
 
-	texture = mlx_load_png(data->texture.nord);
+	texture = mlx_load_png(path);
 	if (!texture)
 		exit(1);
 	img = mlx_texture_to_image(data->mlx, texture);
 	mlx_resize_image(img, 250, 250);
-	data->texture.nordimg = img;
 	mlx_delete_texture(texture);
-	texture = mlx_load_png(data->texture.sud);
-	if (!texture)
-		exit(1);
-	img = mlx_texture_to_image(data->mlx, texture);
-	mlx_resize_image(img, 250, 250);
-	data->texture.sudimg = img;
-	mlx_delete_texture(texture);
-	texture = mlx_load_png(data->texture.east);
-	if (!texture)
-		exit(1);
-	img = mlx_texture_to_image(data->mlx, texture);
-	mlx_resize_image(img, 250, 250);
-	data->texture.eastimg = img;
-	mlx_delete_texture(texture);
-	texture = mlx_load_png(data->texture.ouest);
-	if (!texture)
-		exit(1);
-	img = mlx_texture_to_image(data->mlx, texture);
-	mlx_resize_image(img, 250, 250);
-	data->texture.ouestimg = img;
-	mlx_delete_texture(texture);
+	return (img);
+}
+
+void	load_walls_textures(t_data *data)
+{
+	data->texture.nordimg = load_wall_texture_path(data->texture.nord, data);
+	data->texture.sudimg = load_wall_texture_path(data->texture.sud, data);
+	data->texture.eastimg = load_wall_texture_path(data->texture.east, data);
+	data->texture.ouestimg = load_wall_texture_path(data->texture.ouest, data);
 }
 
 void	draw_ceil_floor(t_data *data, int x, double wallheight)

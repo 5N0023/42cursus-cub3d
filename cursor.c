@@ -18,7 +18,7 @@ void	draw_cursor(t_data *data)
 {
 	size_t	i;
 	size_t	j;
-	int	pixel;
+	int		pixel;
 
 	i = 0;
 	while (i < data->mouse.cursor->width)

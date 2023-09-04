@@ -11,8 +11,9 @@ unsigned int	get_pixel(mlx_image_t *img, int i, int j)
 
 void	put_to_dataimg(t_data *data, mlx_image_t *image, int x, int y)
 {
-	size_t i;
-	size_t j;
+	size_t		i;
+	size_t		j;
+	unsigned	pixel;
 
 	i = 0;
 	while (i < image->width)
@@ -20,7 +21,7 @@ void	put_to_dataimg(t_data *data, mlx_image_t *image, int x, int y)
 		j = 0;
 		while (j < image->height)
 		{
-			unsigned pixel = get_pixel(image, i, j);
+			pixel = get_pixel(image, i, j);
 			mlx_put_pixel(data->img, i + x, j + y, pixel);
 			j++;
 		}

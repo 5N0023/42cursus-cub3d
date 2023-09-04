@@ -42,6 +42,21 @@ void	pick_col_distance(t_data *data, t_hit vhit, t_hit hhit)
 	}
 }
 
+double	checkdoorouters(t_data *data, double ret)
+{
+	if (data->ray.doorlist->doorhitside == WE && (data->ray.doorlist->doorhity
+			- floor(data->ray.doorlist->doorhity) < 0.2
+			|| data->ray.doorlist->doorhity
+			- floor(data->ray.doorlist->doorhity) > 0.8))
+		ret = data->ray.doorlist->doordistance;
+	if (data->ray.doorlist->doorhitside == NS && (data->ray.doorlist->doorhitx
+			- floor(data->ray.doorlist->doorhitx) < 0.2
+			|| data->ray.doorlist->doorhitx
+			- floor(data->ray.doorlist->doorhitx) > 0.8))
+		ret = data->ray.doorlist->doordistance;
+	return (ret);
+}
+
 double	pick_return_value(t_data *data)
 {
 	double	ret;
@@ -56,20 +71,7 @@ double	pick_return_value(t_data *data)
 		if (data->ray.doorlist->doordistance < data->ray.distance
 			&& door_state(data, data->ray.doorlist->doorhitx,
 				data->ray.doorlist->doorhity) == OPENED)
-		{
-			if (data->ray.doorlist->doorhitside == WE
-				&& (data->ray.doorlist->doorhity
-					- floor(data->ray.doorlist->doorhity) < 0.2
-					|| data->ray.doorlist->doorhity
-					- floor(data->ray.doorlist->doorhity) > 0.8))
-				ret = data->ray.doorlist->doordistance;
-			if (data->ray.doorlist->doorhitside == NS
-				&& (data->ray.doorlist->doorhitx
-					- floor(data->ray.doorlist->doorhitx) < 0.2
-					|| data->ray.doorlist->doorhitx
-					- floor(data->ray.doorlist->doorhitx) > 0.8))
-				ret = data->ray.doorlist->doordistance;
-		}
+			ret = checkdoorouters(data, ret);
 	}
 	return (ret);
 }

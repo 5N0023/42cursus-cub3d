@@ -31,7 +31,7 @@ void	put_options_img(t_data *data, mlx_image_t *image)
 {
 	size_t	i;
 	size_t	j;
-	int	pixel;
+	int		pixel;
 
 	i = 0;
 	while (i < image->width)

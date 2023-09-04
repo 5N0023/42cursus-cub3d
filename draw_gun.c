@@ -4,22 +4,20 @@ void	reload_animation(t_data *data, int *f)
 {
 	size_t	i;
 	size_t	j;
-	int	pixel;
+	int		pixel;
 
-	i = 0;
-	while (i < data->player.gun.normal.gunreload[*f / 2]->width)
+	i = -1;
+	while (++i < data->player.gun.normal.gunreload[*f / 2]->width)
 	{
-		j = 0;
-		while (j < data->player.gun.normal.gunreload[*f / 2]->height)
+		j = -1;
+		while (++j < data->player.gun.normal.gunreload[*f / 2]->height)
 		{
 			pixel = get_pixel(data->player.gun.normal.gunreload[*f / 2], i, j);
 			if (pixel)
 				mlx_put_pixel(data->img, i + 200, j + (WINDOWW
 						- data->player.gun.normal.gunreload[*f / 2]->height),
 					pixel);
-			j++;
 		}
-		i++;
 	}
 	(*f)++;
 	if (*f == 45 * 2)
@@ -34,7 +32,7 @@ void	draw_bullets_count(t_data *data)
 {
 	size_t	i;
 	size_t	j;
-	int	pixel;
+	int		pixel;
 
 	i = 0;
 	while (i < data->player.gun.normal.bullets[data->player.gun.normal.bullet]->height)
@@ -58,7 +56,7 @@ void	shoot_animation(t_data *data, int *f, int *k)
 {
 	size_t	i;
 	size_t	j;
-	int	pixel;
+	int		pixel;
 
 	i = 0;
 	while (i < data->player.gun.normal.gunshoot[*f]->width)
@@ -86,7 +84,7 @@ void	gun_texture(t_data *data, int *f, int *k)
 {
 	size_t	i;
 	size_t	j;
-	int	pixel;
+	int		pixel;
 
 	i = 0;
 	*f = 0;
@@ -109,8 +107,8 @@ void	gun_texture(t_data *data, int *f, int *k)
 
 void	draw_gun_normal(t_data *data)
 {
-	static int f;
-	static int k;
+	static int	f;
+	static int	k;
 
 	draw_bullets_count(data);
 	if (data->player.gun.state == RELOAD && data->player.gun.normal.bullet < 24)
