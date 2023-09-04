@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cast_rays.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 20:04:07 by mlektaib          #+#    #+#             */
+/*   Updated: 2023/09/04 20:08:10 by mlektaib         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void	init_hits(t_hit *vhit, t_hit *hhit, t_data *data, double angle)
@@ -27,8 +39,10 @@ void	init_hits(t_hit *vhit, t_hit *hhit, t_data *data, double angle)
 void	pick_distance(t_data *data, t_hit vhit, t_hit hhit, double angle)
 {
 	if ((hhit.distance * cos((angle - data->player.angle)
-				* TO_RAD) < vhit.distance * cos((angle - data->player.angle)
-				* TO_RAD)) || data->ray.angle == 0 || data->ray.angle == 180)
+				* M_PI / 180.0) < vhit.distance 
+			* cos((angle - data->player.angle)
+				* M_PI / 180.0)) || data->ray.angle == 0
+		|| data->ray.angle == 180)
 	{
 		data->ray.x = hhit.x;
 		data->ray.y = hhit.y;

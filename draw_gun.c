@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_gun.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 20:12:06 by mlektaib          #+#    #+#             */
+/*   Updated: 2023/09/04 20:13:30 by mlektaib         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void	reload_animation(t_data *data, int *f)
@@ -35,16 +47,20 @@ void	draw_bullets_count(t_data *data)
 	int		pixel;
 
 	i = 0;
-	while (i < data->player.gun.normal.bullets[data->player.gun.normal.bullet]->height)
+	while (i < data->player.gun.normal.bullets[
+			data->player.gun.normal.bullet]->height)
 	{
 		j = 0;
-		while (j < data->player.gun.normal.bullets[data->player.gun.normal.bullet]->height)
+		while (j < data->player.gun.normal.bullets[
+				data->player.gun.normal.bullet]->height)
 		{
-			pixel = get_pixel(data->player.gun.normal.bullets[data->player.gun.normal.bullet],
+			pixel = get_pixel(data->player.gun.normal.bullets[
+					data->player.gun.normal.bullet],
 					i, j);
 			if (pixel)
 				mlx_put_pixel(data->img, i + 50, j + (WINDOWW
-						- data->player.gun.normal.bullets[data->player.gun.normal.bullet]->height),
+						- data->player.gun.normal.bullets[
+						data->player.gun.normal.bullet]->height),
 					pixel);
 			j++;
 		}

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   castrayver.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 20:05:48 by mlektaib          #+#    #+#             */
+/*   Updated: 2023/09/04 20:08:57 by mlektaib         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 static void	find_dx(t_hit *vhit)
@@ -18,7 +30,8 @@ static void	find_dx(t_hit *vhit)
 static void	find_dy(t_hit *vhit)
 {
 	if (vhit->angle != 0 && vhit->angle != 180 && vhit->angle != 360)
-		vhit->dy = vhit->y + (vhit->dx - vhit->x) / tan(vhit->angle * TO_RAD);
+		vhit->dy = vhit->y + (vhit->dx - vhit->x)
+			/ tan(vhit->angle * M_PI / 180.0);
 	else if (vhit->angle == 0 || vhit->angle == 180 || vhit->angle == 360)
 	{
 		vhit->dx = vhit->x;

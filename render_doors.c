@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_doors.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 20:20:20 by mlektaib          #+#    #+#             */
+/*   Updated: 2023/09/04 22:38:16 by mlektaib         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void	draw_door_top(t_data *data, double wallheight, int frame,
@@ -42,7 +54,7 @@ void	draw_door_bot(t_data *data, double wallheight, int frame,
 	}
 }
 
-void	render_door_NS(t_data *data, int x, double wallheight, t_doorlist *tmp)
+void	render_door_ns(t_data *data, int x, double wallheight, t_doorlist *tmp)
 {
 	int	pixelsline;
 	int	frame;
@@ -54,7 +66,7 @@ void	render_door_NS(t_data *data, int x, double wallheight, t_doorlist *tmp)
 	draw_door_bot(data, wallheight, frame, pixelsline);
 }
 
-void	render_door_WE(t_data *data, int x, double wallheight, t_doorlist *tmp)
+void	render_door_we(t_data *data, int x, double wallheight, t_doorlist *tmp)
 {
 	int	pixelsline;
 	int	frame;

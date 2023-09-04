@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 20:14:55 by mlektaib          #+#    #+#             */
+/*   Updated: 2023/09/04 20:15:01 by mlektaib         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void	hooks_handler(mlx_key_data_t key, t_data *data)
@@ -27,6 +39,7 @@ void	hooks_handler(mlx_key_data_t key, t_data *data)
 	if (key.key == MLX_KEY_R && key.action == MLX_PRESS)
 		data->player.gun.state = RELOAD;
 }
+
 mlx_keyfunc	key_hook(mlx_key_data_t key, t_data *data)
 {
 	hooks_handler(key, data);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   options_sens.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 20:16:54 by mlektaib          #+#    #+#             */
+/*   Updated: 2023/09/04 23:10:10 by mlektaib         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void	put_number_pos(mlx_image_t *image, mlx_image_t *img, int x, int y)
@@ -26,16 +38,6 @@ static void	put_numbers(mlx_image_t *image, mlx_image_t *numbers_img[3])
 	put_number_pos(image, numbers_img[0], 675, 120);
 	put_number_pos(image, numbers_img[1], 725, 120);
 	put_number_pos(image, numbers_img[2], 775, 120);
-}
-
-void	calcul_sens_num(t_data *data, int numbers[3])
-{
-	int	mouse_sensitive;
-
-	mouse_sensitive = (int)(data->mouse.sensitivity * 100);
-	numbers[0] = mouse_sensitive / 100;
-	numbers[1] = (mouse_sensitive / 10) % 10;
-	numbers[2] = mouse_sensitive % 10;
 }
 
 mlx_image_t	*get_number_image(char *path, int number, t_data *data)
@@ -67,11 +69,10 @@ void	load_numbers_sen(t_data *data, mlx_image_t *numbers_img[3],
 
 void	put_mouse_sensitive(t_data *data, mlx_image_t *image)
 {
-	mlx_image_t *numbers_img[3];
-	int numbers[3];
+	mlx_image_t	*numbers_img[3];
+	int			numbers[3];
 
-	calcul_sens_num(data, numbers);
-
+	calcul_num(numbers, data->mouse.sensitivity);
 	load_numbers_sen(data, numbers_img, numbers);
 	put_numbers(image, numbers_img);
 	mlx_delete_image(data->mlx, numbers_img[0]);

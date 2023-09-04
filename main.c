@@ -6,13 +6,11 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 14:58:31 by mlektaib          #+#    #+#             */
-/*   Updated: 2023/09/03 20:59:38 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/04 22:37:56 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-double			tester;
 
 mlx_mousefunc	key_mouse(mouse_key_t button, action_t action,
 		modifier_key_t modifier_key, t_data *data)
@@ -24,6 +22,7 @@ mlx_mousefunc	key_mouse(mouse_key_t button, action_t action,
 		data->mouse.click = 0;
 	return (NULL);
 }
+
 mlx_cursorfunc	key_cursor(double x, double y, t_data *data)
 {
 	if (data->state == GAME)
@@ -36,7 +35,6 @@ mlx_cursorfunc	key_cursor(double x, double y, t_data *data)
 
 int	game_loop(t_data *data)
 {
-	tester = 0;
 	if (data->img != NULL)
 		mlx_delete_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, WINDOWW, WINDOWW);

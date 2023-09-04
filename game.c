@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 20:13:33 by mlektaib          #+#    #+#             */
+/*   Updated: 2023/09/04 20:14:51 by mlektaib         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void	normalize_angle(double *angle)
@@ -18,7 +30,7 @@ void	reneder_walls(t_data *data, double FOV, double angle)
 	{
 		hits(angle, data);
 		wallheight = WINDOWW / (data->ray.distance * cos((angle
-						- data->player.angle) * TO_RAD));
+						- data->player.angle) * M_PI / 180.0));
 		if (data->ray.hitside == VERTICALE && data->ray.angle >= 0
 			&& data->ray.angle <= 180)
 			data->ray.texture = EAST;
@@ -37,16 +49,16 @@ void	reneder_walls(t_data *data, double FOV, double angle)
 
 void	game(t_data *data)
 {
-	double FOV;
-	double angle;
+	double	fov;
+	double	angle;
 
 	move_player(data);
 	door_frames_setter(data);
-	FOV = 60;
+	fov = 60;
 	normalize_angle(&data->player.angle);
-	angle = data->player.angle - FOV / 2;
+	angle = data->player.angle - fov / 2;
 	normalize_angle(&data->player.angle);
-	reneder_walls(data, FOV, angle);
+	reneder_walls(data, fov, angle);
 	draw_cursor(data);
 	draw_gun_normal(data);
 	draw_map(data, 200);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 20:04:20 by mlektaib          #+#    #+#             */
+/*   Updated: 2023/09/04 23:19:51 by mlektaib         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -28,153 +40,14 @@
 # define CLOSING 3
 # define NS 0
 # define WE 1
-# define TO_RAD (M_PI / 180.0)
 # include "MLX42/MLX42.h"
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-
-typedef struct s_doorlist
-{
-	double				doorhitx;
-	double				doorhity;
-	int					doorhit;
-	int					doorhitside;
-	double				doordistance;
-	struct s_doorlist	*next;
-}						t_doorlist;
-
-struct					s_ray
-{
-	double				x;
-	int					windowx;
-	double				y;
-	double				angle;
-	double				distance;
-	double				dx;
-	double				dy;
-	int					hitside;
-	int					texture;
-	t_doorlist			*doorlist;
-};
-
-struct					s_mouse
-{
-	int					x;
-	int					y;
-	int					oldx;
-	int					oldy;
-	int					click;
-	int					anglemove;
-	int					centermove;
-	double				sensitivity;
-	mlx_image_t			*cursor;
-}						t_mouse;
-
-struct					s_normal
-{
-	mlx_image_t			**gunshoot;
-	mlx_image_t			**gunreload;
-	mlx_image_t			**bullets;
-	int					bullet;
-};
-
-typedef struct s_doors
-{
-	int					frame;
-	int					state;
-	int					x;
-	int					y;
-	int					side;
-}						t_doors;
-
-struct					s_gun
-{
-	struct s_normal		normal;
-	int					state;
-};
-
-struct					s_player
-{
-	double				x;
-	double				y;
-	double				speed;
-	double				rotation;
-	double				angle;
-	int					wpress;
-	int					spress;
-	int					dpress;
-	int					apress;
-	struct s_gun		gun;
-};
-
-struct					s_map
-{
-	char				**map;
-	size_t				width;
-	size_t				height;
-	t_doors				*doors;
-	int					doors_count;
-};
-
-struct					s_texture
-{
-	char				*nord;
-	char				*sud;
-	char				*east;
-	char				*ouest;
-	mlx_image_t			*nordimg;
-	mlx_image_t			*sudimg;
-	mlx_image_t			*eastimg;
-	mlx_image_t			*ouestimg;
-	mlx_image_t			**door;
-};
-
-struct					s_loading
-{
-	mlx_image_t			**frames;
-};
-
-struct					s_startmenu
-{
-	mlx_image_t			*frames;
-	int					button;
-};
-
-typedef struct s_hit
-{
-	double				x;
-	double				xray;
-	double				yray;
-	double				y;
-	double				dx;
-	double				dy;
-	double				hitx;
-	double				hity;
-	int					hit;
-	double				distance;
-	double				angle;
-}						t_hit;
-
-typedef struct s_data
-{
-	mlx_t				*mlx;
-	mlx_image_t			*img;
-	struct s_player		player;
-	struct s_map		map;
-	struct s_ray		ray;
-	struct s_mouse		mouse;
-	struct s_texture	texture;
-	struct s_loading	loading;
-	double				center;
-	double				fov;
-	int					floorcolor;
-	int					ceilingcolor;
-	int					state;
-	int					gamemode;
-}						t_data;
+# include "data_types.h"
+# include "parsing/includes/parsing.h"
 
 void					load_normal_texture(t_data *data);
 unsigned int			get_pixel(mlx_image_t *img, int i, int j);
@@ -214,11 +87,20 @@ void					put_number_pos(mlx_image_t *image, mlx_image_t *img,
 void					put_player_speed(t_data *data, mlx_image_t *image);
 void					put_to_dataimg(t_data *data, mlx_image_t *image, int x,
 							int y);
-void					render_door_WE(t_data *data, int x, double wallheight,
+void					render_door_we(t_data *data, int x, double wallheight,
 							t_doorlist *tmp);
-void					render_door_NS(t_data *data, int x, double wallheight,
+void					render_door_ns(t_data *data, int x, double wallheight,
 							t_doorlist *tmp);
 mlx_image_t				*get_number_image(char *path, int number, t_data *data);
+void					render_ouest(t_data *data, int x, double wallheight);
+void					render_east(t_data *data, int x, double wallheight);
+void					render_nord(t_data *data, int x, double wallheight);
+void					render_sud(t_data *data, int x, double wallheight);
+void					draw_wall(mlx_image_t *img, int pixelsline,
+							double wallheight, t_data *data);
+void					draw_ceil_floor(t_data *data, int x, double wallheight);
+void					calcul_num(int numbers[3], double num);
+void					swap(t_doorlist *a, t_doorlist *b);
+void					door_remote(t_data *data, int i, t_doorlist *tmp);
 
-# include "parsing/includes/parsing.h"
 #endif

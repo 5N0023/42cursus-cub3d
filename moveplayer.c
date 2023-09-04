@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   moveplayer.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 20:16:20 by mlektaib          #+#    #+#             */
+/*   Updated: 2023/09/04 20:16:27 by mlektaib         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void	movebackward(t_data *data)
@@ -11,9 +23,9 @@ void	movebackward(t_data *data)
 	free_door_list(data);
 	if (distance1 > 0.2 && distance2 > 0.2)
 	{
-		data->player.x += cos((data->player.angle + 90) * TO_RAD)
+		data->player.x += cos((data->player.angle + 90) * M_PI / 180.0)
 			* data->player.speed;
-		data->player.y -= sinf((data->player.angle + 90) * TO_RAD)
+		data->player.y -= sinf((data->player.angle + 90) * M_PI / 180.0)
 			* data->player.speed;
 	}
 }
@@ -29,12 +41,13 @@ void	movefoward(t_data *data)
 	free_door_list(data);
 	if (distance1 > 0.2 && distance2 > 0.2)
 	{
-		data->player.x -= cos((data->player.angle + 90) * TO_RAD)
+		data->player.x -= cos((data->player.angle + 90) * M_PI / 180.0)
 			* data->player.speed;
-		data->player.y += sinf((data->player.angle + 90) * TO_RAD)
+		data->player.y += sinf((data->player.angle + 90) * M_PI / 180.0)
 			* data->player.speed;
 	}
 }
+
 void	moveleft(t_data *data)
 {
 	double	distance1;
@@ -46,9 +59,9 @@ void	moveleft(t_data *data)
 	free_door_list(data);
 	if (distance1 > 0.2 && distance2 > 0.2)
 	{
-		data->player.x -= cos((data->player.angle) * TO_RAD)
+		data->player.x -= cos((data->player.angle) * M_PI / 180.0)
 			* data->player.speed;
-		data->player.y += sinf((data->player.angle) * TO_RAD)
+		data->player.y += sinf((data->player.angle) * M_PI / 180.0)
 			* data->player.speed;
 	}
 }
@@ -64,9 +77,9 @@ void	moveright(t_data *data)
 	free_door_list(data);
 	if (distance1 > 0.2 && distance2 > 0.2)
 	{
-		data->player.x += cos((data->player.angle) * TO_RAD)
+		data->player.x += cos((data->player.angle) * M_PI / 180.0)
 			* data->player.speed;
-		data->player.y -= sinf((data->player.angle) * TO_RAD)
+		data->player.y -= sinf((data->player.angle) * M_PI / 180.0)
 			* data->player.speed;
 	}
 }

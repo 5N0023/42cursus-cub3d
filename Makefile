@@ -21,6 +21,10 @@ SOURCES =		main.c \
 				options_sens.c\
 				options_ps.c\
 				render_doors.c\
+				draw_walls_sides.c\
+				load_wall_textures.c\
+				doors_utils.c\
+				doors_utils2.c\
 
 OBJECTS = $(SOURCES:.c=.o)
 CC = cc

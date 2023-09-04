@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 14:58:23 by mlektaib          #+#    #+#             */
-/*   Updated: 2023/09/03 20:33:31 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:16:15 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@ void	draw_player_minimap(t_data *data, int size)
 {
 	int	i;
 	int	j;
-	int	newplayerX;
-	int	newplayerY;
+	int	newplayerx;
+	int	newplayery;
 
 	i = 0;
-	newplayerY = (size / 2) - 3;
-	newplayerX = (size / 2) - 3;
-	while (newplayerX + i < ((size / 2)) + 3)
+	newplayery = (size / 2) - 3;
+	newplayerx = (size / 2) - 3;
+	while (newplayerx + i < ((size / 2)) + 3)
 	{
 		j = 0;
-		while (newplayerY + j < ((size / 2)) + 3)
+		while (newplayery + j < ((size / 2)) + 3)
 		{
-			mlx_put_pixel(data->img, newplayerX + i, newplayerY + j,
+			mlx_put_pixel(data->img, newplayerx + i, newplayery + j,
 				0xFF0000FF);
 			j++;
 		}

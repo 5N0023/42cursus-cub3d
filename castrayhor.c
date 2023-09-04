@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   castrayhor.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 20:04:10 by mlektaib          #+#    #+#             */
+/*   Updated: 2023/09/04 20:08:44 by mlektaib         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 static void	find_dy(t_hit *hhit)
@@ -16,7 +28,8 @@ static void	find_dy(t_hit *hhit)
 static void	find_dx(t_hit *hhit)
 {
 	if (hhit->angle != 90 && hhit->angle != 270)
-		hhit->dx = hhit->x + (hhit->dy - hhit->y) * tanf(hhit->angle * TO_RAD);
+		hhit->dx = hhit->x + (hhit->dy - hhit->y)
+			* tanf(hhit->angle * M_PI / 180.0);
 	else
 	{
 		hhit->dy = hhit->y;

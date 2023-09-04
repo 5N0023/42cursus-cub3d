@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   startmenu.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 20:20:41 by mlektaib          #+#    #+#             */
+/*   Updated: 2023/09/04 20:20:42 by mlektaib         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void	hover_start(t_data *data)
@@ -73,8 +85,8 @@ void	nothing_hovered(t_data *data)
 
 void	startmenu(t_data *data)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	mlx_get_mouse_pos(data->mlx, &x, &y);
 	if (x > 40 && x < 326 && y > 237 && y < 308)
