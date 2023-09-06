@@ -6,12 +6,11 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 21:21:25 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/07/20 12:11:54 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/08/18 13:03:34 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
-
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {

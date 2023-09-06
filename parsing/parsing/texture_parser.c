@@ -6,12 +6,11 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:14:49 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/09/02 19:59:44 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/06 15:35:46 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parsing.h"
-
+#include "../../cub3D.h"
 
 int	checker(char *line)
 {
@@ -45,57 +44,55 @@ void	_replace(char *str)
 		str[ft_strlen(str) - 1] = 0;
 }
 
-void	ft_free_textures(t_pars **p)
-{
-	if ((*p)->north)
-		free((*p)->north);
-	if ((*p)->south)
-		free((*p)->south);
-	if ((*p)->east)
-		free((*p)->east);
-	if ((*p)->west)
-		free((*p)->west);
-}
+
 
 int	texture(char *line, t_pars **ret)
 {
-	char	**split;
 	int		fd;
+	int		i;
+	char	*tmp;
 
-	split = ft_split(line, ' ');
-	if (ft_arr_len(split) != 2)
-		return (ft_free_array(split), 1);
-	fd = open(split[1], O_RDONLY);
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	tmp = ft_strdup(line + i);
+	i += 2;
+	while (line[i] && line[i] == ' ')
+		i++;
+	fd = open(line + i, O_RDONLY);
 	if (fd == -1)
-		return (ft_free_array(split), 1);
-	if (ft_strncmp(split[0], "NO", 2) == 0 && !(*ret)->north)
-		(*ret)->north = ft_strdup(split[1]);
-	if (ft_strncmp(split[0], "SO", 2) == 0 && !(*ret)->south)
-		(*ret)->south = ft_strdup(split[1]);
-	if (ft_strncmp(split[0], "WE", 2) == 0 && !(*ret)->west)
-		(*ret)->west = ft_strdup(split[1]);
-	if (ft_strncmp(split[0], "EA", 2) == 0 && !(*ret)->east)
-		(*ret)->east = ft_strdup(split[1]);
-	ft_free_array(split);
+		return (free(tmp), 1);
+	if (ft_strncmp(tmp, "NO", 2) == 0 && !(*ret)->north)
+		return ((*ret)->north = ft_strdup(line + i), free(tmp), 1);
+	if (ft_strncmp(tmp, "SO", 2) == 0 && !(*ret)->south)
+		return ((*ret)->south = ft_strdup(line + i), free(tmp), 1);
+	if (ft_strncmp(tmp, "WE", 2) == 0 && !(*ret)->west)
+		return ((*ret)->west = ft_strdup(line + i), free(tmp), 1);
+	if (ft_strncmp(tmp, "EA", 2) == 0 && !(*ret)->east)
+		return ((*ret)->east = ft_strdup(line + i), free(tmp), 1);
 	return (1);
 }
 
-int	check_type(char *txt, char *line, t_pars **ret)
+int	check_type(char *line, t_pars **ret)
 {
+	int	i;
 	int	r;
 
+	i = 0;
 	r = 0;
-	if (ft_strncmp(txt, "NO", 2) == 0)
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (line[i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
 		r = texture(line, ret);
-	if (ft_strncmp(txt, "SO", 2) == 0)
+	if (line[i] == 'S' && line[i + 1] == 'O' && line[i + 2] == ' ')
 		r = texture(line, ret);
-	if (ft_strncmp(txt, "WE", 2) == 0)
+	if (line[i] == 'W' && line[i + 1] == 'E' && line[i + 2] == ' ')
 		r = texture(line, ret);
-	if (ft_strncmp(txt, "EA", 2) == 0)
+	if (line[i] == 'E' && line[i + 1] == 'A' && line[i + 2] == ' ')
 		r = texture(line, ret);
-	if (ft_strncmp(txt, "F", 1) == 0)
+	if (line[i] == 'C' && line[i + 1] == ' ')
 		r = color(line, ret);
-	if (ft_strncmp(txt, "C", 1) == 0)
+	if (line[i] == 'F' && line[i + 1] == ' ')
 		r = color(line, ret);
 	return (r);
 }

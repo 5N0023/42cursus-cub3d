@@ -6,11 +6,11 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:12 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/09/02 20:04:51 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/04 23:37:09 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parsing.h"
+#include "../../cub3D.h"
 
 int	ft_pixel(int r, int g, int b, int a)
 {
@@ -60,7 +60,10 @@ int	parse_color(char *color)
 	if (_color[2])
 		return (ft_free_array(_color), ERROR);
 	while (_color[1][++i])
-		(_color[1][i] == ',') && v++;
+	{
+		if (_color[1][i] == ',')
+			v++;
+	}
 	if (v != 2)
 		return (ft_free_array(_color), ERROR);
 	ret = ft_fill_int(_color[1]);

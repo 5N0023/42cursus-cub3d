@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ../includes/libft.h                                            :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/10 13:15:20 by mjarboua          #+#    #+#             */
-/*   Updated: 2022/10/27 18:06:38 by mjarboua         ###   ########.fr       */
+/*   Created: 2023/08/25 10:33:28 by mjarboua          #+#    #+#             */
+/*   Updated: 2023/08/25 10:34:31 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,5 @@ char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
 void	ft_free_array(char **arr);
 int		ft_arr_len(char **arr);
-
 
 #endif

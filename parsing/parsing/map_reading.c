@@ -6,11 +6,11 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:06:05 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/09/02 19:57:58 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/04 23:45:32 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parsing.h"
+#include "../../cub3D.h"
 
 char	**map_reader(char *file_name)
 {
@@ -38,3 +38,29 @@ char	**map_reader(char *file_name)
 	return (close(file), map);
 }
 
+int	get_player_direction(char **m)
+{
+	int	count;
+	int	direction;
+	int	i[2];
+
+	i[I] = -1;
+	direction = 0;
+	count = 0;
+	while (m[++i[I]])
+	{
+		i[J] = -1;
+		while (m[i[I]][++i[J]])
+		{
+			if (m[i[I]][i[J]] == 'E' || m[i[I]][i[J]] == 'S'
+				|| m[i[I]][i[J]] == 'N' || m[i[I]][i[J]] == 'W')
+			{
+				direction = m[i[I]][i[J]];
+				count++;
+			}
+		}
+	}
+	if (count != 1)
+		return (-1);
+	return (direction);
+}

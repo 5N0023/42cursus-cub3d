@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:20:53 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/09/01 15:47:58 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/06 15:22:34 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	parser(int c, char **v, t_data *data)
 		return (printf("you will have to give the map path as an argument\n"), 1);
 	pars = ft_map_parser(v[1]);
 	if (!pars)
-		return (1);
+			return (1);
 	data->map.map = pars->map.map;
 	data->map.width = pars->map.width;
 	data->map.height = pars->map.height;
@@ -135,17 +135,8 @@ int	parser(int c, char **v, t_data *data)
 	data->texture.ouest = pars->west;
 	data->texture.east = pars->east;
 	data->texture.nord = pars->north;
-	if(find_player_pos(data) || find_doors(data))
-	{
-		printf("no player found\n");
-		ft_free_array(pars->map.map);
-		free(pars->south);
-		free(pars->west);
-		free(pars->east);
-		free(pars->north);
-		free(pars);
-		return (1);
-	}
+	find_player_pos(data);
+	find_doors(data);
 	free(pars);
 	return (0);
 }

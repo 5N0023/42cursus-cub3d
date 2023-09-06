@@ -1,16 +1,13 @@
-C 135,206,255
 WE ./textures/walls/weast.png
 EA ./textures/walls/east.png
 NO ./textures/walls/north.png
-
 SO ./textures/walls/south.png
+F 0,255,0
+C 0,0,255       
 
-F ,105,84,71
 
-111111111
-100000001
-10000001
-10Dd00S01
-10D000001
-100000001
-111111111
+111
+1d1
+1d1
+1N0
+111

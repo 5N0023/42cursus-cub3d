@@ -41,7 +41,7 @@ t_pars	*allocate_struct(void);
 //parsing functions
 int     parser(int c, char **v, t_data *data);
 int	checker(char *line);
-int	check_type(char *txt, char *line, t_pars **ret);
+int	check_type(char *line, t_pars **ret);
 int		parse_color(char *color);
 int	color(char *line, t_pars **ret);
 int		parse_texture(char *txt);
@@ -56,5 +56,6 @@ int		check_map(char **map);
 char	**map_reader(char *file_name);
 t_pars	*ft_map_parser(char *file_name);
 void	ft_free_textures(t_pars **p);
+int			get_player_direction(char **m);
 
 #endif

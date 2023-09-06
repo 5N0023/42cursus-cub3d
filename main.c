@@ -6,7 +6,7 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 14:58:31 by mlektaib          #+#    #+#             */
-/*   Updated: 2023/09/04 22:37:56 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/06 15:53:29 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	clear_leaks(t_data *data)
 		free(data->map.map[i]);
 		i++;
 	}
+	free(data->map.doors);
 	free(data->map.map);
 }
 

@@ -6,11 +6,11 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 21:25:11 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/09/02 19:58:31 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/04 23:36:56 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parsing.h"
+#include "../../cub3D.h"
 
 int	put_texture_in_place(char *texture, char **target, t_pars **data)
 {

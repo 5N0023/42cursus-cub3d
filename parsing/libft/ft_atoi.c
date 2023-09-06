@@ -6,14 +6,11 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:11:49 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/07/25 20:55:05 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/08/18 13:01:35 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
-
-
-
 
 int	ft_atoi(char const *str)
 {

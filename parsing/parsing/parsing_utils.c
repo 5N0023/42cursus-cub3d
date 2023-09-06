@@ -6,11 +6,11 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:09:32 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/09/02 20:04:59 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/04 23:45:40 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parsing.h"
+#include "../../cub3D.h"
 
 int	get_map_len(char *file_name)
 {
@@ -87,29 +87,4 @@ char	**ft_allocate_clone(char **original)
 	}
 	map[i] = NULL;
 	return (map);
-}
-
-char	**allocate_clone(char **v)
-{
-	int		i;
-	int		j;
-	char	**str;
-	int		l;
-
-	i = -1;
-	str = malloc(sizeof(char *) * (ft_arr_len(v) + 3));
-	l = ft_longest_line(v);
-	while (++i < l)
-		str[0] = ft_strjoin(str[0], "*");
-	i = 1;
-	j = 0;
-	while (v[j])
-		str[i++] = ft_strdup(v[j++]);
-	j = i;
-	i = -1;
-	while (++i < l)
-		str[j] = ft_strjoin(str[j], "*");
-	j++;
-	str[j] = NULL;
-	return (str);
 }

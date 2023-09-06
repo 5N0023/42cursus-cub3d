@@ -6,13 +6,28 @@
 /*   By: mlektaib <mlektaib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:24:25 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/09/02 23:32:44 by mlektaib         ###   ########.fr       */
+/*   Updated: 2023/09/06 15:40:36 by mlektaib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parsing.h"
+#include "../../cub3D.h"
+void	free_list(t_pars *p)
+{
+	if (!p)
+		return ;
+	if (p->east)
+		free(p->east);
+	if (p->west)
+		free(p->west);
+	if (p->south)
+		free(p->south);
+	if (p->north)
+		free(p->north);
+	ft_free_array(p->map.map);
+	free(p);
+}
 
-int	skip_spaces_and_compare(char *line, char *txt)
+int	skip_spaces_and_compare(char *line)
 {
 	int	i;
 
@@ -21,7 +36,17 @@ int	skip_spaces_and_compare(char *line, char *txt)
 		return (1);
 	while (line[i] && line[i] == ' ')
 		i++;
-	if (ft_strncmp(line + i, txt, ft_strlen(txt)) == 0)
+	if (line[i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
+		return (0);
+	if (line[i] == 'S' && line[i + 1] == 'O' && line[i + 2] == ' ')
+		return (0);
+	if (line[i] == 'W' && line[i + 1] == 'E' && line[i + 2] == ' ')
+		return (0);
+	if (line[i] == 'E' && line[i + 1] == 'A' && line[i + 2] == ' ')
+		return (0);
+	if (line[i] == 'C' && line[i + 1] == ' ')
+		return (0);
+	if (line[i] == 'F' && line[i + 1] == ' ')
 		return (0);
 	return (1);
 }
@@ -30,20 +55,19 @@ t_pars	*map_part(int *iter, char **map, t_pars *ret)
 {
 	iter[1] = 0;
 	if (iter[2] != 6)
-		return (printf("error in map elements\n"), 
-			ft_free_array(map), ft_free_textures(&ret), free(ret), NULL);
+		return (printf("error in map elements\n"), free_list(ret), ft_free_array(map), NULL);
 	while (map[iter[1]] && checker(map[iter[1]]) == 0)
 		iter[1]++;
 	if (parse_map(map + iter[1], &ret) == -1)
-		return (ft_free_textures(&ret),
-			free(ret), printf("error in map\n"), NULL);
+		return (free_list(ret), ft_free_array(map)
+		, printf("error in map\n"), NULL);
 	return (ft_free_array(map), ret);
 }
+
 
 t_pars	*ft_map_parser(char *file_name)
 {
 	char	**map;
-	char	**txt;
 	t_pars	*ret;
 	int		iter[3];
 
@@ -53,47 +77,37 @@ t_pars	*ft_map_parser(char *file_name)
 	if (!ret)
 		return (NULL);
 	map = map_reader(file_name);
-	txt = ft_split("NO SO WE EA F C", ' ');
-	while (txt[++iter[0]])
+	while (map[++iter[0]])
 	{
-		iter[1] = -1;
-		while (++iter[1] < ft_arr_len(map))
-		{
-			while (map[iter[1]] && ft_strncmp(map[iter[1]], "\n", 1) == 0)
-				iter[1]++;
-			if (skip_spaces_and_compare(map[iter[1]], txt[iter[0]]) == 0)
-				iter[2] += check_type(txt[iter[0]], map[iter[1]], &ret);
-		}
+		while (map[iter[0]] && ft_strncmp(map[iter[0]], "\n", 1) == 0)
+			iter[0]++;
+		if (skip_spaces_and_compare(map[iter[0]]) == 0)
+			iter[2] += check_type(map[iter[0]], &ret);
 	}
-	ft_free_array(txt);
 	return (map_part(iter, map, ret));
 }
 
-int	get_player_direction(char **m)
+char	**get_a_clone(char **p)
 {
-	int	count;
-	int	direction;
-	int	i[2];
+	char	**ret;
+	int		i;
 
-	i[I] = -1;
-	direction = 0;
-	count = 0;
-	while (m[++i[I]])
+	i = -1;
+	ret = malloc(sizeof(char *) * (ft_arr_len(p) + 3));
+	if (!ret)
+		return (NULL);
+	ret[0] = ft_strdup("");
+	while (++i < ft_longest_line(p))
+		ret[0] = ft_strjoin(ret[0], "*");
+	i = 1;
+	while (p[i - 1])
 	{
-		i[J] = -1;
-		while (m[i[I]][++i[J]])
-		{
-			if (m[i[I]][i[J]] == 'E' || m[i[I]][i[J]] == 'S'
-				|| m[i[I]][i[J]] == 'N' || m[i[I]][i[J]] == 'W')
-			{
-				direction = m[i[I]][i[J]];
-				count++;
-			}
-		}
+		ret[i] = ft_strdup(p[i - 1]);
+		i++;
 	}
-	if (count != 1)
-		return (-1);
-	return (direction);
+	ret[i++] = ft_strdup(ret[0]);
+	ret[i] = NULL;
+	return (ret);
 }
 
 int	parse_map(char **map, t_pars **data)
@@ -103,16 +117,14 @@ int	parse_map(char **map, t_pars **data)
 
 	longest_line = ft_longest_line(map);
 	if (longest_line == ERROR)
-	{
 		return (ERROR);
-	}
 	i = -1;
 	while (map[++i])
 		while ((int)ft_strlen(map[i]) < longest_line)
 			map[i] = ft_strjoin(map[i], " ");
 	if (check_for_tabs(map) == ERROR)
 		return (ERROR);
-	if (check_map(map) == -1)
+	if (check_map(get_a_clone(map)) == -1)
 		return (ERROR);
 	if (get_player_direction(map) == -1)
 		return (ERROR);

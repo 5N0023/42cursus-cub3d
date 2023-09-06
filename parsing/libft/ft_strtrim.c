@@ -6,12 +6,11 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 14:32:37 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/07/20 12:11:54 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/08/18 13:03:32 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
-
 
 char	*ft_strtrim(char const *s1, char const *set)
 {

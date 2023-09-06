@@ -6,7 +6,7 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 21:13:28 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/05/18 14:51:13 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/08/25 10:34:15 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 
 int		ft_strlen_mod(char *str, int flag);
 char	*ft_strjoin(char *s1, char *s2);
+char	*_ft_strjoin(char *s1, char *s2);
 char	*reeeed(int fd, char *bucket);
 char	*get_next_line(int fd);
-
 
 #endif

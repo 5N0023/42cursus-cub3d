@@ -6,12 +6,11 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 21:41:52 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/07/20 12:10:49 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/08/18 13:03:46 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
-
 
 int	ft_toupper(int c)
 {

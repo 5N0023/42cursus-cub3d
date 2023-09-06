@@ -6,12 +6,11 @@
 /*   By: mjarboua <mjarboua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 19:51:56 by mjarboua          #+#    #+#             */
-/*   Updated: 2023/07/20 12:11:54 by mjarboua         ###   ########.fr       */
+/*   Updated: 2023/08/18 13:03:06 by mjarboua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
-
 
 static size_t	w_counter(char *s, char c)
 {
