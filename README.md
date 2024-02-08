@@ -31,7 +31,7 @@ To run Cub3D, you'll need:
 1. **Clone the Repository:**
 
 ```bash
-git clone https://github.com/5N0023/Cub3D.git
+git clone https://github.com/5N0023/42cursus-cub3d.git
 cd Cub3D
 ```
 2.  **Compile the Project:**
