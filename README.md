@@ -1,13 +1,13 @@
 
-# Cube3D
+# Cub3d
 
 ## Introduction
 
-Cube3D is a 3D graphics project inspired by the early days of 3D gaming. It aims to recreate the essence of classic 3D rendering techniques, specifically ray-casting, to generate a 3D perspective from a 2D map. This project serves as an educational tool for understanding the basics of 3D graphics, game development, and the mathematical principles behind rendering techniques.
+Cub3d is a 3D graphics project inspired by the early days of 3D gaming. It aims to recreate the essence of classic 3D rendering techniques, specifically ray-casting, to generate a 3D perspective from a 2D map. This project serves as an educational tool for understanding the basics of 3D graphics, game development, and the mathematical principles behind rendering techniques.
 
 ## Project Description
 
-At its core, Cube3D is about bringing a simple 2D map layout to life in 3D space. Using the ray-casting technique, similar to what was used in the classic game Wolfenstein 3D, Cube3D renders walls, textures, and simple objects into a navigable 3D environment. The project is built to demonstrate how 2D projections can be transformed into 3D visuals, offering a glimpse into the fundamentals of game development and computer graphics.
+At its core, Cub3d is about bringing a simple 2D map layout to life in 3D space. Using the ray-casting technique, similar to what was used in the classic game Wolfenstein 3D, Cub3d renders walls, textures, and simple objects into a navigable 3D environment. The project is built to demonstrate how 2D projections can be transformed into 3D visuals, offering a glimpse into the fundamentals of game development and computer graphics.
 
 ### Features
 
@@ -21,7 +21,7 @@ At its core, Cube3D is about bringing a simple 2D map layout to life in 3D space
 
 ### Prerequisites
 
-To run Cube3D, you'll need:
+To run Cub3d, you'll need:
 
 - A C compiler (GCC or Clang recommended)
 - The MinilibX graphics library (or any equivalent library capable of handling basic windowing and graphical rendering)
@@ -31,26 +31,26 @@ To run Cube3D, you'll need:
 1. **Clone the Repository:**
 
 ```bash
-git clone https://github.com/yourusername/Cube3D.git
-cd Cube3D
+git clone https://github.com/5N0023/Cub3D.git
+cd Cub3d
 ```
 2.  **Compile the Project:**
 
-Using the Makefile included in the project directory, compile Cube3D:
+Using the Makefile included in the project directory, compile Cub3d:
 
 
 ```bash
 make
 ``` 
 
-3.  **Run Cube3D:**
+3.  **Run Cub3d:**
 
-After compilation, you can start Cube3D by running:
+After compilation, you can start Cub3d by running:
 
 bashCopy code
 
 ```bash
-./cube3d maps/map.cub
+./Cub3d maps/map.cub
 ```
 
 ## Controls
